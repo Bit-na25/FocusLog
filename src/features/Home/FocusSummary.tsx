@@ -1,25 +1,25 @@
+import { useRecoilValue } from "recoil";
 import ContentBox from "../../components/common/ContentBox";
+import { todayTotalFocusTimeSelector } from "../../store/retrospectSelector";
+import { formatKoreanDuration } from "../../utils/formatDuration";
 
 export default function FocusSummary() {
+  const todayTotalFocusTime = useRecoilValue(todayTotalFocusTimeSelector);
+
   const maxTime = 3;
-  const curTime = 130;
-  const h = Math.floor(curTime / 60);
-  const m = curTime % 60;
-  const percent = Math.floor((curTime / (maxTime * 60)) * 100);
+  const percent = Math.floor((todayTotalFocusTime / (maxTime * 60 * 60)) * 100);
 
   return (
     <section className="my-8">
       <h2 className="text-xl font-bold mb-2">집중 요약</h2>
       <ContentBox>
         <p className="flex justify-between">
-          목표 시간 <span className="font-bold">{maxTime}h</span>
+          목표 시간 <span className="font-bold">{maxTime}시간</span>
         </p>
         <p className="flex justify-between">
           완료 시간{" "}
           <span className="font-bold">
-            {h > 0 && <>{h}h</>}
-            {m}m(
-            {percent}%)
+            {formatKoreanDuration(todayTotalFocusTime)}({percent}%)
           </span>
         </p>
         <div className="border-t border-gray-300 my-3" />

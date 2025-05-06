@@ -1,21 +1,30 @@
-export default function Schedule({ isMini = true }: { isMini?: boolean }) {
-  const title = "Study Session";
-  const time = "10:00";
+import { useRecoilValue } from "recoil";
+import { categoryByIdSelector } from "../store/categorySelector";
+import { scheduleByIdSelector } from "../store/scheduleSelector";
+
+interface ScheduleProps {
+  scheduleId: string;
+  isMini?: boolean;
+}
+
+export default function Schedule({ scheduleId, isMini = true }: ScheduleProps) {
+  const schedule = useRecoilValue(scheduleByIdSelector(scheduleId));
+  const categoryInfo = useRecoilValue(categoryByIdSelector(schedule?.category));
 
   return (
     <>
       {isMini ? (
         <div className="flex text-[1.1rem] font-bold">
-          <div className="border-l-4 border-blue-600 mr-2" />
-          <p className="mr-7 text-gray-500">{time}</p>
-          <p>{title}</p>
+          <div className={`w-1 h-7 mr-2 ${categoryInfo.color}`} />
+          <p className="mr-7 text-gray-500">{schedule?.time}</p>
+          <p>{schedule?.title}</p>
         </div>
       ) : (
         <div className="flex items-center">
-          <div className="w-1 h-14 bg-yellow-400 mr-5"></div>
+          <div className={`w-1 h-14 mr-5 ${categoryInfo.color}`}></div>
           <div>
-            <div className="text-3xl font-bold">{title}</div>
-            <div className="text-sm text-gray-400 font-bold">시작 {time}</div>
+            <div className="text-3xl font-bold">{schedule?.title}</div>
+            <div className="text-sm text-gray-400 font-bold">시작 {schedule?.time}</div>
           </div>
         </div>
       )}

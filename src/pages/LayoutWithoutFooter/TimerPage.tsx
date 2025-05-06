@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import PageHeader from "../../components/PageHeader";
 import Schedule from "../../components/Schedule";
+import { useLocation } from "react-router-dom";
 
 enum TimerStatus {
   READY = "READY",
@@ -8,6 +9,9 @@ enum TimerStatus {
 }
 
 export default function TimerPage() {
+  const location = useLocation();
+  const scheduleId = location.state?.scheduleId;
+
   const [status, setStatus] = useState<TimerStatus>(TimerStatus.READY);
 
   const [time, setTime] = useState(0); // seconds
@@ -63,7 +67,7 @@ export default function TimerPage() {
         )}
 
         <div className="bg-white text-black p-4 mt-6 rounded-lg">
-          <Schedule isMini={false} />
+          <Schedule scheduleId={scheduleId} isMini={false} />
         </div>
 
         <div className="mt-3 flex gap-2">

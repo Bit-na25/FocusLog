@@ -1,21 +1,27 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import PageHeader from "../../components/PageHeader";
-
-const categories = [
-  { id: "1", name: "Study", color: "bg-yellow-400" },
-  { id: "2", name: "Meeting", color: "bg-green-400" },
-  { id: "3", name: "Work", color: "bg-purple-500" },
-];
+import { useLocation } from "react-router-dom";
+import { useClickOutside } from "../../hooks/useClickOutside";
+import { useRecoilValue } from "recoil";
+import { categorySelector } from "../../store/categorySelector";
 
 export default function ScheduleFormPage() {
+  const location = useLocation();
+  const categories = useRecoilValue(categorySelector);
+
   const [title, setTitle] = useState("");
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(
+    location.state?.selectedDate ? new Date(location.state.selectedDate) : new Date(),
+  );
   const [category, setCategory] = useState(categories[0]);
   const [memo, setMemo] = useState("");
   const [open, setOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const readOnly = false;
+
+  useClickOutside(dropdownRef, () => setOpen(false), open);
 
   return (
     <div>
@@ -49,7 +55,7 @@ export default function ScheduleFormPage() {
           />
         </div>
 
-        <div className="relative w-full">
+        <div className="relative w-full" ref={dropdownRef}>
           <label className="block mb-1 text-lg font-bold">카테고리</label>
           <button
             onClick={() => setOpen(!open)}
@@ -58,7 +64,7 @@ export default function ScheduleFormPage() {
           >
             <div className="flex items-center gap-2">
               <span className={`w-3 h-3 rounded-full ${category.color}`}></span>
-              {category.name}
+              {category.label}
             </div>
             <span>{!readOnly && (open ? "▲" : "▼")}</span>
           </button>
@@ -75,7 +81,7 @@ export default function ScheduleFormPage() {
                   className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer"
                 >
                   <span className={`w-3 h-3 rounded-full ${c.color}`}></span>
-                  {c.name}
+                  {c.label}
                 </div>
               ))}
 
