@@ -10,13 +10,13 @@ export const categorySelector = selector<CategoryType[]>({
   },
 });
 
-export const categoryByIdSelector = selectorFamily<CategoryType, number | undefined>({
+export const categoryByIdSelector = selectorFamily<CategoryType, string | undefined>({
   key: "categoryByIdSelector",
   get:
-    (categoryId: number | undefined) =>
+    (categoryId) =>
     ({ get }) => {
       const categories = get(categoryState);
       const data = categories.find((cat) => cat.id === categoryId);
-      return data ? data : { id: 0, label: "", color: "gray-500" };
+      return data ?? { id: "", label: "", color: "gray-500" };
     },
 });
