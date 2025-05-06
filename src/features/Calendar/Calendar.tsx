@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 import { getSchedulesByMonthSelector } from "../../store/scheduleSelector";
-import { formatToDateString } from "../../utils/dateUtils";
+import { formatDateOnly } from "../../utils/dateUtils";
 import { categorySelector } from "../../store/categorySelector";
 
 interface CalendarProps {
@@ -81,7 +81,7 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
             const textColor =
               day === 0 ? "text-red-500" : day === 6 ? "text-blue-500" : "text-black";
             const opacity = isCurrentMonth ? "opacity-100" : "opacity-50";
-            const schedules = monthSchedules.filter((s) => s.date === formatToDateString(date));
+            const schedules = monthSchedules.filter((s) => s.date === formatDateOnly(date));
 
             return (
               <div key={idx} className="w-full flex flex-col items-center justify-center">

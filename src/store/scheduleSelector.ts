@@ -1,7 +1,8 @@
 import { selector, selectorFamily } from "recoil";
 import { ScheduleType } from "../types/schedule";
 import { scheduleState } from "./scheduleAtom";
-import { formatToISOStringDate } from "../utils/dateUtils";
+import { formatDateOnly } from "../utils/dateUtils";
+import { sortSchedulesByTime } from "./utils/scheduleTimeSort";
 
 export const scheduleByIdSelector = selectorFamily<ScheduleType | undefined, string>({
   key: "retrospectByScheduleIdSelector",
@@ -17,9 +18,9 @@ export const todayScheduleSelector = selector<ScheduleType[]>({
   key: "todayScheduleSelector",
   get: ({ get }) => {
     const allSchedules = get(scheduleState);
-    const today = formatToISOStringDate(new Date());
+    const today = formatDateOnly(new Date());
 
-    return allSchedules.filter((item) => item.date === today);
+    return sortSchedulesByTime(allSchedules.filter((item) => item.date === today));
   },
 });
 
@@ -37,7 +38,7 @@ export const getSchedulesByDateSelector = selectorFamily<ScheduleType[], string>
     (targetDate: string) =>
     ({ get }) => {
       const allSchedules = get(scheduleState);
-      return allSchedules.filter((schedule) => schedule.date === targetDate);
+      return sortSchedulesByTime(allSchedules.filter((schedule) => schedule.date === targetDate));
     },
 });
 
