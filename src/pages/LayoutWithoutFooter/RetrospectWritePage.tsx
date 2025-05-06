@@ -5,47 +5,27 @@ import { useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { retrospectByScheduleIdSelector } from "../../store/retrospectSelector";
 import { formatDuration } from "../../utils/formatDuration";
+import { tagState } from "../../store/tagAtom";
 
 export default function RetrospectWritePage() {
   const location = useLocation();
   const scheduleId = location.state?.scheduleId;
 
   const retrospect = useRecoilValue(retrospectByScheduleIdSelector(scheduleId));
+  const allTags = useRecoilValue(tagState);
 
   const [note, setNote] = useState("");
   const [tags, setTags] = useState<string[]>([]);
-  const allTags = [
-    "집중됨",
-    "피곤함",
-    "산만함",
-    "지침",
-    "피곤함",
-    "산만함",
-    "지침",
-    "피곤함",
-    "산만함",
-    "지침",
-    "피곤함",
-    "산만함",
-    "지침",
-    "피곤함",
-    "산만함",
-    "지침",
-    "피곤함",
-    "산만함",
-    "지침",
-    "피곤함",
-    "산만함",
-    "지침",
-    "피곤함",
-    "산만함",
-    "지침",
-  ];
   const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     setNote(retrospect?.content ?? "");
-  });
+    setTags(retrospect?.tags ?? []);
+  }, []);
+
+  const handleChangeTag = (tag: string) => {
+    setTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
+  };
 
   return (
     <div>
@@ -74,10 +54,10 @@ export default function RetrospectWritePage() {
             <button className="text-sm px-3 py-1 border rounded">+추가</button>
           </label>
           <div className="flex flex-wrap gap-2 mb-2">
-            {(showMore ? allTags : allTags.slice(0, 7)).map((tag, i) => (
+            {(showMore ? allTags : allTags.slice(0, 7)).map((tag) => (
               <button
-                key={i}
-                onClick={() => {}}
+                key={tag}
+                onClick={() => handleChangeTag(tag)}
                 className={`px-3 py-1 rounded-full border ${
                   tags.includes(tag) ? "bg-gray-300" : "bg-white"
                 }`}
