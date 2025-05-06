@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import PageHeader from "../../components/PageHeader";
 import Schedule from "../../components/Schedule";
 import { retrospectByScheduleIdSelector } from "../../store/retrospectSelector";
 import { formatDuration } from "../../utils/formatDuration";
 import { tagState } from "../../store/tagAtom";
+import { retrospectState } from "../../store/retrospectAtom";
+import { RetrospectType } from "../../types/retrospect";
 
 export default function RetrospectWritePage() {
+  const navigate = useNavigate();
   const { state } = useLocation();
   const scheduleId = state?.scheduleId;
 
   const retrospect = useRecoilValue(retrospectByScheduleIdSelector(scheduleId));
+  const setRetrospect = useSetRecoilState(retrospectState);
   const allTags = useRecoilValue(tagState);
 
   const [note, setNote] = useState("");
@@ -27,6 +31,28 @@ export default function RetrospectWritePage() {
 
   const handleChangeTag = (tag: string) => {
     setTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
+  };
+
+  const handleSave = () => {
+    if (!retrospect) return;
+
+    const newRetrospect: RetrospectType = {
+      id: retrospect.id,
+      scheduleId,
+      focusDuration: retrospect.focusDuration,
+      content: note,
+      tags,
+    };
+
+    setRetrospect((prev) => {
+      return prev.map((item) => (item.id === retrospect.id ? newRetrospect : item));
+    });
+    navigate(-1);
+  };
+
+  const handleDelete = () => {
+    setRetrospect((prev) => prev.filter((s) => s.id !== retrospect?.id));
+    navigate(-1);
   };
 
   const visibleTags = showMore ? allTags : allTags.slice(0, 7);
@@ -84,14 +110,18 @@ export default function RetrospectWritePage() {
       </section>
 
       {/* 저장 버튼 */}
-      <div className="fixed bottom-0 left-0 right-0 w-full bg-white">
+      <div className="fixed w-[90%] bottom-6 left-1/2 -translate-x-1/2 flex gap-1">
         <button
-          className="m-6 w-[90%] py-3 bg-black font-bold text-white rounded-lg shadow-lg"
-          onClick={() => {
-            alert("저장되었습니다!");
-          }}
+          className="w-1/2 border py-3 rounded-lg border-gray-400 bg-black font-bold text-white"
+          onClick={handleSave}
         >
           저장
+        </button>
+        <button
+          className="w-1/2 border py-3 rounded-lg border-red-400 text-red-400 font-bold"
+          onClick={handleDelete}
+        >
+          삭제
         </button>
       </div>
     </div>

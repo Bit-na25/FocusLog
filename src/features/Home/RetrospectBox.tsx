@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 export default function RetrospectBox() {
   const [showIndex, setShowIndex] = useState(-1);
   const retrospects = useRecoilValue(todayRetrospectSelector);
-  const filteredRetrospects = retrospects.filter((r) => r.content);
+  const filteredRetrospects = retrospects.filter((r) => r.content || r.tags);
 
   useEffect(() => {
     setShowIndex(Math.floor(Math.random() * filteredRetrospects.length));

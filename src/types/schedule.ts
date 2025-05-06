@@ -5,5 +5,5 @@ export interface ScheduleType {
   title: string;
   memo?: string;
   done: boolean;
-  category: number;
+  category: string;
 }
