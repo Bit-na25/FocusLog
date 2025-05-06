@@ -1,6 +1,7 @@
 import { useRecoilValue } from "recoil";
 import { categoryByIdSelector } from "../store/categorySelector";
 import { scheduleByIdSelector } from "../store/scheduleSelector";
+import { Link } from "react-router-dom";
 
 interface ScheduleProps {
   scheduleId: string;
@@ -14,11 +15,13 @@ export default function Schedule({ scheduleId, isMini = true }: ScheduleProps) {
   return (
     <>
       {isMini ? (
-        <div className="flex text-[1.1rem] font-bold">
-          <div className={`w-1 h-7 mr-2 ${categoryInfo.color}`} />
-          <p className="mr-7 text-gray-500">{schedule?.time}</p>
-          <p>{schedule?.title}</p>
-        </div>
+        <Link to="/schedule-form" state={{ scheduleId }}>
+          <div className="flex text-[1.1rem] font-bold">
+            <div className={`w-1 h-7 mr-2 ${categoryInfo.color}`} />
+            <p className="mr-7 text-gray-500">{schedule?.time}</p>
+            <p>{schedule?.title}</p>
+          </div>
+        </Link>
       ) : (
         <div className="flex items-center">
           <div className={`w-1 h-14 mr-5 ${categoryInfo.color}`}></div>

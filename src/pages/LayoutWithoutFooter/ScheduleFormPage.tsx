@@ -1,33 +1,96 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import PageHeader from "../../components/PageHeader";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useClickOutside } from "../../hooks/useClickOutside";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import PageHeader from "../../components/PageHeader";
 import { categorySelector } from "../../store/categorySelector";
+import { CategoryType } from "../../types/category";
+import { ScheduleType } from "../../types/schedule";
+import { formatDateOnly, formatTimeOnly } from "../../utils/dateUtils";
+import { scheduleState } from "../../store/scheduleAtom";
+import { scheduleByIdSelector } from "../../store/scheduleSelector";
 
 export default function ScheduleFormPage() {
-  const location = useLocation();
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  const schedule = useRecoilValue(scheduleByIdSelector(state?.scheduleId));
   const categories = useRecoilValue(categorySelector);
-
+  const [fixMode, setFixMode] = useState(true);
   const [title, setTitle] = useState("");
-  const [selectedDate, setSelectedDate] = useState<Date | null>(
-    location.state?.selectedDate ? new Date(location.state.selectedDate) : new Date(),
-  );
-  const [category, setCategory] = useState(categories[0]);
+  const titleRef = useRef<HTMLInputElement>(null);
   const [memo, setMemo] = useState("");
+  const [selectedDate, setSelectedDate] = useState<Date>(
+    state?.selectedDate ? new Date(state.selectedDate) : new Date(),
+  );
+  const [category, setCategory] = useState<CategoryType>(categories[0]);
   const [open, setOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const readOnly = false;
+  const dropdownRef = useRef(null);
+
+  const setSchedules = useSetRecoilState(scheduleState);
 
   useClickOutside(dropdownRef, () => setOpen(false), open);
+
+  useEffect(() => {
+    if (schedule) {
+      setFixMode(false);
+      setTitle(schedule.title);
+      setMemo(schedule.memo ?? "");
+      setCategory(categories.find((c) => c.id === schedule.category) ?? categories[0]);
+      setSelectedDate(new Date(`${schedule.date}T${schedule.time}`));
+    }
+  }, []);
+
+  const handleSave = () => {
+    if (!title.trim()) {
+      titleRef.current?.focus();
+      alert("제목을 입력해주세요.");
+      return;
+    }
+
+    const newSchedule: ScheduleType = {
+      id: schedule?.id ?? crypto.randomUUID(),
+      date: formatDateOnly(selectedDate),
+      time: formatTimeOnly(selectedDate),
+      title,
+      memo,
+      category: category.id,
+      done: schedule?.done ?? false,
+    };
+
+    setSchedules((prev) => {
+      if (schedule) {
+        // 수정 모드 → 기존 id 덮어쓰기
+        return prev.map((item) => (item.id === schedule.id ? newSchedule : item));
+      }
+
+      return [...prev, newSchedule];
+    });
+    navigate(-1);
+  };
+
+  const handleDelete = () => {
+    setSchedules((prev) => prev.filter((s) => s.id !== schedule?.id));
+    navigate(-1);
+  };
+
+  const handleChangeCategory = (category: CategoryType) => {
+    setCategory(category);
+    setOpen(false);
+  };
+
+  const handleOpenAddCategory = () => {
+    alert("카테고리 추가 기능 연결 예정");
+    setOpen(false);
+  };
 
   return (
     <div>
       <PageHeader title="일정" />
 
       <section className="mt-24">
+        {/* 제목 */}
         <div>
           <label className="block mb-1 text-lg font-bold">제목</label>
           <input
@@ -36,37 +99,39 @@ export default function ScheduleFormPage() {
             onChange={(e) => setTitle(e.target.value)}
             placeholder="제목을 입력하세요."
             className="w-full p-2 border rounded bg-white"
-            disabled={readOnly}
+            disabled={!fixMode}
+            ref={titleRef}
           ></input>
         </div>
 
+        {/* 날짜 및 시간 */}
         <div className="my-4">
           <label className="block mb-1 text-lg font-bold">날짜 및 시간</label>
           <DatePicker
             selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
+            onChange={(date) => date && setSelectedDate(date)}
             showTimeSelect
             timeIntervals={30} // 시간 선택 간격 (30분 단위)
             dateFormat="yyyy.MM.dd (eee) HH:mm" // 원하는 포맷
-            className="w-full p-2 border rounded bg-white" // Tailwind로 예쁘게
-            placeholderText="날짜 및 시간을 선택하세요"
+            className="w-full p-2 border rounded bg-white"
             wrapperClassName="w-full"
-            disabled={readOnly}
+            disabled={!fixMode}
           />
         </div>
 
+        {/* 카테고리 */}
         <div className="relative w-full" ref={dropdownRef}>
           <label className="block mb-1 text-lg font-bold">카테고리</label>
           <button
             onClick={() => setOpen(!open)}
             className="w-full flex items-center justify-between border p-2 rounded"
-            disabled={readOnly}
+            disabled={!fixMode}
           >
             <div className="flex items-center gap-2">
               <span className={`w-3 h-3 rounded-full ${category.color}`}></span>
               {category.label}
             </div>
-            <span>{!readOnly && (open ? "▲" : "▼")}</span>
+            <span>{fixMode && (open ? "▲" : "▼")}</span>
           </button>
 
           {open && (
@@ -74,10 +139,7 @@ export default function ScheduleFormPage() {
               {categories.map((c) => (
                 <div
                   key={c.id}
-                  onClick={() => {
-                    setCategory(c);
-                    setOpen(false);
-                  }}
+                  onClick={() => handleChangeCategory(c)}
                   className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer"
                 >
                   <span className={`w-3 h-3 rounded-full ${c.color}`}></span>
@@ -87,10 +149,7 @@ export default function ScheduleFormPage() {
 
               <div
                 className="text-center text-sm font-bold py-2 mt-2 border-t hover:bg-gray-100 cursor-pointer"
-                onClick={() => {
-                  alert("카테고리 추가 기능 연결 예정");
-                  setOpen(false);
-                }}
+                onClick={handleOpenAddCategory}
               >
                 + 새 카테고리 추가
               </div>
@@ -98,6 +157,7 @@ export default function ScheduleFormPage() {
           )}
         </div>
 
+        {/* 메모 */}
         <div className="mt-4">
           <label className="block mb-1 text-lg font-bold">메모</label>
           <textarea
@@ -105,44 +165,32 @@ export default function ScheduleFormPage() {
             onChange={(e) => setMemo(e.target.value)}
             placeholder="메모를 입력하세요."
             className="w-full p-2 border rounded h-32 resize-none bg-white"
-            disabled={readOnly}
+            disabled={!fixMode}
           />
         </div>
-
-        {readOnly && (
-          <div className="flex justify-end gap-1">
-            <button
-              className="border px-5 py-1 rounded border-gray-400 font-bold text-sm"
-              onClick={() => {}}
-            >
-              수정
-            </button>
-            <button
-              className="border px-5 py-1 rounded border-red-400 text-red-400 font-bold text-sm"
-              onClick={() => {}}
-            >
-              삭제
-            </button>
-          </div>
-        )}
       </section>
-      {readOnly ? (
+      {fixMode ? (
         <button
           className="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-[90%] py-3 bg-black font-bold text-white rounded-lg shadow-lg"
-          onClick={() => {}}
-        >
-          집중 시작
-        </button>
-      ) : (
-        <button
-          className="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-[90%] py-3 bg-black font-bold text-white rounded-lg shadow-lg"
-          onClick={() => {
-            console.log({ title, selectedDate, category, memo });
-            alert("저장되었습니다!");
-          }}
+          onClick={handleSave}
         >
           저장
         </button>
+      ) : (
+        <div className="fixed w-[90%] bottom-6 left-1/2 -translate-x-1/2 flex gap-1">
+          <button
+            className="w-1/2 border py-3 rounded-lg border-gray-400 font-bold"
+            onClick={() => setFixMode(true)}
+          >
+            수정
+          </button>
+          <button
+            className="w-1/2 border py-3 rounded-lg border-red-400 text-red-400 font-bold"
+            onClick={handleDelete}
+          >
+            삭제
+          </button>
+        </div>
       )}
     </div>
   );

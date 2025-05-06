@@ -1,8 +1,11 @@
 import { atom } from "recoil";
 import { ScheduleType } from "../types/schedule";
-import { mockSchedules } from "./mockSchedules";
+import { localStorageEffect } from "./utils/localStorageEffect";
+
+const STORAGE_KEY = "focuslog_schedules";
 
 export const scheduleState = atom<ScheduleType[]>({
   key: "scheduleState",
-  default: mockSchedules,
+  default: [],
+  effects: [localStorageEffect<ScheduleType[]>(STORAGE_KEY)],
 });

@@ -1,14 +1,14 @@
 import { useRecoilValue } from "recoil";
 import { getSchedulesByDateSelector } from "../../store/scheduleSelector";
 import CalendarSchedule from "./CalendarSchedule";
-import { formatToKoreanDateWithoutYear, formatToDateString } from "../../utils/dateUtils";
+import { formatToKoreanDateWithoutYear, formatDateOnly } from "../../utils/dateUtils";
 
 interface Props {
   selectedDate: Date;
 }
 
 export default function CalendarScheduleList({ selectedDate }: Props) {
-  const dateStr = formatToDateString(selectedDate);
+  const dateStr = formatDateOnly(selectedDate);
   const schedules = useRecoilValue(getSchedulesByDateSelector(dateStr));
 
   return (

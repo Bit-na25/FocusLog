@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import PageHeader from "../../components/PageHeader";
-import Schedule from "../../components/Schedule";
 import { useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import PageHeader from "../../components/PageHeader";
+import Schedule from "../../components/Schedule";
 import { retrospectByScheduleIdSelector } from "../../store/retrospectSelector";
 import { formatDuration } from "../../utils/formatDuration";
 import { tagState } from "../../store/tagAtom";
 
 export default function RetrospectWritePage() {
-  const location = useLocation();
-  const scheduleId = location.state?.scheduleId;
+  const { state } = useLocation();
+  const scheduleId = state?.scheduleId;
 
   const retrospect = useRecoilValue(retrospectByScheduleIdSelector(scheduleId));
   const allTags = useRecoilValue(tagState);
@@ -19,13 +19,17 @@ export default function RetrospectWritePage() {
   const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
-    setNote(retrospect?.content ?? "");
-    setTags(retrospect?.tags ?? []);
-  }, []);
+    if (retrospect) {
+      setNote(retrospect.content ?? "");
+      setTags(retrospect.tags ?? []);
+    }
+  }, [retrospect]);
 
   const handleChangeTag = (tag: string) => {
     setTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
   };
+
+  const visibleTags = showMore ? allTags : allTags.slice(0, 7);
 
   return (
     <div>
@@ -38,6 +42,7 @@ export default function RetrospectWritePage() {
 
         <Schedule scheduleId={scheduleId} isMini={false} />
 
+        {/* 노트 작성 */}
         <div className="mt-6 mb-5">
           <label className="block mb-1 text-lg font-bold">노트</label>
           <textarea
@@ -48,13 +53,15 @@ export default function RetrospectWritePage() {
           />
         </div>
 
+        {/* 태그 선택 */}
         <div className="my-5">
           <label className="block mb-1 text-lg font-bold flex justify-between">
             태그
             <button className="text-sm px-3 py-1 border rounded">+추가</button>
           </label>
+
           <div className="flex flex-wrap gap-2 mb-2">
-            {(showMore ? allTags : allTags.slice(0, 7)).map((tag) => (
+            {visibleTags.map((tag) => (
               <button
                 key={tag}
                 onClick={() => handleChangeTag(tag)}
@@ -76,6 +83,7 @@ export default function RetrospectWritePage() {
         </div>
       </section>
 
+      {/* 저장 버튼 */}
       <div className="fixed bottom-0 left-0 right-0 w-full bg-white">
         <button
           className="m-6 w-[90%] py-3 bg-black font-bold text-white rounded-lg shadow-lg"
