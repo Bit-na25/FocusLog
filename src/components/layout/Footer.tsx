@@ -18,6 +18,7 @@ export default function Footer() {
           `btm-nav-label text-2xl transition-all ${isActive ? "bg-white text-primary text-3xl" : "text-gray-500"}`
         }
         aria-label="Calendar"
+        state={{ from: "category" }}
       >
         📅
       </NavLink>

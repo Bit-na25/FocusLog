@@ -2,11 +2,14 @@ import UnderLine from "../components/common/UnderLine";
 import FocusSummary from "../features/Home/FocusSummary";
 import RetrospectBox from "../features/Home/RetrospectBox";
 import ScheduleList from "../features/Home/ScheduleList";
+import { formatToKoreanDate } from "../utils/dateUtils";
 
 export default function HomePage() {
+  const today = new Date();
+
   return (
     <div>
-      <header className="py-4 text-xl font-bold">2025년 4월 25일 토요일</header>
+      <header className="py-4 text-xl font-bold">{formatToKoreanDate(today)}</header>
       <UnderLine />
       <ScheduleList />
       <FocusSummary />

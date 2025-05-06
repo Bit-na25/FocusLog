@@ -1,7 +1,16 @@
-import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { getSchedulesByMonthSelector } from "../../store/scheduleSelector";
+import { formatToDateString } from "../../utils/dateUtils";
+import { categorySelector } from "../../store/categorySelector";
 
-export default function Calendar() {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+interface CalendarProps {
+  selectedDate: Date;
+  onDateChange: (date: Date) => void;
+}
+
+export default function Calendar({ selectedDate, onDateChange }: CalendarProps) {
+  const monthSchedules = useRecoilValue(getSchedulesByMonthSelector(selectedDate));
+  const categories = useRecoilValue(categorySelector);
 
   const year = selectedDate.getFullYear();
   const month = selectedDate.getMonth();
@@ -16,9 +25,9 @@ export default function Calendar() {
   // 날짜 배열 만들기 (빈칸 포함)
   const dates: { date: Date; isCurrentMonth: boolean }[] = [];
 
+  const prevMonthLastDate = new Date(year, month, 0).getDate();
   // 앞에 빈칸 (ex: 1일이 수요일이면 앞에 0,0)
   for (let i = 0; i < firstDayOfWeek; i++) {
-    const prevMonthLastDate = new Date(year, month, 0).getDate();
     dates.unshift({
       date: new Date(year, month - 1, prevMonthLastDate - i),
       isCurrentMonth: false,
@@ -54,7 +63,7 @@ export default function Calendar() {
 
       <div className="mx-[-1rem]">
         {/* 요일 표시 */}
-        <div className="grid grid-cols-7 text-center font-semibold text-xs">
+        <div className="grid grid-cols-7 text-center font-semibold text-xs mb-1">
           <div className="text-red-500">일</div>
           <div>월</div>
           <div>화</div>
@@ -72,19 +81,27 @@ export default function Calendar() {
             const textColor =
               day === 0 ? "text-red-500" : day === 6 ? "text-blue-500" : "text-black";
             const opacity = isCurrentMonth ? "opacity-100" : "opacity-50";
+            const schedules = monthSchedules.filter((s) => s.date === formatToDateString(date));
 
             return (
-              <div
-                key={idx}
-                className={`w-full aspect-square flex items-start justify-center ${opacity}`}
-                onClick={() => setSelectedDate(date)}
-              >
-                <div
-                  className={`w-8 h-8 text-sm flex items-center justify-center ${
-                    isSelected ? "bg-gray-300 rounded-full" : ""
-                  } ${textColor}`}
-                >
-                  {date.getDate()}
+              <div key={idx} className="w-full flex flex-col items-center justify-center">
+                <div className={`${opacity} mb-1`} onClick={() => onDateChange(date)}>
+                  <div
+                    className={`w-7 h-7 text-sm flex items-center justify-center ${
+                      isSelected ? "bg-gray-300 rounded-full" : ""
+                    } ${textColor}`}
+                  >
+                    {date.getDate()}
+                  </div>
+                </div>
+                <div className="flex gap-1 mb-3">
+                  {schedules.map((s) => {
+                    const color = categories.find((e) => e.id === s.category);
+
+                    return (
+                      <span key={s.id} className={`w-1 h-1 rounded-full ${color?.color}`}></span>
+                    );
+                  })}
                 </div>
               </div>
             );

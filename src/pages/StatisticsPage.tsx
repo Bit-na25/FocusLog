@@ -1,7 +1,7 @@
 import { useState } from "react";
 import UnderLine from "../components/common/UnderLine";
 import ContentBox from "../components/common/ContentBox";
-import RandomLog from "../components/RandomLog";
+import Log from "../components/Log";
 
 export default function StatisticsPage() {
   const [period, setPeriod] = useState("1week");
@@ -96,7 +96,7 @@ export default function StatisticsPage() {
                 70%
               </div>
             </div>
-            <RandomLog />
+            <Log />
           </div>
         </ContentBox>
       </div>

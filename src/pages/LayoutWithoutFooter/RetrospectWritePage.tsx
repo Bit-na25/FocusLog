@@ -1,8 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PageHeader from "../../components/PageHeader";
 import Schedule from "../../components/Schedule";
+import { useLocation } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { retrospectByScheduleIdSelector } from "../../store/retrospectSelector";
+import { formatDuration } from "../../utils/formatDuration";
 
 export default function RetrospectWritePage() {
+  const location = useLocation();
+  const scheduleId = location.state?.scheduleId;
+
+  const retrospect = useRecoilValue(retrospectByScheduleIdSelector(scheduleId));
+
   const [note, setNote] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const allTags = [
@@ -34,14 +43,20 @@ export default function RetrospectWritePage() {
   ];
   const [showMore, setShowMore] = useState(false);
 
+  useEffect(() => {
+    setNote(retrospect?.content ?? "");
+  });
+
   return (
     <div>
       <PageHeader title="회고 작성" />
 
       <section className="mt-24 mb-32">
-        <div className="text-center text-6xl font-bold mb-14">00:54:23</div>
+        <div className="text-center text-6xl font-bold mb-14">
+          {formatDuration(retrospect?.focusDuration ?? 0)}
+        </div>
 
-        <Schedule isMini={false} />
+        <Schedule scheduleId={scheduleId} isMini={false} />
 
         <div className="mt-6 mb-5">
           <label className="block mb-1 text-lg font-bold">노트</label>

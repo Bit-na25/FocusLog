@@ -1,14 +1,17 @@
+import { useRecoilValue } from "recoil";
 import Schedule from "../../components/Schedule";
+import { Link } from "react-router-dom";
+import { todayScheduleSelector } from "../../store/scheduleSelector";
 
 export default function ScheduleList() {
-  const schedule = Array.from({ length: 10 });
+  const todaySchedules = useRecoilValue(todayScheduleSelector);
 
   return (
     <section className="my-4">
-      {schedule.length > 0 ? (
+      {todaySchedules.length > 0 ? (
         <ul className="my-3.5 flex flex-col gap-3">
-          {schedule.map((_, i) => (
-            <Schedule key={i} />
+          {todaySchedules.map((item) => (
+            <Schedule key={item.id} scheduleId={item.id} />
           ))}
         </ul>
       ) : (
@@ -16,7 +19,11 @@ export default function ScheduleList() {
           오늘 일정이 없습니다.
         </p>
       )}
-      <button className="w-full border border-gray-300 p-2 rounded-lg">+ 일정 추가하기</button>
+      <Link to="/schedule-form">
+        <div className="w-full border border-gray-300 p-2 rounded-lg text-center">
+          + 일정 추가하기
+        </div>
+      </Link>
     </section>
   );
 }
