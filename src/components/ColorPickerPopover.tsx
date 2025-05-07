@@ -1,5 +1,4 @@
-// components/ColorPickerPopover.tsx
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { createPortal } from "react-dom";
 import { defaultCategoryColor } from "../store/categoryAtom";
 import { FaCheck } from "react-icons/fa";

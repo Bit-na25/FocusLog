@@ -1,0 +1,80 @@
+import PageHeader from "../../components/PageHeader";
+import { FiPlus } from "react-icons/fi";
+import { tagState } from "../../store/tagAtom";
+import { useRecoilState } from "recoil";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AddTagModal from "../../components/AddTagModal";
+import ManageItemList from "../../features/myPage/ManageItemList";
+
+export default function TagManagePage() {
+  const navigate = useNavigate();
+  const [tags, setTags] = useRecoilState(tagState);
+  const [fixedTag, setFixedTag] = useState(tags);
+  const [editingDefaultLabel, setEditingDefaultLabel] = useState<string>("");
+  const [editedLabel, setEditedLabel] = useState("");
+  const [showTagModal, setShowTagModal] = useState(false);
+
+  const handleDelete = (tag: string) => {
+    setFixedTag((prev) => prev.filter((t) => t !== tag));
+  };
+
+  const handleSaveEdit = () => {
+    setFixedTag((prev) => prev.map((t) => (t === editingDefaultLabel ? editedLabel : t)));
+    setEditingDefaultLabel("");
+    setEditedLabel("");
+  };
+
+  const handleEnter = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleSaveEdit();
+    }
+  };
+
+  const handleSave = () => {
+    setTags(fixedTag);
+    navigate(-1);
+  };
+
+  return (
+    <div>
+      <PageHeader
+        title="태그 관리"
+        rightSlot={
+          <button onClick={() => setShowTagModal(true)} className="text-2xl">
+            <FiPlus />
+          </button>
+        }
+      />
+      <section className="mt-20">
+        <ManageItemList
+          items={fixedTag}
+          getKey={(tag) => tag}
+          getLabel={(tag) => `# ${tag}`}
+          editingKey={editingDefaultLabel}
+          editedLabel={editedLabel}
+          setEditedLabel={setEditedLabel}
+          onEdit={(tag) => {
+            setEditingDefaultLabel(tag);
+            setEditedLabel(tag);
+          }}
+          onSaveEdit={handleSaveEdit}
+          onDelete={(tag) => handleDelete(tag)}
+          handleEnter={handleEnter}
+        />
+      </section>
+
+      <div className="fixed bottom-0 left-0 right-0 w-full bg-white">
+        <button
+          className="m-6 w-[90%] py-3 bg-black font-bold text-white rounded-lg shadow-lg"
+          onClick={handleSave}
+        >
+          저장
+        </button>
+      </div>
+      {showTagModal && (
+        <AddTagModal onClose={() => setShowTagModal(false)} setTag={(tags) => setFixedTag(tags)} />
+      )}
+    </div>
+  );
+}

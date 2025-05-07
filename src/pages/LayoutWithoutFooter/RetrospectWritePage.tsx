@@ -8,6 +8,7 @@ import { formatDuration } from "../../utils/formatDuration";
 import { tagState } from "../../store/tagAtom";
 import { retrospectState } from "../../store/retrospectAtom";
 import { RetrospectType } from "../../types/retrospect";
+import AddTagModal from "../../components/AddTagModal";
 
 export default function RetrospectWritePage() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export default function RetrospectWritePage() {
   const [note, setNote] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [showMore, setShowMore] = useState(false);
+  const [showTagModal, setShowTagModal] = useState(false);
 
   useEffect(() => {
     if (retrospect) {
@@ -31,6 +33,14 @@ export default function RetrospectWritePage() {
 
   const handleChangeTag = (tag: string) => {
     setTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
+  };
+
+  const handleAddTag = (addTags: string[]) => {
+    if (!addTags || addTags.length === 0) return;
+
+    console.log(addTags);
+
+    addTags.forEach((tag) => setTags((prev) => (prev.includes(tag) ? prev : [...prev, tag])));
   };
 
   const handleSave = () => {
@@ -83,7 +93,12 @@ export default function RetrospectWritePage() {
         <div className="my-5">
           <label className="block mb-1 text-lg font-bold flex justify-between">
             태그
-            <button className="text-sm px-3 py-1 border rounded">+추가</button>
+            <button
+              className="text-sm px-3 py-1 border rounded"
+              onClick={() => setShowTagModal(true)}
+            >
+              +추가
+            </button>
           </label>
 
           <div className="flex flex-wrap gap-2 mb-2">
@@ -92,7 +107,7 @@ export default function RetrospectWritePage() {
                 key={tag}
                 onClick={() => handleChangeTag(tag)}
                 className={`px-3 py-1 rounded-full border ${
-                  tags.includes(tag) ? "bg-gray-300" : "bg-white"
+                  tags.includes(tag) ? "bg-gray-300 shadow" : "bg-white"
                 }`}
               >
                 #{tag}
@@ -126,6 +141,14 @@ export default function RetrospectWritePage() {
           </button>
         </div>
       </div>
+      {showTagModal && (
+        <AddTagModal
+          onAddTag={(newTag) => {
+            handleAddTag(newTag);
+          }}
+          onClose={() => setShowTagModal(false)}
+        />
+      )}
     </div>
   );
 }

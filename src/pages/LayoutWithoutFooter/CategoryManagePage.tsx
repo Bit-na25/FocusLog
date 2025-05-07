@@ -1,10 +1,12 @@
-import { useRecoilState } from "recoil";
-import PageHeader from "../../components/PageHeader";
-import { categoryState } from "../../store/categoryAtom";
-import { FiTrash2, FiPlus } from "react-icons/fi";
 import { useState } from "react";
-import AddCategoryModal from "../../components/AddCategoryModal";
+import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
+import { categoryState } from "../../store/categoryAtom";
+import { CategoryType } from "../../types/category";
+import { FiPlus } from "react-icons/fi";
+import PageHeader from "../../components/PageHeader";
+import AddCategoryModal from "../../components/AddCategoryModal";
+import ManageItemList from "../../features/myPage/ManageItemList";
 import ColorPickerPopover from "../../components/ColorPickerPopover";
 
 export default function CategoryManagePage() {
@@ -14,21 +16,14 @@ export default function CategoryManagePage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editedLabel, setEditedLabel] = useState("");
   const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
-  const [popoverPos, setPopoverPos] = useState({ top: 0, left: 0 });
-  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [colorPickerTarget, setColorPickerTarget] = useState<{
+    id: string;
+    position: { top: number; left: number };
+  } | null>(null);
 
-  const handleSave = () => {
-    setCategories(fixedCategory);
-    navigate(-1);
-  };
-
-  const handleDelete = (id: string) => {
-    setFixedCategory((prev) => prev.filter((c) => c.id !== id));
-  };
-
-  const handleEdit = (id: string, label: string) => {
-    setEditingId(id);
-    setEditedLabel(label);
+  const handleEdit = (cat: CategoryType) => {
+    setEditingId(cat.id);
+    setEditedLabel(cat.label);
   };
 
   const handleSaveEdit = () => {
@@ -41,25 +36,35 @@ export default function CategoryManagePage() {
     setEditedLabel("");
   };
 
+  const handleDelete = (cat: CategoryType) => {
+    setFixedCategory((prev) => prev.filter((item) => item.id !== cat.id));
+  };
+
+  const handleChangeColor = (id: string, color: string) => {
+    setFixedCategory((prev) => prev.map((cat) => (cat.id === id ? { ...cat, color } : cat)));
+    setColorPickerTarget(null);
+  };
+
+  const handleOpenColorPicker = (e: React.MouseEvent<HTMLDivElement>, cat: CategoryType) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setColorPickerTarget({
+      id: cat.id,
+      position: {
+        top: rect.top + 200 > window.innerHeight ? rect.top - 180 : rect.bottom,
+        left: rect.left,
+      },
+    });
+  };
+
+  const handleSave = () => {
+    setCategories(fixedCategory);
+    navigate(-1);
+  };
+
   const handleEnter = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       handleSaveEdit();
     }
-  };
-
-  const handleOpenPicker = (e: React.MouseEvent, id: string) => {
-    const rect = (e.target as HTMLElement).getBoundingClientRect();
-    setEditingId(id);
-    setPopoverPos({ top: rect.bottom + window.scrollY + 4, left: rect.left + window.scrollX });
-    setShowColorPicker(true);
-  };
-
-  const handleSaveColorEdit = (color: string) => {
-    setFixedCategory((prev) =>
-      prev.map((cat) => (cat.id === editingId ? { ...cat, color: color } : cat)),
-    );
-    setEditingId(null);
-    setShowColorPicker(false);
   };
 
   return (
@@ -73,53 +78,32 @@ export default function CategoryManagePage() {
         }
       />
       <section className="mt-20">
-        <ul>
-          {fixedCategory.map((cat) => (
-            <li key={cat.id}>
-              <div className="flex items-center justify-between py-3 h-14">
-                <div className="flex items-center gap-3 flex-1 mr-3">
-                  <span
-                    className={`w-6 h-6 rounded-full ${cat.color}`}
-                    onClick={(e) => handleOpenPicker(e, cat.id)}
-                  />
-                  {showColorPicker && editingId === cat.id && (
-                    <ColorPickerPopover
-                      position={popoverPos}
-                      selectedColor={cat.color}
-                      onSelect={(newColor) => {
-                        handleSaveColorEdit(newColor);
-                      }}
-                      onClose={() => setShowColorPicker(false)}
-                    />
-                  )}
-                  {!showColorPicker && editingId === cat.id ? (
-                    <input
-                      className="flex-1 border rounded px-2 py-1 bg-white"
-                      value={editedLabel}
-                      onChange={(e) => setEditedLabel(e.target.value)}
-                      onBlur={handleSaveEdit}
-                      onKeyDown={(e) => handleEnter(e)}
-                      autoFocus
-                    />
-                  ) : (
-                    <span className="flex-1" onClick={() => handleEdit(cat.id, cat.label)}>
-                      {cat.label}
-                    </span>
-                  )}
-                </div>
-                <button
-                  onClick={() => {
-                    handleDelete(cat.id);
-                  }}
-                  className="text-gray-500"
-                >
-                  <FiTrash2 />
-                </button>
-              </div>
-              <hr />
-            </li>
-          ))}
-        </ul>
+        <ManageItemList<CategoryType>
+          items={fixedCategory}
+          getKey={(cat) => cat.id}
+          getLabel={(cat) => cat.label}
+          onEdit={handleEdit}
+          onSaveEdit={handleSaveEdit}
+          onDelete={handleDelete}
+          editingKey={editingId}
+          editedLabel={editedLabel}
+          setEditedLabel={setEditedLabel}
+          handleEnter={handleEnter}
+          renderLeft={(cat) => (
+            <div
+              className={`w-6 h-6 rounded-full ${cat.color} cursor-pointer`}
+              onClick={(e) => handleOpenColorPicker(e, cat)}
+            />
+          )}
+        />
+        {colorPickerTarget && (
+          <ColorPickerPopover
+            position={colorPickerTarget.position}
+            selectedColor={categories.find((c) => c.id === colorPickerTarget.id)?.color ?? ""}
+            onSelect={(color) => handleChangeColor(colorPickerTarget.id, color)}
+            onClose={() => setColorPickerTarget(null)}
+          />
+        )}
       </section>
 
       <div className="fixed bottom-0 left-0 right-0 w-full bg-white">

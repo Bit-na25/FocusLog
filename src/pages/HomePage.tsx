@@ -1,7 +1,7 @@
 import UnderLine from "../components/common/UnderLine";
-import FocusSummary from "../features/Home/FocusSummary";
-import RetrospectBox from "../features/Home/RetrospectBox";
-import ScheduleList from "../features/Home/ScheduleList";
+import FocusSummary from "../features/home/FocusSummary";
+import RetrospectBox from "../features/home/RetrospectBox";
+import ScheduleList from "../features/home/ScheduleList";
 import { formatToKoreanDate } from "../utils/dateUtils";
 
 export default function HomePage() {
