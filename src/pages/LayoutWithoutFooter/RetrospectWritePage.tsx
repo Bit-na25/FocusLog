@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { formatDuration } from "../../utils/date/formatDuration";
+import {
+  tagState,
+  retrospectState,
+  RetrospectType,
+  retrospectByScheduleIdSelector,
+} from "../../features";
 import PageHeader from "../../components/PageHeader";
 import Schedule from "../../components/Schedule";
-import { retrospectByScheduleIdSelector } from "../../store/retrospectSelector";
-import { formatDuration } from "../../utils/formatDuration";
-import { tagState } from "../../store/tagAtom";
-import { retrospectState } from "../../store/retrospectAtom";
-import { RetrospectType } from "../../types/retrospect";
-import AddTagModal from "../../components/AddTagModal";
+import AddTagModal from "../../components/modals/AddTagModal";
 
 export default function RetrospectWritePage() {
   const navigate = useNavigate();

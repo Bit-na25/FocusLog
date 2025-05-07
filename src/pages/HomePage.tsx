@@ -1,8 +1,8 @@
 import UnderLine from "../components/common/UnderLine";
-import FocusSummary from "../features/home/FocusSummary";
-import RetrospectBox from "../features/home/RetrospectBox";
-import ScheduleList from "../features/home/ScheduleList";
-import { formatToKoreanDate } from "../utils/dateUtils";
+import FocusSummary from "../components/features/home/FocusSummary";
+import RetrospectBox from "../components/features/home/RetrospectBox";
+import ScheduleList from "../components/features/home/ScheduleList";
+import { formatToKoreanDate } from "../utils/date/dateUtils";
 
 export default function HomePage() {
   const today = new Date();

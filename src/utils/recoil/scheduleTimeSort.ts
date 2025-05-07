@@ -1,4 +1,4 @@
-import { ScheduleType } from "../../types/schedule";
+import { ScheduleType } from "../../features";
 
 export function sortSchedulesByTime(schedules: ScheduleType[]): ScheduleType[] {
   return [...schedules].sort((a, b) => a.time.localeCompare(b.time));

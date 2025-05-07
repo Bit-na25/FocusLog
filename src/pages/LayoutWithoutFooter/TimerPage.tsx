@@ -3,8 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import PageHeader from "../../components/PageHeader";
 import Schedule from "../../components/Schedule";
 import { useSetRecoilState } from "recoil";
-import { retrospectState } from "../../store/retrospectAtom";
-import { RetrospectType } from "../../types/retrospect";
+import { retrospectState, RetrospectType } from "../../features";
 
 enum TimerStatus {
   READY = "READY",

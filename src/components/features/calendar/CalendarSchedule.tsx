@@ -1,5 +1,5 @@
-import LogBox from "../../components/LogBox";
-import Schedule from "../../components/Schedule";
+import LogBox from "../../LogBox";
+import Schedule from "../../Schedule";
 
 export default function CalendarSchedule({ scheduleId }: { scheduleId: string }) {
   return (

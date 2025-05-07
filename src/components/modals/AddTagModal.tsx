@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { SetterOrUpdater, useRecoilState } from "recoil";
-import { tagState } from "../store/tagAtom";
+import { tagState } from "../../features";
 
 interface AddTagModal {
   onClose: () => void;

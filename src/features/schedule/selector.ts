@@ -1,8 +1,8 @@
 import { selector, selectorFamily } from "recoil";
-import { ScheduleType } from "../types/schedule";
-import { scheduleState } from "./scheduleAtom";
-import { formatDateOnly } from "../utils/dateUtils";
-import { sortSchedulesByTime } from "./utils/scheduleTimeSort";
+import { ScheduleType } from "./types";
+import { scheduleState } from "./atom";
+import { formatDateOnly } from "../../utils/date/dateUtils";
+import { sortSchedulesByTime } from "../../utils/recoil/scheduleTimeSort";
 
 export const scheduleByIdSelector = selectorFamily<ScheduleType | undefined, string>({
   key: "retrospectByScheduleIdSelector",

@@ -1,8 +1,7 @@
 import { useRef, useState } from "react";
-import { FaCheck } from "react-icons/fa";
-import { CategoryType } from "../types/category";
 import { SetterOrUpdater, useSetRecoilState } from "recoil";
-import { categoryState, defaultCategoryColor } from "../store/categoryAtom";
+import { CategoryType, categoryState, defaultCategoryColor } from "../../features";
+import { FaCheck } from "react-icons/fa";
 
 interface AddCategoryModalProps {
   onClose: () => void;

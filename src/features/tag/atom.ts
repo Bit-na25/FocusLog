@@ -1,6 +1,6 @@
 import { atom } from "recoil";
-import { localStorageEffect } from "./utils/localStorageEffect";
-import { defaultTags } from "./initializeRecoilDefaults";
+import { localStorageEffect } from "../../utils/recoil/localStorageEffect";
+import { defaultTags } from "./default";
 
 const TAG_KEY = "focuslog_tags";
 

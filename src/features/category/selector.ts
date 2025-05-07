@@ -1,6 +1,6 @@
 import { selector, selectorFamily } from "recoil";
-import { CategoryType } from "../types/category";
-import { categoryState } from "./categoryAtom";
+import { CategoryType } from "./types";
+import { categoryState } from "./atom";
 
 export const categorySelector = selector<CategoryType[]>({
   key: "categorySelector",
