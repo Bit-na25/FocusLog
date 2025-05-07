@@ -21,15 +21,21 @@ export default function MyPage() {
       <UnderLine />
 
       <ul className="space-y-4 text-[1.05rem] mt-6">
-        <Link to="/category">
-          <li className="flex items-center gap-3">
-            <FaFolder className="text-lg" />
-            카테고리 관리
-          </li>
-        </Link>
-        <li className="flex items-center gap-3">
-          <FaTag className="text-lg" />
-          태그 관리
+        <li>
+          <Link to="/category">
+            <div className="flex items-center gap-3">
+              <FaFolder className="text-lg" />
+              카테고리 관리
+            </div>
+          </Link>
+        </li>
+        <li>
+          <Link to="/tag">
+            <div className="flex items-center gap-3">
+              <FaTag className="text-lg" />
+              태그 관리
+            </div>
+          </Link>
         </li>
         <li className="flex items-center justify-between">
           <div className="flex items-center gap-3">
