@@ -121,7 +121,7 @@ export default function ScheduleFormPage() {
         <div className="relative w-full" ref={dropdownRef}>
           <label className="block mb-1 text-lg font-bold">카테고리</label>
           <button
-            onClick={() => setDropdownOpen(!open)}
+            onClick={() => setDropdownOpen(!dropdownOpen)}
             className="w-full flex items-center justify-between border p-2 rounded"
           >
             <div className="flex items-center gap-2">
@@ -132,7 +132,7 @@ export default function ScheduleFormPage() {
           </button>
 
           {dropdownOpen && (
-            <div className="absolute z-10 w-full border rounded shadow bg-white">
+            <div className="absolute z-10 w-full h-48 border rounded shadow bg-white overflow-auto">
               {categories.map((c) => (
                 <div
                   key={c.id}
