@@ -1,8 +1,8 @@
 import { useRef } from "react";
 import { createPortal } from "react-dom";
-import { defaultCategoryColor } from "../store/categoryAtom";
 import { FaCheck } from "react-icons/fa";
-import { useClickOutside } from "../hooks/useClickOutside";
+import { useClickOutside } from "../../hooks/useClickOutside";
+import { defaultCategoryColor } from "../../features";
 
 interface ColorPickerPopoverProps {
   position: { top: number; left: number };

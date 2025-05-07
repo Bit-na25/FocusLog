@@ -1,6 +1,6 @@
 import { atom } from "recoil";
-import { RetrospectType } from "../types/retrospect";
-import { localStorageEffect } from "./utils/localStorageEffect";
+import { RetrospectType } from "./types";
+import { localStorageEffect } from "../../utils/recoil/localStorageEffect";
 
 const RETROSPECT_KEY = "focuslog_retrospects";
 

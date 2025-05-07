@@ -1,7 +1,7 @@
 import { selector, selectorFamily } from "recoil";
-import { RetrospectType } from "../types/retrospect";
-import { retrospectState } from "./retrospectAtom";
-import { todayScheduleIdsSelector } from "./scheduleSelector";
+import { RetrospectType } from "./types";
+import { retrospectState } from "./atom";
+import { todayScheduleIdsSelector } from "../schedule/selector";
 
 export const retrospectByScheduleIdSelector = selectorFamily<RetrospectType | undefined, string>({
   key: "retrospectByScheduleIdSelector",

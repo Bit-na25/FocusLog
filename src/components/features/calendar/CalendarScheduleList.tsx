@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
-import { getSchedulesByDateSelector } from "../../store/scheduleSelector";
+import { getSchedulesByDateSelector } from "../../../features";
+import { formatToKoreanDateWithoutYear, formatDateOnly } from "../../../utils/date/dateUtils";
 import CalendarSchedule from "./CalendarSchedule";
-import { formatToKoreanDateWithoutYear, formatDateOnly } from "../../utils/dateUtils";
 
 interface Props {
   selectedDate: Date;

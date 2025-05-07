@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useClickOutside } from "../../hooks/useClickOutside";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import PageHeader from "../../components/PageHeader";
-import { categorySelector } from "../../store/categorySelector";
-import { CategoryType } from "../../types/category";
-import { ScheduleType } from "../../types/schedule";
-import { formatDateOnly, formatTimeOnly } from "../../utils/dateUtils";
-import { scheduleState } from "../../store/scheduleAtom";
-import { scheduleByIdSelector } from "../../store/scheduleSelector";
-import AddCategoryModal from "../../components/AddCategoryModal";
+import AddCategoryModal from "../../components/modals/AddCategoryModal";
+import { formatDateOnly, formatTimeOnly } from "../../utils/date/dateUtils";
+import {
+  categorySelector,
+  CategoryType,
+  ScheduleType,
+  scheduleState,
+  scheduleByIdSelector,
+} from "../../features";
 
 export default function ScheduleFormPage() {
   const navigate = useNavigate();

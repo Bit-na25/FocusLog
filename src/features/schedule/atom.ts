@@ -1,6 +1,6 @@
 import { atom } from "recoil";
-import { ScheduleType } from "../types/schedule";
-import { localStorageEffect } from "./utils/localStorageEffect";
+import { ScheduleType } from "./types";
+import { localStorageEffect } from "../../utils/recoil/localStorageEffect";
 
 const STORAGE_KEY = "focuslog_schedules";
 

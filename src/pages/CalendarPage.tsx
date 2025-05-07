@@ -1,9 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import UnderLine from "../components/common/UnderLine";
-import Calendar from "../features/Calendar/Calendar";
-import CalendarScheduleList from "../features/Calendar/CalendarScheduleList";
+import Calendar from "../components/features/calendar/Calendar";
+import CalendarScheduleList from "../components/features/calendar/CalendarScheduleList";
 import { useRecoilState } from "recoil";
-import { calendarSelectedDateState } from "../store/calendarAtom";
+import { calendarSelectedDateState } from "../features";
 import { useEffect } from "react";
 
 export default function CalendarPage() {

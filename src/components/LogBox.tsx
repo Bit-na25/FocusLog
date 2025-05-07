@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import ContentBox from "./common/ContentBox";
 import Log from "./Log";
-import { retrospectByScheduleIdSelector } from "../store/retrospectSelector";
+import { retrospectByScheduleIdSelector } from "../features";
 import { useRecoilValue } from "recoil";
 export default function LogBox({ scheduleId }: { scheduleId: string }) {
   const retrospect = useRecoilValue(retrospectByScheduleIdSelector(scheduleId));

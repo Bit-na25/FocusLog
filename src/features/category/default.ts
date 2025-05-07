@@ -1,9 +1,10 @@
-import { atom } from "recoil";
-import { CategoryType } from "../types/category";
-import { localStorageEffect } from "./utils/localStorageEffect";
-import { defaultCategories } from "./initializeRecoilDefaults";
+import { CategoryType } from "./types";
 
-const CATEGORY_KEY = "focuslog_categories";
+export const defaultCategories: CategoryType[] = [
+  { id: "1", label: "Study", color: "bg-blue-600" },
+  { id: "2", label: "Exercise", color: "bg-green-600" },
+  { id: "3", label: "Meeting", color: "bg-purple-600" },
+];
 
 export const defaultCategoryColor = [
   "bg-red-600",
@@ -31,9 +32,3 @@ export const defaultCategoryColor = [
   "bg-purple-400",
   "bg-purple-200",
 ];
-
-export const categoryState = atom<CategoryType[]>({
-  key: "categoryState",
-  default: [],
-  effects: [localStorageEffect<CategoryType[]>(CATEGORY_KEY, defaultCategories)],
-});

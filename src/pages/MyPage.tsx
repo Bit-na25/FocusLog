@@ -2,13 +2,16 @@ import { FaFolder, FaTag, FaBullseye, FaTrash, FaUser } from "react-icons/fa";
 import UnderLine from "../components/common/UnderLine";
 import { Link } from "react-router-dom";
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
-import { targetHourAtom } from "../store/targetHourAtom";
 import { FiPlus, FiMinus } from "react-icons/fi";
-import { scheduleState } from "../store/scheduleAtom";
-import { categoryState } from "../store/categoryAtom";
-import { tagState } from "../store/tagAtom";
-import { retrospectState } from "../store/retrospectAtom";
-import { initializeCategoryState, initializeTagState } from "../store/initializeRecoilDefaults";
+import {
+  scheduleState,
+  categoryState,
+  tagState,
+  retrospectState,
+  initializeCategoryState,
+  initializeTagState,
+  targetHourAtom,
+} from "../features";
 
 export default function MyPage() {
   const resetSchedule = useResetRecoilState(scheduleState);

@@ -1,11 +1,11 @@
 import PageHeader from "../../components/PageHeader";
 import { FiPlus } from "react-icons/fi";
-import { tagState } from "../../store/tagAtom";
+import { tagState } from "../../features/tag/atom";
 import { useRecoilState } from "recoil";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AddTagModal from "../../components/AddTagModal";
-import ManageItemList from "../../features/myPage/ManageItemList";
+import AddTagModal from "../../components/modals/AddTagModal";
+import ManageItemList from "../../components/features/myPage/ManageItemList";
 
 export default function TagManagePage() {
   const navigate = useNavigate();
