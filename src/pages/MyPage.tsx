@@ -1,10 +1,39 @@
-import { useState } from "react";
 import { FaFolder, FaTag, FaBullseye, FaTrash, FaUser } from "react-icons/fa";
 import UnderLine from "../components/common/UnderLine";
 import { Link } from "react-router-dom";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
+import { targetHourAtom } from "../store/targetHourAtom";
+import { FiPlus, FiMinus } from "react-icons/fi";
+import { scheduleState } from "../store/scheduleAtom";
+import { categoryState } from "../store/categoryAtom";
+import { tagState } from "../store/tagAtom";
+import { retrospectState } from "../store/retrospectAtom";
+import { initializeCategoryState, initializeTagState } from "../store/initializeRecoilDefaults";
 
 export default function MyPage() {
-  const [targetHour, setTargetHour] = useState(7);
+  const resetSchedule = useResetRecoilState(scheduleState);
+  const resetRetrospect = useResetRecoilState(retrospectState);
+  const resetCategory = useResetRecoilState(categoryState);
+  const resetTag = useResetRecoilState(tagState);
+  const resetTargetHour = useResetRecoilState(targetHourAtom);
+
+  const setCategory = useSetRecoilState(categoryState);
+  const setTag = useSetRecoilState(tagState);
+  const [targetHour, setTargetHour] = useRecoilState(targetHourAtom);
+
+  const handleResetAll = () => {
+    if (!confirm("모든 데이터를 초기화하시겠습니까?")) return;
+
+    resetSchedule();
+    resetCategory();
+    resetTag();
+    resetRetrospect();
+    resetTargetHour();
+    localStorage.clear();
+
+    initializeCategoryState(setCategory);
+    initializeTagState(setTag);
+  };
 
   return (
     <div>
@@ -42,9 +71,28 @@ export default function MyPage() {
             <FaBullseye className="text-lg" />
             목표 집중시간 설정
           </div>
-          <span className="text-gray-700">{targetHour}h</span>
+          <span className="text-gray-700 flex items-center gap-2">
+            <button
+              className="border p-1 rounded"
+              onClick={() => {
+                setTargetHour((prev) => (prev > 1 ? --prev : prev));
+              }}
+            >
+              <FiMinus />
+            </button>
+            {targetHour}시간
+            <button
+              className="border p-1 rounded"
+              onClick={() => {
+                setTargetHour((prev) => (prev < 24 ? ++prev : prev));
+              }}
+            >
+              <FiPlus />
+            </button>
+          </span>
         </li>
-        <li className="flex items-center gap-3">
+
+        <li className="flex items-center gap-3" onClick={handleResetAll}>
           <FaTrash className="text-lg" />
           모든 데이터 초기화
         </li>
