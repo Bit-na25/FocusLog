@@ -11,13 +11,13 @@ import { ScheduleType } from "../../types/schedule";
 import { formatDateOnly, formatTimeOnly } from "../../utils/dateUtils";
 import { scheduleState } from "../../store/scheduleAtom";
 import { scheduleByIdSelector } from "../../store/scheduleSelector";
+import AddCategoryModal from "../../components/AddCategoryModal";
 
 export default function ScheduleFormPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const schedule = useRecoilValue(scheduleByIdSelector(state?.scheduleId));
   const categories = useRecoilValue(categorySelector);
-  const [fixMode, setFixMode] = useState(true);
   const [title, setTitle] = useState("");
   const titleRef = useRef<HTMLInputElement>(null);
   const [memo, setMemo] = useState("");
@@ -25,16 +25,16 @@ export default function ScheduleFormPage() {
     state?.selectedDate ? new Date(state.selectedDate) : new Date(),
   );
   const [category, setCategory] = useState<CategoryType>(categories[0]);
-  const [open, setOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
 
   const setSchedules = useSetRecoilState(scheduleState);
 
-  useClickOutside(dropdownRef, () => setOpen(false), open);
+  useClickOutside(dropdownRef, () => setDropdownOpen(false), dropdownOpen);
 
   useEffect(() => {
     if (schedule) {
-      setFixMode(false);
       setTitle(schedule.title);
       setMemo(schedule.memo ?? "");
       setCategory(categories.find((c) => c.id === schedule.category) ?? categories[0]);
@@ -77,12 +77,12 @@ export default function ScheduleFormPage() {
 
   const handleChangeCategory = (category: CategoryType) => {
     setCategory(category);
-    setOpen(false);
+    setDropdownOpen(false);
   };
 
   const handleOpenAddCategory = () => {
-    alert("카테고리 추가 기능 연결 예정");
-    setOpen(false);
+    setDropdownOpen(false);
+    setShowCategoryModal(true);
   };
 
   return (
@@ -99,7 +99,6 @@ export default function ScheduleFormPage() {
             onChange={(e) => setTitle(e.target.value)}
             placeholder="제목을 입력하세요."
             className="w-full p-2 border rounded bg-white"
-            disabled={!fixMode}
             ref={titleRef}
           ></input>
         </div>
@@ -115,7 +114,6 @@ export default function ScheduleFormPage() {
             dateFormat="yyyy.MM.dd (eee) HH:mm" // 원하는 포맷
             className="w-full p-2 border rounded bg-white"
             wrapperClassName="w-full"
-            disabled={!fixMode}
           />
         </div>
 
@@ -123,26 +121,25 @@ export default function ScheduleFormPage() {
         <div className="relative w-full" ref={dropdownRef}>
           <label className="block mb-1 text-lg font-bold">카테고리</label>
           <button
-            onClick={() => setOpen(!open)}
+            onClick={() => setDropdownOpen(!dropdownOpen)}
             className="w-full flex items-center justify-between border p-2 rounded"
-            disabled={!fixMode}
           >
             <div className="flex items-center gap-2">
               <span className={`w-3 h-3 rounded-full ${category.color}`}></span>
               {category.label}
             </div>
-            <span>{fixMode && (open ? "▲" : "▼")}</span>
+            <span>{dropdownOpen ? "▲" : "▼"}</span>
           </button>
 
-          {open && (
-            <div className="absolute z-10 w-full border rounded shadow bg-white">
+          {dropdownOpen && (
+            <div className="absolute z-10 w-full h-48 border rounded shadow bg-white overflow-auto">
               {categories.map((c) => (
                 <div
                   key={c.id}
                   onClick={() => handleChangeCategory(c)}
                   className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer"
                 >
-                  <span className={`w-3 h-3 rounded-full ${c.color}`}></span>
+                  <span className={`w-3 h-3 rounded-full ${c.color}`} />
                   {c.label}
                 </div>
               ))}
@@ -165,11 +162,10 @@ export default function ScheduleFormPage() {
             onChange={(e) => setMemo(e.target.value)}
             placeholder="메모를 입력하세요."
             className="w-full p-2 border rounded h-32 resize-none bg-white"
-            disabled={!fixMode}
           />
         </div>
       </section>
-      {fixMode ? (
+      {!schedule ? (
         <button
           className="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-[90%] py-3 bg-black font-bold text-white rounded-lg shadow-lg"
           onClick={handleSave}
@@ -179,10 +175,10 @@ export default function ScheduleFormPage() {
       ) : (
         <div className="fixed w-[90%] bottom-6 left-1/2 -translate-x-1/2 flex gap-1">
           <button
-            className="w-1/2 border py-3 rounded-lg border-gray-400 font-bold"
-            onClick={() => setFixMode(true)}
+            className="w-1/2 border py-3 rounded-lg border-gray-400 bg-black font-bold text-white"
+            onClick={handleSave}
           >
-            수정
+            저장
           </button>
           <button
             className="w-1/2 border py-3 rounded-lg border-red-400 text-red-400 font-bold"
@@ -191,6 +187,14 @@ export default function ScheduleFormPage() {
             삭제
           </button>
         </div>
+      )}
+      {showCategoryModal && (
+        <AddCategoryModal
+          onAddCategory={(newCategory) => {
+            setCategory(newCategory);
+          }}
+          onClose={() => setShowCategoryModal(false)}
+        />
       )}
     </div>
   );

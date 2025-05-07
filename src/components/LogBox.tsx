@@ -8,7 +8,7 @@ export default function LogBox({ scheduleId }: { scheduleId: string }) {
 
   return (
     <ContentBox>
-      {retrospect ? (
+      {retrospect && (retrospect.content || retrospect.tags) ? (
         <Link to="/retrospect" state={{ scheduleId }}>
           <Log content={retrospect.content} tags={retrospect.tags} />
         </Link>

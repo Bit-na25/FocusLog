@@ -110,19 +110,21 @@ export default function RetrospectWritePage() {
       </section>
 
       {/* 저장 버튼 */}
-      <div className="fixed w-[90%] bottom-6 left-1/2 -translate-x-1/2 flex gap-1">
-        <button
-          className="w-1/2 border py-3 rounded-lg border-gray-400 bg-black font-bold text-white"
-          onClick={handleSave}
-        >
-          저장
-        </button>
-        <button
-          className="w-1/2 border py-3 rounded-lg border-red-400 text-red-400 font-bold"
-          onClick={handleDelete}
-        >
-          삭제
-        </button>
+      <div className="fixed bottom-0 left-0 right-0 w-full bg-white">
+        <div className="flex gap-1 m-6 font-bold">
+          <button
+            className="w-1/2 border py-3 rounded-lg border-gray-400 bg-black text-white"
+            onClick={handleSave}
+          >
+            저장
+          </button>
+          <button
+            className="w-1/2 border py-3 rounded-lg border-red-400 text-red-400"
+            onClick={handleDelete}
+          >
+            삭제
+          </button>
+        </div>
       </div>
     </div>
   );
