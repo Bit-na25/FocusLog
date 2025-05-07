@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaFolder, FaTag, FaBullseye, FaTrash, FaUser } from "react-icons/fa";
 import UnderLine from "../components/common/UnderLine";
+import { Link } from "react-router-dom";
 
 export default function MyPage() {
   const [targetHour, setTargetHour] = useState(7);
@@ -20,10 +21,12 @@ export default function MyPage() {
       <UnderLine />
 
       <ul className="space-y-4 text-[1.05rem] mt-6">
-        <li className="flex items-center gap-3">
-          <FaFolder className="text-lg" />
-          카테고리 관리
-        </li>
+        <Link to="/category">
+          <li className="flex items-center gap-3">
+            <FaFolder className="text-lg" />
+            카테고리 관리
+          </li>
+        </Link>
         <li className="flex items-center gap-3">
           <FaTag className="text-lg" />
           태그 관리

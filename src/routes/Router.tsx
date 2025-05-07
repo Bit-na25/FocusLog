@@ -8,6 +8,7 @@ import ScheduleFormPage from "../pages/LayoutWithoutFooter/ScheduleFormPage";
 import LayoutWithoutFooter from "./LayoutWithoutFooter";
 import RetrospectWritePage from "../pages/LayoutWithoutFooter/RetrospectWritePage";
 import TimerPage from "../pages/LayoutWithoutFooter/TimerPage";
+import CategoryManagePage from "../pages/LayoutWithoutFooter/CategoryManagePage";
 
 export default function Router() {
   return (
@@ -22,6 +23,7 @@ export default function Router() {
       <Route element={<LayoutWithoutFooter />}>
         <Route path="/schedule-form" element={<ScheduleFormPage />} />
         <Route path="/retrospect" element={<RetrospectWritePage />} />
+        <Route path="/category" element={<CategoryManagePage />} />
       </Route>
 
       <Route path="/timer" element={<TimerPage />} />

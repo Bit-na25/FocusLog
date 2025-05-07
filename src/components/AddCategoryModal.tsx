@@ -1,42 +1,20 @@
 import { useRef, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { CategoryType } from "../types/category";
-import { useSetRecoilState } from "recoil";
-import { categoryState } from "../store/categoryAtom";
-
-const defaultCategoryColor = [
-  "bg-red-600",
-  "bg-red-400",
-  "bg-red-200",
-  "bg-pink-600",
-  "bg-pink-400",
-  "bg-pink-200",
-  "bg-orange-600",
-  "bg-orange-400",
-  "bg-orange-200",
-  "bg-yellow-600",
-  "bg-yellow-400",
-  "bg-yellow-200",
-  "bg-green-600",
-  "bg-green-400",
-  "bg-green-200",
-  "bg-teal-600",
-  "bg-teal-400",
-  "bg-teal-200",
-  "bg-blue-600",
-  "bg-blue-400",
-  "bg-blue-200",
-  "bg-purple-600",
-  "bg-purple-400",
-  "bg-purple-200",
-];
+import { SetterOrUpdater, useSetRecoilState } from "recoil";
+import { categoryState, defaultCategoryColor } from "../store/categoryAtom";
 
 interface AddCategoryModalProps {
   onClose: () => void;
-  onAdd: (newCategory: CategoryType) => void;
+  onAddCategory?: (newCategory: CategoryType) => void;
+  setCategory?: SetterOrUpdater<CategoryType[]>;
 }
 
-export default function AddCategoryModal({ onClose, onAdd }: AddCategoryModalProps) {
+export default function AddCategoryModal({
+  onClose,
+  onAddCategory,
+  setCategory,
+}: AddCategoryModalProps) {
   const [label, setLabel] = useState("");
   const [color, setColor] = useState(defaultCategoryColor[0]);
   const labelRef = useRef<HTMLInputElement>(null);
@@ -53,9 +31,14 @@ export default function AddCategoryModal({ onClose, onAdd }: AddCategoryModalPro
       label,
       color,
     };
+    if (setCategory != null) {
+      setCategory((prev) => [...prev, newCategory]);
+    } else {
+      setCategories((prev) => [...prev, newCategory]);
+    }
 
-    setCategories((prev) => [...prev, newCategory]);
-    onAdd(newCategory);
+    if (onAddCategory != null) onAddCategory(newCategory);
+
     onClose();
   };
 

@@ -17,6 +17,6 @@ export const categoryByIdSelector = selectorFamily<CategoryType, string | undefi
     ({ get }) => {
       const categories = get(categoryState);
       const data = categories.find((cat) => cat.id === categoryId);
-      return data ?? { id: "", label: "", color: "gray-500" };
+      return data ?? { id: "", label: "", color: "bg-gray-400" };
     },
 });

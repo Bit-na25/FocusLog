@@ -25,13 +25,13 @@ export default function ScheduleFormPage() {
     state?.selectedDate ? new Date(state.selectedDate) : new Date(),
   );
   const [category, setCategory] = useState<CategoryType>(categories[0]);
-  const [open, setOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
 
   const setSchedules = useSetRecoilState(scheduleState);
 
-  useClickOutside(dropdownRef, () => setOpen(false), open);
+  useClickOutside(dropdownRef, () => setDropdownOpen(false), dropdownOpen);
 
   useEffect(() => {
     if (schedule) {
@@ -77,11 +77,11 @@ export default function ScheduleFormPage() {
 
   const handleChangeCategory = (category: CategoryType) => {
     setCategory(category);
-    setOpen(false);
+    setDropdownOpen(false);
   };
 
   const handleOpenAddCategory = () => {
-    setOpen(false);
+    setDropdownOpen(false);
     setShowCategoryModal(true);
   };
 
@@ -121,17 +121,17 @@ export default function ScheduleFormPage() {
         <div className="relative w-full" ref={dropdownRef}>
           <label className="block mb-1 text-lg font-bold">카테고리</label>
           <button
-            onClick={() => setOpen(!open)}
+            onClick={() => setDropdownOpen(!open)}
             className="w-full flex items-center justify-between border p-2 rounded"
           >
             <div className="flex items-center gap-2">
               <span className={`w-3 h-3 rounded-full ${category.color}`}></span>
               {category.label}
             </div>
-            <span>{open ? "▲" : "▼"}</span>
+            <span>{dropdownOpen ? "▲" : "▼"}</span>
           </button>
 
-          {open && (
+          {dropdownOpen && (
             <div className="absolute z-10 w-full border rounded shadow bg-white">
               {categories.map((c) => (
                 <div
@@ -190,7 +190,7 @@ export default function ScheduleFormPage() {
       )}
       {showCategoryModal && (
         <AddCategoryModal
-          onAdd={(newCategory) => {
+          onAddCategory={(newCategory) => {
             setCategory(newCategory);
           }}
           onClose={() => setShowCategoryModal(false)}
