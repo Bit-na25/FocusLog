@@ -5,9 +5,14 @@ import FocusTimeByWeekday from "../components/features/statistics/FocusTimeByWee
 import TagStatistics from "../components/features/statistics/TagStatistics";
 import RetrospectCompletionRate from "../components/features/statistics/RetrospectCompletionRate";
 import { DateRange } from "../utils/date/dateRangeFilter";
+import { useRecoilValue } from "recoil";
+import { categoryState } from "../features";
+import CategorySelect from "../components/features/statistics/CategorySelect";
+import PeriodSelect from "../components/features/statistics/PeriodSelect";
 
 export default function StatisticsPage() {
   const [period, setPeriod] = useState<DateRange>("1week");
+  const categories = useRecoilValue(categoryState);
   const [category, setCategory] = useState("all");
 
   return (
@@ -15,37 +20,29 @@ export default function StatisticsPage() {
       <header className="py-4 text-xl font-bold text-center">통계</header>
 
       <div className="flex gap-2 mb-4">
-        <select
-          className="border rounded p-2 flex-1 bg-white"
-          value={period}
-          onChange={(e) => setPeriod(e.target.value as DateRange)}
-        >
-          <option value="1week">최근 1주</option>
-          <option value="1month">최근 1개월</option>
-          <option value="1year">최근 1년</option>
-        </select>
-        <select
-          className="border rounded p-2 flex-1 bg-white"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="all">카테고리 전체</option>
-          <option value="study">Study</option>
-          <option value="meeting">Meeting</option>
-        </select>
+        <div className="flex-1">
+          <PeriodSelect period={period} setPeriod={(e) => setPeriod(e)} />
+        </div>
+        <div className="flex-1">
+          <CategorySelect
+            category={category}
+            setCategory={(c) => setCategory(c)}
+            categories={categories}
+          />
+        </div>
       </div>
       <UnderLine />
 
-      <TotalFocusTime period={period} />
+      <TotalFocusTime period={period} category={category} />
       <hr className="my-4" />
 
-      <FocusTimeByWeekday period={period} />
+      <FocusTimeByWeekday period={period} category={category} />
       <hr className="my-4" />
 
-      <TagStatistics period={period} />
+      <TagStatistics period={period} category={category} />
       <hr className="my-4" />
 
-      <RetrospectCompletionRate period={period} />
+      <RetrospectCompletionRate period={period} category={category} />
     </div>
   );
 }

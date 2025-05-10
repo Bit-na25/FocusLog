@@ -56,6 +56,7 @@ export default function RetrospectWritePage() {
       date: schedule ? schedule.date : formatDateOnly(new Date()),
       focusDuration: retrospect.focusDuration,
       content: note,
+      category: schedule ? schedule.category : "",
       tags,
     };
 

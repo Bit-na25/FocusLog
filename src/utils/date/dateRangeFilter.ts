@@ -1,8 +1,6 @@
-import { RetrospectType, ScheduleType } from "../../features";
-
 export type DateRange = "1week" | "1month" | "1year";
 
-function getStartAndEndDate(range: DateRange) {
+export function getStartAndEndDate(range: DateRange) {
   const today = new Date();
   const startDate = new Date();
 
@@ -19,22 +17,4 @@ function getStartAndEndDate(range: DateRange) {
   }
 
   return { startDate, today };
-}
-
-export function filterRetrospectsByDateRange(retrospects: RetrospectType[], range: DateRange) {
-  const { startDate, today } = getStartAndEndDate(range);
-
-  return retrospects.filter((r) => {
-    const retrospectDate = new Date(`${r.date}T00:00:00`);
-    return retrospectDate >= startDate && retrospectDate <= today;
-  });
-}
-
-export function filterSchedulesByDateRange(schedules: ScheduleType[], range: DateRange) {
-  const { startDate, today } = getStartAndEndDate(range);
-
-  return schedules.filter((s) => {
-    const scheduleDate = new Date(`${s.date}T00:00:00`);
-    return scheduleDate >= startDate && scheduleDate <= today;
-  });
 }

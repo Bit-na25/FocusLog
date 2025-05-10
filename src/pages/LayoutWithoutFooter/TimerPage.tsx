@@ -69,6 +69,7 @@ export default function TimerPage() {
       scheduleId,
       date: schedule ? schedule.date : formatDateOnly(new Date()),
       focusDuration,
+      category: schedule ? schedule.category : "",
       content: "",
     };
 

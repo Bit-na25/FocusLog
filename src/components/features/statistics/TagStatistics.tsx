@@ -1,17 +1,19 @@
 import { useRecoilValue } from "recoil";
 import { retrospectState } from "../../../features";
-import { DateRange, filterRetrospectsByDateRange } from "../../../utils/date/dateRangeFilter";
+import { DateRange } from "../../../utils/date/dateRangeFilter";
+import { filterRetrospects } from "../../../utils/filter/filterRetrospects";
 
 type tagCount = Record<string, number>;
 const showCount = 5;
 
 interface TagStatisticsProps {
   period: DateRange;
+  category: string;
 }
 
-export default function TagStatistics({ period }: TagStatisticsProps) {
+export default function TagStatistics({ period, category }: TagStatisticsProps) {
   const retrospects = useRecoilValue(retrospectState);
-  const filtered = filterRetrospectsByDateRange(retrospects, period);
+  const filtered = filterRetrospects(retrospects, period, category);
 
   const tagCounts: tagCount = {};
   filtered.forEach((r) => {

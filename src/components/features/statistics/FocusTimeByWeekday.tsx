@@ -1,14 +1,16 @@
 import { useRecoilValue } from "recoil";
 import { retrospectState } from "../../../features";
-import { DateRange, filterRetrospectsByDateRange } from "../../../utils/date/dateRangeFilter";
+import { DateRange } from "../../../utils/date/dateRangeFilter";
+import { filterRetrospects } from "../../../utils/filter/filterRetrospects";
 
 const dayLabels = ["일", "월", "화", "수", "목", "금", "토"];
 interface FocusTimeByDayProps {
   period: DateRange;
+  category: string;
 }
-export default function FocusTimeByDay({ period }: FocusTimeByDayProps) {
+export default function FocusTimeByDay({ period, category }: FocusTimeByDayProps) {
   const retrospects = useRecoilValue(retrospectState);
-  const filtered = filterRetrospectsByDateRange(retrospects, period);
+  const filtered = filterRetrospects(retrospects, period, category);
   const focusTimeByDay = Array(dayLabels.length).fill(0);
 
   filtered.forEach((r) => {

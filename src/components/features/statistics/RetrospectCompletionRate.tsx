@@ -3,26 +3,32 @@ import ContentBox from "../../common/ContentBox";
 import Log from "../../Log";
 import { useRecoilValue } from "recoil";
 import { retrospectState, scheduleState } from "../../../features";
-import {
-  DateRange,
-  filterRetrospectsByDateRange,
-  filterSchedulesByDateRange,
-} from "../../../utils/date/dateRangeFilter";
+import { DateRange } from "../../../utils/date/dateRangeFilter";
+import { filterSchedules } from "../../../utils/filter/filterSchedules";
+import { filterRetrospects } from "../../../utils/filter/filterRetrospects";
 
 interface RetrospectCompletionRateProps {
   period: DateRange;
+  category: string;
 }
 
-export default function RetrospectCompletionRate({ period }: RetrospectCompletionRateProps) {
+export default function RetrospectCompletionRate({
+  period,
+  category,
+}: RetrospectCompletionRateProps) {
   const [showIndex, setShowIndex] = useState(-1);
   const schedules = useRecoilValue(scheduleState);
-  const filteredSchedules = filterSchedulesByDateRange(schedules, period);
+  const filteredSchedules = filterSchedules(schedules, period, category);
   const retrospects = useRecoilValue(retrospectState);
-  const filteredRetrospects = filterRetrospectsByDateRange(
+  const filteredRetrospects = filterRetrospects(
     retrospects.filter((r) => r.content || r.tags),
     period,
+    category,
   );
-  const completionRate = (filteredRetrospects.length / filteredSchedules.length) * 100;
+  const completionRate =
+    filteredSchedules.length === 0
+      ? 0
+      : (filteredRetrospects.length / filteredSchedules.length) * 100;
   const circumference = 2 * Math.PI * 16; // 반지름 r = 16
   const offset = circumference - (circumference * completionRate) / 100;
 

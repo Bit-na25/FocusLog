@@ -4,5 +4,6 @@ export interface RetrospectType {
   date: string;
   focusDuration: number;
   content: string;
+  category: string;
   tags?: string[];
 }
