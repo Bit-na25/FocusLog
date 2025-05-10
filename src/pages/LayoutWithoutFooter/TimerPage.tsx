@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PageHeader from "../../components/PageHeader";
 import Schedule from "../../components/Schedule";
-import { useSetRecoilState } from "recoil";
-import { retrospectState, RetrospectType } from "../../features";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { retrospectState, RetrospectType, scheduleByIdSelector } from "../../features";
+import { formatDateOnly } from "../../utils/date/dateUtils";
 
 enum TimerStatus {
   READY = "READY",
@@ -16,6 +17,7 @@ export default function TimerPage() {
   const scheduleId = state?.scheduleId;
   const navigate = useNavigate();
 
+  const schedule = useRecoilValue(scheduleByIdSelector(scheduleId));
   const setRetrospect = useSetRecoilState(retrospectState);
   const [status, setStatus] = useState<TimerStatus>(TimerStatus.READY);
   const [time, setTime] = useState(0);
@@ -65,6 +67,7 @@ export default function TimerPage() {
     const newRetrospect: RetrospectType = {
       id: crypto.randomUUID(),
       scheduleId,
+      date: schedule ? schedule.date : formatDateOnly(new Date()),
       focusDuration,
       content: "",
     };

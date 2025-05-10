@@ -7,16 +7,18 @@ import {
   retrospectState,
   RetrospectType,
   retrospectByScheduleIdSelector,
+  scheduleByIdSelector,
 } from "../../features";
 import PageHeader from "../../components/PageHeader";
 import Schedule from "../../components/Schedule";
 import AddTagModal from "../../components/modals/AddTagModal";
+import { formatDateOnly } from "../../utils/date/dateUtils";
 
 export default function RetrospectWritePage() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const scheduleId = state?.scheduleId;
-
+  const schedule = useRecoilValue(scheduleByIdSelector(scheduleId));
   const retrospect = useRecoilValue(retrospectByScheduleIdSelector(scheduleId));
   const setRetrospect = useSetRecoilState(retrospectState);
   const allTags = useRecoilValue(tagState);
@@ -51,6 +53,7 @@ export default function RetrospectWritePage() {
     const newRetrospect: RetrospectType = {
       id: retrospect.id,
       scheduleId,
+      date: schedule ? schedule.date : formatDateOnly(new Date()),
       focusDuration: retrospect.focusDuration,
       content: note,
       tags,
