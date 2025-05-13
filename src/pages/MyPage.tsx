@@ -1,6 +1,6 @@
 import { FaFolder, FaTag, FaBullseye, FaTrash, FaUser } from "react-icons/fa";
 import UnderLine from "../components/common/UnderLine";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import {
@@ -12,6 +12,8 @@ import {
   initializeTagState,
   targetHourAtom,
 } from "../features";
+import { loginWithGoogle, logout } from "../services/authService";
+import { userAtom } from "../features/user/userAtom";
 
 export default function MyPage() {
   const resetSchedule = useResetRecoilState(scheduleState);
@@ -23,6 +25,8 @@ export default function MyPage() {
   const setCategory = useSetRecoilState(categoryState);
   const setTag = useSetRecoilState(tagState);
   const [targetHour, setTargetHour] = useRecoilState(targetHourAtom);
+  const [user, setUser] = useRecoilState(userAtom);
+  const navigate = useNavigate();
 
   const handleResetAll = () => {
     if (!confirm("모든 데이터를 초기화하시겠습니까?")) return;
@@ -38,6 +42,32 @@ export default function MyPage() {
     initializeTagState(setTag);
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      const user = await loginWithGoogle();
+      setUser(user);
+      console.log("✅ 로그인된 사용자:", user);
+    } catch (err) {
+      console.error("❌ 로그인 에러 발생", err);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout(); // 실패해도 catch
+    } catch (e) {
+      console.warn("⚠️ 로그아웃 실패 무시:", e);
+    }
+
+    // ✅ 상태 초기화
+    setUser(null);
+    localStorage.removeItem("user");
+    indexedDB.deleteDatabase("firebaseLocalStorageDb");
+
+    console.log("✅ 로그아웃 완료");
+    window.location.reload();
+  };
+
   return (
     <div>
       <header className="py-4 text-xl font-bold text-center">마이페이지</header>
@@ -48,7 +78,11 @@ export default function MyPage() {
             <FaUser />
           </div>
         </div>
-        <button className="border px-4 py-1 rounded text-sm">로그인</button>
+        {!user && (
+          <button className="border px-4 py-1 rounded text-sm" onClick={handleGoogleLogin}>
+            로그인
+          </button>
+        )}
       </div>
       <UnderLine />
 
@@ -101,10 +135,14 @@ export default function MyPage() {
         </li>
       </ul>
 
-      <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 w-full py-8">
-        <hr className="mb-4 mx-6" />
-        <button className="w-full mx-auto">로그아웃</button>
-      </div>
+      {user && (
+        <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 w-full py-8">
+          <hr className="mb-4 mx-6" />
+          <button className="w-full mx-auto" onClick={handleLogout}>
+            로그아웃
+          </button>
+        </div>
+      )}
     </div>
   );
 }
