@@ -1,4 +1,4 @@
-import { ScheduleType } from "../../features";
+import { ScheduleType } from "@/recoil";
 import { DateRange, getStartAndEndDate } from "../date/dateRangeFilter";
 
 export function filterSchedules(

@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil";
-import { retrospectState } from "../../../features";
+import { retrospectState } from "@/recoil";
 import { formatKoreanDuration } from "../../../utils/date/formatDuration";
 import { DateRange } from "../../../utils/date/dateRangeFilter";
 import { filterRetrospects } from "../../../utils/filter/filterRetrospects";

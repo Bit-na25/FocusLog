@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { todayRetrospectSelector } from "../../../features";
 import ContentBox from "../../common/ContentBox";
 import LogBox from "../../LogBox";
+import { todayRetrospectSelector } from "@/recoil";
 
 export default function RetrospectBox() {
   const [showIndex, setShowIndex] = useState(-1);

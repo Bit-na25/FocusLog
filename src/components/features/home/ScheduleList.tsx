@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
 import { Link } from "react-router-dom";
-import { todayScheduleSelector } from "../../../features";
 import Schedule from "../../Schedule";
+import { todayScheduleSelector } from "@/recoil";
 
 export default function ScheduleList() {
   const todaySchedules = useRecoilValue(todayScheduleSelector);

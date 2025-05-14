@@ -17,4 +17,6 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
+console.log("🔥 Firebase Project ID:", firebaseConfig.projectId);
+
 export { auth, db, googleProvider };

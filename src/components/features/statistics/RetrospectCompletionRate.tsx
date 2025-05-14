@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ContentBox from "../../common/ContentBox";
 import Log from "../../Log";
 import { useRecoilValue } from "recoil";
-import { retrospectState, scheduleState } from "../../../features";
+import { retrospectState, scheduleState } from "@/recoil";
 import { DateRange } from "../../../utils/date/dateRangeFilter";
 import { filterSchedules } from "../../../utils/filter/filterSchedules";
 import { filterRetrospects } from "../../../utils/filter/filterRetrospects";

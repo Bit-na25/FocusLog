@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
-import { todayTotalFocusTimeSelector, targetHourAtom } from "../../../features";
 import { formatKoreanDuration } from "../../../utils/date/formatDuration";
 import ContentBox from "../../common/ContentBox";
+import { targetHourAtom, todayTotalFocusTimeSelector } from "@/recoil";
 
 export default function FocusSummary() {
   const todayTotalFocusTime = useRecoilValue(todayTotalFocusTimeSelector);

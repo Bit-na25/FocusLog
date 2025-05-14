@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { SetterOrUpdater, useRecoilState } from "recoil";
-import { tagState } from "../../features";
+import { tagState } from "@/recoil";
+import { useAuthUser } from "@/hooks/useAuthUser";
+import { addTags as addTagsToFirestore } from "@/firebase/services/tagService";
 
 interface AddTagModal {
   onClose: () => void;
@@ -9,11 +11,12 @@ interface AddTagModal {
 }
 
 export default function AddTagModal({ onClose, onAddTag, setTag }: AddTagModal) {
+  const userId = useAuthUser();
   const [label, setLabel] = useState("");
   const labelRef = useRef<HTMLInputElement>(null);
   const [tags, setTags] = useRecoilState(tagState);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!label.trim()) {
       labelRef.current?.focus();
       return;
@@ -26,6 +29,10 @@ export default function AddTagModal({ onClose, onAddTag, setTag }: AddTagModal) 
       setTag((prev) => [...prev, ...filterAddTags]);
     } else {
       setTags((prev) => [...prev, ...filterAddTags]);
+
+      if (userId !== null) {
+        await addTagsToFirestore(userId, filterAddTags);
+      }
     }
 
     if (onAddTag != null) onAddTag(addTags);

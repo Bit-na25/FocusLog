@@ -1,17 +1,49 @@
-// src/firebase/services/tagService.ts
 import { db } from "../firebase";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, writeBatch } from "firebase/firestore";
 
-export const addTag = async (uid: string, tag: string) => {
-  const tagsRef = collection(db, "users", uid, "tags");
-  await addDoc(tagsRef, {
-    label: tag,
-    createdAt: new Date().toISOString(),
+const getTagCollectionRef = (userId: string) => collection(db, `users/testUser/tags`);
+
+export async function getTags(userId: string): Promise<string[]> {
+  const snapshot = await getDocs(getTagCollectionRef(userId));
+  return snapshot.docs.map((doc) => doc.data().label);
+}
+
+export async function addTags(userId: string, labels: string[]) {
+  const batch = writeBatch(db);
+  const tagRef = getTagCollectionRef(userId);
+
+  labels.forEach((label) => {
+    const newDocRef = doc(tagRef); // 자동 ID
+    batch.set(newDocRef, { label });
   });
-};
 
-export const getTags = async (uid: string) => {
-  const tagsRef = collection(db, "users", uid, "tags");
-  const snapshot = await getDocs(tagsRef);
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-};
+  await batch.commit();
+}
+
+export async function deleteAllTags(userId: string) {
+  const snapshot = await getDocs(getTagCollectionRef(userId));
+  const batch = writeBatch(db);
+
+  snapshot.forEach((doc) => {
+    batch.delete(doc.ref);
+  });
+
+  await batch.commit();
+}
+
+export async function addAllTags(userId: string, tags: string[]) {
+  const batch = writeBatch(db);
+  const ref = getTagCollectionRef(userId);
+
+  tags.forEach((label) => {
+    const docRef = doc(ref); // 자동 ID 생성
+    batch.set(docRef, { label });
+  });
+
+  await batch.commit();
+}
+
+export async function replaceAllTags(userId: string, tags: string[]) {
+  await deleteAllTags(userId);
+  await addAllTags(userId, tags);
+}

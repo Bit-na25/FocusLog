@@ -1,4 +1,4 @@
-import { RetrospectType } from "../../features";
+import { RetrospectType } from "@/recoil";
 import { DateRange, getStartAndEndDate } from "../date/dateRangeFilter";
 
 export function filterRetrospects(

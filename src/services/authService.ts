@@ -1,6 +1,6 @@
 import { signInWithPopup, signOut } from "firebase/auth";
-import { resetFirebase } from "@/utils/resetFirebase";
 import { auth, googleProvider } from "@/firebase/firebase";
+import { resetFirebase } from "@/utils/resetFirebase";
 
 // 로그인
 export const loginWithGoogle = async () => {

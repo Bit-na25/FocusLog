@@ -1,14 +1,17 @@
 import PageHeader from "../../components/PageHeader";
 import { FiPlus } from "react-icons/fi";
-import { tagState } from "../../features/tag/atom";
 import { useRecoilState } from "recoil";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddTagModal from "../../components/modals/AddTagModal";
 import ManageItemList from "../../components/features/myPage/ManageItemList";
+import { tagState } from "@/recoil";
+import { saveTagsToFirestore } from "@/firebase/services/saveTagsToFirestore";
+import { useAuthUser } from "@/hooks/useAuthUser";
 
 export default function TagManagePage() {
   const navigate = useNavigate();
+  const userId = useAuthUser();
   const [tags, setTags] = useRecoilState(tagState);
   const [fixedTag, setFixedTag] = useState(tags);
   const [editingDefaultLabel, setEditingDefaultLabel] = useState<string>("");
@@ -31,8 +34,9 @@ export default function TagManagePage() {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setTags(fixedTag);
+    if (userId !== null) await saveTagsToFirestore(userId, fixedTag);
     navigate(-1);
   };
 

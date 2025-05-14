@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil";
-import { getSchedulesByMonthSelector, categorySelector } from "../../../features";
+import { getSchedulesByMonthSelector, categorySelector } from "@/recoil";
 import { formatDateOnly } from "../../../utils/date/dateUtils";
 
 interface CalendarProps {

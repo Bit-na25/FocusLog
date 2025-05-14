@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { SetterOrUpdater, useSetRecoilState } from "recoil";
-import { CategoryType, categoryState, defaultCategoryColor } from "../../features";
+import { CategoryType, categoryState, defaultCategoryColor } from "@/recoil";
 import { FaCheck } from "react-icons/fa";
 
 interface AddCategoryModalProps {

@@ -13,7 +13,7 @@ import {
   ScheduleType,
   scheduleState,
   scheduleByIdSelector,
-} from "../../features";
+} from "@/recoil";
 
 export default function ScheduleFormPage() {
   const navigate = useNavigate();

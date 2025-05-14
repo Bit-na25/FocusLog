@@ -11,9 +11,9 @@ import {
   initializeCategoryState,
   initializeTagState,
   targetHourAtom,
-} from "../features";
+} from "@/recoil";
 import { loginWithGoogle, logout } from "../services/authService";
-import { userAtom } from "../features/user/userAtom";
+import { useAuthUser } from "@/hooks/useAuthUser";
 
 export default function MyPage() {
   const resetSchedule = useResetRecoilState(scheduleState);
@@ -25,7 +25,7 @@ export default function MyPage() {
   const setCategory = useSetRecoilState(categoryState);
   const setTag = useSetRecoilState(tagState);
   const [targetHour, setTargetHour] = useRecoilState(targetHourAtom);
-  const [user, setUser] = useRecoilState(userAtom);
+  const userId = useAuthUser();
   const navigate = useNavigate();
 
   const handleResetAll = () => {
@@ -45,7 +45,7 @@ export default function MyPage() {
   const handleGoogleLogin = async () => {
     try {
       const user = await loginWithGoogle();
-      setUser(user);
+
       console.log("✅ 로그인된 사용자:", user);
     } catch (err) {
       console.error("❌ 로그인 에러 발생", err);
@@ -60,8 +60,7 @@ export default function MyPage() {
     }
 
     // ✅ 상태 초기화
-    setUser(null);
-    localStorage.removeItem("user");
+    localStorage.clear();
     indexedDB.deleteDatabase("firebaseLocalStorageDb");
 
     console.log("✅ 로그아웃 완료");
@@ -78,7 +77,7 @@ export default function MyPage() {
             <FaUser />
           </div>
         </div>
-        {!user && (
+        {!userId && (
           <button className="border px-4 py-1 rounded text-sm" onClick={handleGoogleLogin}>
             로그인
           </button>
@@ -135,7 +134,7 @@ export default function MyPage() {
         </li>
       </ul>
 
-      {user && (
+      {userId && (
         <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 w-full py-8">
           <hr className="mb-4 mx-6" />
           <button className="w-full mx-auto" onClick={handleLogout}>

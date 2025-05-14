@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil";
-import { getSchedulesByDateSelector } from "../../../features";
+import { getSchedulesByDateSelector } from "@/recoil";
 import { formatToKoreanDateWithoutYear, formatDateOnly } from "../../../utils/date/dateUtils";
 import CalendarSchedule from "./CalendarSchedule";
 

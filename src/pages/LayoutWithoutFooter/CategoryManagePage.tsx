@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-import { categoryState, CategoryType } from "../../features";
 import { FiPlus } from "react-icons/fi";
 import PageHeader from "../../components/PageHeader";
 import AddCategoryModal from "../../components/modals/AddCategoryModal";
 import ManageItemList from "../../components/features/myPage/ManageItemList";
 import ColorPickerPopover from "../../components/modals/ColorPickerPopover";
+import { categoryState, CategoryType } from "@/recoil";
 
 export default function CategoryManagePage() {
   const navigate = useNavigate();

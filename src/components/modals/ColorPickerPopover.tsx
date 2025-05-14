@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { createPortal } from "react-dom";
 import { FaCheck } from "react-icons/fa";
 import { useClickOutside } from "../../hooks/useClickOutside";
-import { defaultCategoryColor } from "../../features";
+import { defaultCategoryColor } from "@/recoil";
 
 interface ColorPickerPopoverProps {
   position: { top: number; left: number };

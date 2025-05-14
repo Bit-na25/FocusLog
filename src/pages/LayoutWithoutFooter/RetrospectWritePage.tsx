@@ -8,7 +8,7 @@ import {
   RetrospectType,
   retrospectByScheduleIdSelector,
   scheduleByIdSelector,
-} from "../../features";
+} from "@/recoil";
 import PageHeader from "../../components/PageHeader";
 import Schedule from "../../components/Schedule";
 import AddTagModal from "../../components/modals/AddTagModal";

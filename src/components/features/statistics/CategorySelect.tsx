@@ -1,4 +1,4 @@
-import { CategoryType } from "../../../features";
+import { CategoryType } from "@/recoil";
 import BaseSelect from "../../common/BaseSelect";
 
 interface CategoryOption {

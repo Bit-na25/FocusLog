@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil";
-import { categoryByIdSelector, scheduleByIdSelector } from "../features";
+import { categoryByIdSelector, scheduleByIdSelector } from "@/recoil";
 import { Link } from "react-router-dom";
 
 interface ScheduleProps {

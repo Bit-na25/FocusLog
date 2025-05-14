@@ -6,7 +6,7 @@ import TagStatistics from "../components/features/statistics/TagStatistics";
 import RetrospectCompletionRate from "../components/features/statistics/RetrospectCompletionRate";
 import { DateRange } from "../utils/date/dateRangeFilter";
 import { useRecoilValue } from "recoil";
-import { categoryState } from "../features";
+import { categoryState } from "@/recoil";
 import CategorySelect from "../components/features/statistics/CategorySelect";
 import PeriodSelect from "../components/features/statistics/PeriodSelect";
 

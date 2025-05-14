@@ -3,7 +3,7 @@ import UnderLine from "../components/common/UnderLine";
 import Calendar from "../components/features/calendar/Calendar";
 import CalendarScheduleList from "../components/features/calendar/CalendarScheduleList";
 import { useRecoilState } from "recoil";
-import { calendarSelectedDateState } from "../features";
+import { calendarSelectedDateState } from "@/recoil";
 import { useEffect } from "react";
 
 export default function CalendarPage() {
