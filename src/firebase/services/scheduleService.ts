@@ -1,8 +1,8 @@
 import { collection, addDoc, deleteDoc, updateDoc, doc, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "@/firebase";
 import { ScheduleType } from "@/recoil";
 
-const getScheduleCollectionRef = (userId: string) => collection(db, `users/testUser/schedules`);
+const getScheduleCollectionRef = (userId: string) => collection(db, `users/${userId}/schedules`);
 
 export async function getSchedules(userId: string): Promise<ScheduleType[]> {
   const snapshot = await getDocs(getScheduleCollectionRef(userId));

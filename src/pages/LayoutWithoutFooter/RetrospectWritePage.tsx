@@ -14,7 +14,7 @@ import Schedule from "../../components/Schedule";
 import AddTagModal from "../../components/modals/AddTagModal";
 import { formatDateOnly } from "../../utils/date/dateUtils";
 import { useAuthUser } from "@/hooks/useAuthUser";
-import { deleteRetrospect, updateRetrospect } from "@/firebase/services/retrospectService";
+import { deleteRetrospect, updateRetrospect } from "@/firebase";
 
 export default function RetrospectWritePage() {
   const navigate = useNavigate();
@@ -44,8 +44,6 @@ export default function RetrospectWritePage() {
 
   const handleAddTag = (addTags: string[]) => {
     if (!addTags || addTags.length === 0) return;
-
-    console.log(addTags);
 
     addTags.forEach((tag) => setTags((prev) => (prev.includes(tag) ? prev : [...prev, tag])));
   };

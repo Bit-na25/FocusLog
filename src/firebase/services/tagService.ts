@@ -1,7 +1,7 @@
-import { db } from "../firebase";
+import { db } from "@/firebase";
 import { collection, getDocs, doc, writeBatch } from "firebase/firestore";
 
-const getTagCollectionRef = (userId: string) => collection(db, `users/testUser/tags`);
+const getTagCollectionRef = (userId: string) => collection(db, `users/${userId}/tags`);
 
 export async function getTags(userId: string): Promise<string[]> {
   const snapshot = await getDocs(getTagCollectionRef(userId));

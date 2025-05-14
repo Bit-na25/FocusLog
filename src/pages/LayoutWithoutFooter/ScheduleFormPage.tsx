@@ -15,7 +15,7 @@ import {
   scheduleByIdSelector,
 } from "@/recoil";
 import { useAuthUser } from "@/hooks/useAuthUser";
-import { addSchedule, deleteSchedule, updateSchedule } from "@/firebase/services/scheduleService";
+import { addSchedule, deleteSchedule, updateSchedule } from "@/firebase";
 
 export default function ScheduleFormPage() {
   const navigate = useNavigate();
@@ -86,7 +86,6 @@ export default function ScheduleFormPage() {
 
   const handleDelete = () => {
     if (userId !== null && schedule) {
-      console.log(schedule.id);
       deleteSchedule(userId, schedule.id);
     }
     setSchedules((prev) => prev.filter((s) => s.id !== schedule?.id));

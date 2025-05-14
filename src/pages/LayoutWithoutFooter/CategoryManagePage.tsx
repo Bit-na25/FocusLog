@@ -8,7 +8,7 @@ import ManageItemList from "../../components/features/myPage/ManageItemList";
 import ColorPickerPopover from "../../components/modals/ColorPickerPopover";
 import { categoryState, CategoryType } from "@/recoil";
 import { useAuthUser } from "@/hooks/useAuthUser";
-import { saveCategoriesToFirestore } from "@/firebase/services/saveToFirestore";
+import { saveCategoriesToFirestore } from "@/firebase";
 
 export default function CategoryManagePage() {
   const navigate = useNavigate();

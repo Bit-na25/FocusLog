@@ -1,8 +1,9 @@
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "@/firebase";
 import { RetrospectType } from "@/recoil";
 
-const getRetrospectCollectionRef = (userId: string) => collection(db, `users/testUser/retrospects`);
+const getRetrospectCollectionRef = (userId: string) =>
+  collection(db, `users/${userId}/retrospects`);
 
 export async function getRetrospects(userId: string): Promise<RetrospectType[]> {
   const snapshot = await getDocs(getRetrospectCollectionRef(userId));

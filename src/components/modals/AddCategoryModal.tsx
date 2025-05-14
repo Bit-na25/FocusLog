@@ -2,8 +2,8 @@ import { useRef, useState } from "react";
 import { SetterOrUpdater, useSetRecoilState } from "recoil";
 import { CategoryType, categoryState, defaultCategoryColor } from "@/recoil";
 import { FaCheck } from "react-icons/fa";
-import { addCategory } from "@/firebase/services/categoryService";
 import { useAuthUser } from "@/hooks/useAuthUser";
+import { addCategory } from "@/firebase";
 
 interface AddCategoryModalProps {
   onClose: () => void;

@@ -1,8 +1,8 @@
 import { CategoryType } from "@/recoil";
 import { collection, getDocs, writeBatch, doc, addDoc } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "@/firebase";
 
-const getCategoryCollectionRef = (userId: string) => collection(db, `users/testUser/categories`);
+const getCategoryCollectionRef = (userId: string) => collection(db, `users/${userId}/categories`);
 
 export async function getCategories(userId: string): Promise<CategoryType[]> {
   const snapshot = await getDocs(getCategoryCollectionRef(userId));

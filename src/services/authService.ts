@@ -1,5 +1,5 @@
-import { signInWithPopup, signOut } from "firebase/auth";
-import { auth, googleProvider } from "@/firebase/firebase";
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "@/firebase";
 import { resetFirebase } from "@/utils/resetFirebase";
 
 // 로그인
@@ -26,7 +26,7 @@ export const logout = async () => {
 
     console.log("✅ 로그아웃 완료");
   } catch (e: any) {
-    console.warn("⚠️ signOut 실패, 무시함:", e);
+    console.warn("⚠️ signOut 실패:", e);
   } finally {
     // Firebase 완전 초기화
     await resetFirebase();

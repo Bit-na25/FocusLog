@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { SetterOrUpdater, useRecoilState } from "recoil";
 import { tagState } from "@/recoil";
 import { useAuthUser } from "@/hooks/useAuthUser";
-import { addTags as addTagsToFirestore } from "@/firebase/services/tagService";
+import { addTags as addTagsToFirestore } from "@/firebase";
 
 interface AddTagModal {
   onClose: () => void;

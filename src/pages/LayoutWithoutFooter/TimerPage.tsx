@@ -6,7 +6,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { retrospectState, RetrospectType, scheduleByIdSelector } from "@/recoil";
 import { formatDateOnly } from "../../utils/date/dateUtils";
 import { useAuthUser } from "@/hooks/useAuthUser";
-import { addRetrospect } from "@/firebase/services/retrospectService";
+import { addRetrospect } from "@/firebase";
 
 enum TimerStatus {
   READY = "READY",

@@ -2,16 +2,13 @@ import { useSetRecoilState } from "recoil";
 import { useAuthUser } from "./useAuthUser";
 import { categoryState, retrospectState, scheduleState, tagState } from "@/recoil";
 import { useEffect } from "react";
-import { getTags } from "@/firebase/services/tagService";
-import { getCategories } from "@/firebase/services/categoryService";
-import { getSchedules } from "@/firebase/services/scheduleService";
 import {
   getLocalCategories,
   getLocalSchedules,
   getLocalTags,
   getLocalRetrospects,
 } from "@/utils/localStorage";
-import { getRetrospects } from "@/firebase/services/retrospectService";
+import { getCategories, getRetrospects, getSchedules, getTags } from "@/firebase";
 
 export function useInitializeAppData() {
   const userId = useAuthUser();
