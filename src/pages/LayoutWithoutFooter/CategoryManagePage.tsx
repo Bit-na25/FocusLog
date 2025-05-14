@@ -7,9 +7,12 @@ import AddCategoryModal from "../../components/modals/AddCategoryModal";
 import ManageItemList from "../../components/features/myPage/ManageItemList";
 import ColorPickerPopover from "../../components/modals/ColorPickerPopover";
 import { categoryState, CategoryType } from "@/recoil";
+import { useAuthUser } from "@/hooks/useAuthUser";
+import { saveCategoriesToFirestore } from "@/firebase/services/saveToFirestore";
 
 export default function CategoryManagePage() {
   const navigate = useNavigate();
+  const userId = useAuthUser();
   const [categories, setCategories] = useRecoilState(categoryState);
   const [fixedCategory, setFixedCategory] = useState(categories);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -19,6 +22,8 @@ export default function CategoryManagePage() {
     id: string;
     position: { top: number; left: number };
   } | null>(null);
+
+  console.log(categories);
 
   const handleEdit = (cat: CategoryType) => {
     setEditingId(cat.id);
@@ -55,8 +60,9 @@ export default function CategoryManagePage() {
     });
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setCategories(fixedCategory);
+    if (userId !== null) await saveCategoriesToFirestore(userId, fixedCategory);
     navigate(-1);
   };
 

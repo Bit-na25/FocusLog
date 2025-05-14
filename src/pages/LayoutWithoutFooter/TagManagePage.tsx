@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import AddTagModal from "../../components/modals/AddTagModal";
 import ManageItemList from "../../components/features/myPage/ManageItemList";
 import { tagState } from "@/recoil";
-import { saveTagsToFirestore } from "@/firebase/services/saveTagsToFirestore";
+import { saveTagsToFirestore } from "@/firebase/services/saveToFirestore";
 import { useAuthUser } from "@/hooks/useAuthUser";
 
 export default function TagManagePage() {

@@ -2,6 +2,8 @@ import { useRef, useState } from "react";
 import { SetterOrUpdater, useSetRecoilState } from "recoil";
 import { CategoryType, categoryState, defaultCategoryColor } from "@/recoil";
 import { FaCheck } from "react-icons/fa";
+import { addCategory } from "@/firebase/services/categoryService";
+import { useAuthUser } from "@/hooks/useAuthUser";
 
 interface AddCategoryModalProps {
   onClose: () => void;
@@ -14,12 +16,13 @@ export default function AddCategoryModal({
   onAddCategory,
   setCategory,
 }: AddCategoryModalProps) {
+  const userId = useAuthUser();
   const [label, setLabel] = useState("");
   const [color, setColor] = useState(defaultCategoryColor[0]);
   const labelRef = useRef<HTMLInputElement>(null);
   const setCategories = useSetRecoilState(categoryState);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!label.trim()) {
       labelRef.current?.focus();
       return;
@@ -34,6 +37,10 @@ export default function AddCategoryModal({
       setCategory((prev) => [...prev, newCategory]);
     } else {
       setCategories((prev) => [...prev, newCategory]);
+
+      if (userId !== null) {
+        await addCategory(userId, newCategory);
+      }
     }
 
     if (onAddCategory != null) onAddCategory(newCategory);

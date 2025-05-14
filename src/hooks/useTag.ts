@@ -10,7 +10,6 @@ export function useInitializeTagState() {
   const setTags = useSetRecoilState(tagState);
 
   useEffect(() => {
-    // ✅ 인증 상태 로딩 중이면 아무것도 하지 않음
     if (userId === null) return;
 
     async function init() {
@@ -32,12 +31,12 @@ export function useSetFixedTags(fixedTag: string[]) {
   const setTags = useSetRecoilState(tagState);
 
   useEffect(() => {
-    if (userId === null) return; // 인증 확인 전
+    if (userId === null) return;
 
-    setTags(fixedTag); // 무조건 로컬 상태 갱신
+    setTags(fixedTag);
 
     if (userId) {
-      replaceAllTags(userId, fixedTag); // 로그인 시에만 DB 반영
+      replaceAllTags(userId, fixedTag);
     }
   }, [userId, fixedTag]);
 }
