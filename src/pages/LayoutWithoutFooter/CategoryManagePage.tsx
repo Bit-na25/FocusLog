@@ -23,8 +23,6 @@ export default function CategoryManagePage() {
     position: { top: number; left: number };
   } | null>(null);
 
-  console.log(categories);
-
   const handleEdit = (cat: CategoryType) => {
     setEditingId(cat.id);
     setEditedLabel(cat.label);
