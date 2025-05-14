@@ -2,7 +2,6 @@ import { collection, addDoc, deleteDoc, updateDoc, doc, getDocs } from "firebase
 import { db } from "../firebase";
 import { ScheduleType } from "@/recoil";
 
-// 컬렉션 경로
 const getScheduleCollectionRef = (userId: string) => collection(db, `users/testUser/schedules`);
 
 export async function getSchedules(userId: string): Promise<ScheduleType[]> {
@@ -30,7 +29,6 @@ export async function updateSchedule(
   scheduleId: string,
   schedule: Omit<ScheduleType, "id">,
 ) {
-  console.log(scheduleId, schedule);
   const ref = doc(getScheduleCollectionRef(userId), scheduleId);
   await updateDoc(ref, schedule);
 }

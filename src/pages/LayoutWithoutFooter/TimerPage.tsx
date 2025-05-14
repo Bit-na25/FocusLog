@@ -5,6 +5,8 @@ import Schedule from "../../components/Schedule";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { retrospectState, RetrospectType, scheduleByIdSelector } from "@/recoil";
 import { formatDateOnly } from "../../utils/date/dateUtils";
+import { useAuthUser } from "@/hooks/useAuthUser";
+import { addRetrospect } from "@/firebase/services/retrospectService";
 
 enum TimerStatus {
   READY = "READY",
@@ -16,6 +18,7 @@ export default function TimerPage() {
   const { state } = useLocation();
   const scheduleId = state?.scheduleId;
   const navigate = useNavigate();
+  const userId = useAuthUser();
 
   const schedule = useRecoilValue(scheduleByIdSelector(scheduleId));
   const setRetrospect = useSetRecoilState(retrospectState);
@@ -74,6 +77,9 @@ export default function TimerPage() {
     };
 
     setRetrospect((prev) => [...prev, newRetrospect]);
+    if (userId !== null) {
+      addRetrospect(userId, newRetrospect);
+    }
 
     navigate("/retrospect", {
       state: { scheduleId },

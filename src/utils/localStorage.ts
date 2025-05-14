@@ -1,6 +1,7 @@
 export const TAG_KEY = "focuslog_tags";
 export const CATEGORY_KEY = "focuslog_categories";
 export const STORAGE_KEY = "focuslog_schedules";
+export const RETROSPECT_KEY = "focuslog_retrospects";
 
 export function getLocalTags() {
   const raw = localStorage.getItem(TAG_KEY);
@@ -27,4 +28,13 @@ export function getLocalSchedules() {
 
 export function setLocalSchedules(tags: any[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(tags));
+}
+
+export function getLocalRetrospects() {
+  const raw = localStorage.getItem(RETROSPECT_KEY);
+  return raw ? JSON.parse(raw) : [];
+}
+
+export function setLocalRetrospects(tags: any[]) {
+  localStorage.setItem(RETROSPECT_KEY, JSON.stringify(tags));
 }

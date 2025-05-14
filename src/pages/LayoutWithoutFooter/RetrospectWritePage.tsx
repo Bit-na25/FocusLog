@@ -13,10 +13,13 @@ import PageHeader from "../../components/PageHeader";
 import Schedule from "../../components/Schedule";
 import AddTagModal from "../../components/modals/AddTagModal";
 import { formatDateOnly } from "../../utils/date/dateUtils";
+import { useAuthUser } from "@/hooks/useAuthUser";
+import { deleteRetrospect, updateRetrospect } from "@/firebase/services/retrospectService";
 
 export default function RetrospectWritePage() {
   const navigate = useNavigate();
   const { state } = useLocation();
+  const userId = useAuthUser();
   const scheduleId = state?.scheduleId;
   const schedule = useRecoilValue(scheduleByIdSelector(scheduleId));
   const retrospect = useRecoilValue(retrospectByScheduleIdSelector(scheduleId));
@@ -63,11 +66,18 @@ export default function RetrospectWritePage() {
     setRetrospect((prev) => {
       return prev.map((item) => (item.id === retrospect.id ? newRetrospect : item));
     });
+    if (userId !== null) {
+      updateRetrospect(userId, newRetrospect.id, newRetrospect);
+    }
+
     navigate(-1);
   };
 
   const handleDelete = () => {
     setRetrospect((prev) => prev.filter((s) => s.id !== retrospect?.id));
+    if (userId !== null && retrospect) {
+      deleteRetrospect(userId, retrospect.id);
+    }
     navigate(-1);
   };
 
