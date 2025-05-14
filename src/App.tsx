@@ -1,12 +1,10 @@
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 import Router from "./routes/Router";
-import { useInitializeTagState } from "./hooks/useTag";
-import { useInitializeCategoryState } from "./hooks/useCategory";
+import { useInitializeAppData } from "./hooks/useInitializeAppData";
 
 function App() {
-  useInitializeTagState();
-  useInitializeCategoryState();
+  useInitializeAppData();
 
   return (
     <BrowserRouter>

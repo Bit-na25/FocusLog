@@ -14,9 +14,12 @@ import {
   scheduleState,
   scheduleByIdSelector,
 } from "@/recoil";
+import { useAuthUser } from "@/hooks/useAuthUser";
+import { addSchedule, deleteSchedule, updateSchedule } from "@/firebase/services/scheduleService";
 
 export default function ScheduleFormPage() {
   const navigate = useNavigate();
+  const userId = useAuthUser();
   const { state } = useLocation();
   const schedule = useRecoilValue(scheduleByIdSelector(state?.scheduleId));
   const categories = useRecoilValue(categorySelector);
@@ -69,10 +72,23 @@ export default function ScheduleFormPage() {
 
       return [...prev, newSchedule];
     });
+
+    if (userId !== null) {
+      if (schedule) {
+        updateSchedule(userId, newSchedule.id, newSchedule);
+      } else {
+        addSchedule(userId, newSchedule);
+      }
+    }
+
     navigate(-1);
   };
 
   const handleDelete = () => {
+    if (userId !== null && schedule) {
+      console.log(schedule.id);
+      deleteSchedule(userId, schedule.id);
+    }
     setSchedules((prev) => prev.filter((s) => s.id !== schedule?.id));
     navigate(-1);
   };
