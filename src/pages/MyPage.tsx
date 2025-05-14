@@ -14,6 +14,9 @@ import {
 } from "@/recoil";
 import { loginWithGoogle, logout } from "../services/authService";
 import { useAuthUser } from "@/hooks/useAuthUser";
+import { setFocusDuration } from "@/firebase";
+import { useEffect } from "react";
+import { resetAllUserData } from "@/firebase/services/resetAllUserData";
 
 export default function MyPage() {
   const resetSchedule = useResetRecoilState(scheduleState);
@@ -40,6 +43,10 @@ export default function MyPage() {
 
     initializeCategoryState(setCategory);
     initializeTagState(setTag);
+
+    if (userId !== null) {
+      resetAllUserData(userId);
+    }
   };
 
   const handleGoogleLogin = async () => {
@@ -66,6 +73,12 @@ export default function MyPage() {
     console.log("✅ 로그아웃 완료");
     window.location.reload();
   };
+
+  useEffect(() => {
+    if (userId !== null) {
+      setFocusDuration(userId, targetHour);
+    }
+  }, [targetHour, userId]);
 
   return (
     <div>

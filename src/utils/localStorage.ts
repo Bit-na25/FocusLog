@@ -2,6 +2,7 @@ export const TAG_KEY = "focuslog_tags";
 export const CATEGORY_KEY = "focuslog_categories";
 export const STORAGE_KEY = "focuslog_schedules";
 export const RETROSPECT_KEY = "focuslog_retrospects";
+export const FOCUS_DURATION_KEY = "focuslog_focus_duration";
 
 export function getLocalTags() {
   const raw = localStorage.getItem(TAG_KEY);
@@ -17,8 +18,8 @@ export function getLocalCategories() {
   return raw ? JSON.parse(raw) : [];
 }
 
-export function setLocalCategories(tags: any[]) {
-  localStorage.setItem(CATEGORY_KEY, JSON.stringify(tags));
+export function setLocalCategories(categories: any[]) {
+  localStorage.setItem(CATEGORY_KEY, JSON.stringify(categories));
 }
 
 export function getLocalSchedules() {
@@ -26,8 +27,8 @@ export function getLocalSchedules() {
   return raw ? JSON.parse(raw) : [];
 }
 
-export function setLocalSchedules(tags: any[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(tags));
+export function setLocalSchedules(schedules: any[]) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(schedules));
 }
 
 export function getLocalRetrospects() {
@@ -35,6 +36,15 @@ export function getLocalRetrospects() {
   return raw ? JSON.parse(raw) : [];
 }
 
-export function setLocalRetrospects(tags: any[]) {
-  localStorage.setItem(RETROSPECT_KEY, JSON.stringify(tags));
+export function setLocalRetrospects(retrospects: any[]) {
+  localStorage.setItem(RETROSPECT_KEY, JSON.stringify(retrospects));
+}
+
+export function getLocalFocusDuration() {
+  const raw = localStorage.getItem(FOCUS_DURATION_KEY);
+  return raw ? JSON.parse(raw) : 5;
+}
+
+export function setLocalFocusDuration(time: number) {
+  localStorage.setItem(RETROSPECT_KEY, JSON.stringify(time));
 }
