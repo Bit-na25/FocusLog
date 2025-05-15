@@ -10,6 +10,7 @@ import RetrospectWritePage from "../pages/LayoutWithoutFooter/RetrospectWritePag
 import TimerPage from "../pages/LayoutWithoutFooter/TimerPage";
 import CategoryManagePage from "../pages/LayoutWithoutFooter/CategoryManagePage";
 import TagManagePage from "../pages/LayoutWithoutFooter/TagManagePage";
+import LoginPage from "@/pages/LayoutWithoutFooter/LoginPage";
 
 export default function Router() {
   return (
@@ -26,6 +27,7 @@ export default function Router() {
         <Route path="/retrospect" element={<RetrospectWritePage />} />
         <Route path="/category" element={<CategoryManagePage />} />
         <Route path="/tag" element={<TagManagePage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Route>
 
       <Route path="/timer" element={<TimerPage />} />

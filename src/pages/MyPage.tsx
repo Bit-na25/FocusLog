@@ -1,6 +1,6 @@
 import { FaFolder, FaTag, FaBullseye, FaTrash, FaUser } from "react-icons/fa";
 import UnderLine from "../components/common/UnderLine";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import {
@@ -12,11 +12,10 @@ import {
   initializeTagState,
   targetHourAtom,
 } from "@/recoil";
-import { loginWithGoogle, logout } from "../services/authService";
+import { logout } from "../services/authService";
 import { useAuthUser } from "@/hooks/useAuthUser";
-import { setFocusDuration } from "@/firebase";
+import { resetAllUserData, setFocusDuration } from "@/firebase";
 import { useEffect } from "react";
-import { resetAllUserData } from "@/firebase/services/resetAllUserData";
 
 export default function MyPage() {
   const resetSchedule = useResetRecoilState(scheduleState);
@@ -28,8 +27,7 @@ export default function MyPage() {
   const setCategory = useSetRecoilState(categoryState);
   const setTag = useSetRecoilState(tagState);
   const [targetHour, setTargetHour] = useRecoilState(targetHourAtom);
-  const userId = useAuthUser();
-  const navigate = useNavigate();
+  const { userId, name, photo } = useAuthUser();
 
   const handleResetAll = () => {
     if (!confirm("모든 데이터를 초기화하시겠습니까?")) return;
@@ -49,24 +47,13 @@ export default function MyPage() {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      const user = await loginWithGoogle();
-
-      console.log("✅ 로그인된 사용자:", user);
-    } catch (err) {
-      console.error("❌ 로그인 에러 발생", err);
-    }
-  };
-
   const handleLogout = async () => {
     try {
-      await logout(); // 실패해도 catch
+      await logout();
     } catch (e) {
       console.warn("⚠️ 로그아웃 실패 무시:", e);
     }
 
-    // ✅ 상태 초기화
     localStorage.clear();
     indexedDB.deleteDatabase("firebaseLocalStorageDb");
 
@@ -86,14 +73,19 @@ export default function MyPage() {
 
       <div className="flex items-center justify-between my-4">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-xl">
-            <FaUser />
-          </div>
+          {photo ? (
+            <img className="w-12 h-12 rounded-full" src={photo} />
+          ) : (
+            <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-xl">
+              <FaUser />
+            </div>
+          )}
+          <div>{name}</div>
         </div>
         {!userId && (
-          <button className="border px-4 py-1 rounded text-sm" onClick={handleGoogleLogin}>
-            로그인
-          </button>
+          <Link to="/login">
+            <div className="border px-4 py-1 rounded text-sm">로그인</div>
+          </Link>
         )}
       </div>
       <UnderLine />

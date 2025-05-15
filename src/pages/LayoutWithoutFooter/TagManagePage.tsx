@@ -11,7 +11,7 @@ import { useAuthUser } from "@/hooks/useAuthUser";
 
 export default function TagManagePage() {
   const navigate = useNavigate();
-  const userId = useAuthUser();
+  const { userId } = useAuthUser();
   const [tags, setTags] = useRecoilState(tagState);
   const [fixedTag, setFixedTag] = useState(tags);
   const [editingDefaultLabel, setEditingDefaultLabel] = useState<string>("");

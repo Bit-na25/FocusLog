@@ -6,3 +6,5 @@ export * from "./services/saveToFirestore";
 export * from "./services/scheduleService";
 export * from "./services/tagService";
 export * from "./services/userService";
+export * from "./services/isFirstLogin";
+export * from "./services/setUserData";
