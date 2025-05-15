@@ -18,7 +18,7 @@ export default function TimerPage() {
   const { state } = useLocation();
   const scheduleId = state?.scheduleId;
   const navigate = useNavigate();
-  const userId = useAuthUser();
+  const { userId } = useAuthUser();
 
   const schedule = useRecoilValue(scheduleByIdSelector(scheduleId));
   const setRetrospect = useSetRecoilState(retrospectState);

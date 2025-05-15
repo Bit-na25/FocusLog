@@ -16,7 +16,7 @@ export default function AddCategoryModal({
   onAddCategory,
   setCategory,
 }: AddCategoryModalProps) {
-  const userId = useAuthUser();
+  const { userId } = useAuthUser();
   const [label, setLabel] = useState("");
   const [color, setColor] = useState(defaultCategoryColor[0]);
   const labelRef = useRef<HTMLInputElement>(null);

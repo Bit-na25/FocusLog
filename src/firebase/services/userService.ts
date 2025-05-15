@@ -1,4 +1,4 @@
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 
 const getUserDocRef = (userId: string) => doc(db, `users/${userId}`);
@@ -10,5 +10,6 @@ export async function getFocusDuration(userId: string): Promise<number | null> {
 }
 
 export async function setFocusDuration(userId: string, value: number) {
-  await updateDoc(getUserDocRef(userId), { focusDuration: value });
+  const ref = getUserDocRef(userId);
+  await setDoc(ref, { focusDuration: value }, { merge: true });
 }

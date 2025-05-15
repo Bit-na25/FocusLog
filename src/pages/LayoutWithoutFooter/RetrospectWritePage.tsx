@@ -19,7 +19,7 @@ import { deleteRetrospect, updateRetrospect } from "@/firebase";
 export default function RetrospectWritePage() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const userId = useAuthUser();
+  const { userId } = useAuthUser();
   const scheduleId = state?.scheduleId;
   const schedule = useRecoilValue(scheduleByIdSelector(scheduleId));
   const retrospect = useRecoilValue(retrospectByScheduleIdSelector(scheduleId));

@@ -12,7 +12,7 @@ import { saveCategoriesToFirestore } from "@/firebase";
 
 export default function CategoryManagePage() {
   const navigate = useNavigate();
-  const userId = useAuthUser();
+  const { userId } = useAuthUser();
   const [categories, setCategories] = useRecoilState(categoryState);
   const [fixedCategory, setFixedCategory] = useState(categories);
   const [editingId, setEditingId] = useState<string | null>(null);

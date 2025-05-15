@@ -11,7 +11,7 @@ interface AddTagModal {
 }
 
 export default function AddTagModal({ onClose, onAddTag, setTag }: AddTagModal) {
-  const userId = useAuthUser();
+  const { userId } = useAuthUser();
   const [label, setLabel] = useState("");
   const labelRef = useRef<HTMLInputElement>(null);
   const [tags, setTags] = useRecoilState(tagState);

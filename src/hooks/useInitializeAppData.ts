@@ -12,7 +12,7 @@ import {
 import { getCategories, getFocusDuration, getRetrospects, getSchedules, getTags } from "@/firebase";
 
 export function useInitializeAppData() {
-  const userId = useAuthUser();
+  const { userId } = useAuthUser();
   const setTags = useSetRecoilState(tagState);
   const setCategories = useSetRecoilState(categoryState);
   const setSchedules = useSetRecoilState(scheduleState);
@@ -21,6 +21,7 @@ export function useInitializeAppData() {
 
   useEffect(() => {
     if (userId === null) return;
+    console.log(userId);
 
     async function init() {
       if (userId) {

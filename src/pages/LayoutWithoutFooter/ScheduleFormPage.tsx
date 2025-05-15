@@ -19,7 +19,7 @@ import { addSchedule, deleteSchedule, updateSchedule } from "@/firebase";
 
 export default function ScheduleFormPage() {
   const navigate = useNavigate();
-  const userId = useAuthUser();
+  const { userId } = useAuthUser();
   const { state } = useLocation();
   const schedule = useRecoilValue(scheduleByIdSelector(state?.scheduleId));
   const categories = useRecoilValue(categorySelector);

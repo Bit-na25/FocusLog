@@ -4,6 +4,29 @@ import { defaultCategories, defaultTags } from "@/recoil";
 
 const getSubCol = (userId: string, path: string) => collection(db, `users/${userId}/${path}`);
 
+export async function initializeUserData(userId: string) {
+  const batch = writeBatch(db);
+
+  const userRef = doc(db, "users", userId);
+  batch.set(userRef, {
+    createdAt: new Date(),
+    focusDuration: 5,
+  });
+
+  defaultCategories.forEach((category) => {
+    const categoryRef = doc(getSubCol(userId, "categories"));
+    batch.set(categoryRef, category);
+  });
+
+  defaultTags.forEach((label) => {
+    const tagRef = doc(getSubCol(userId, "tags"));
+    batch.set(tagRef, { label });
+  });
+
+  await batch.commit();
+  console.log("✅ 초기 사용자 데이터 생성 완료");
+}
+
 export async function resetAllUserData(userId: string) {
   const batch = writeBatch(db);
 
