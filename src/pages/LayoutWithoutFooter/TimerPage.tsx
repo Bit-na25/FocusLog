@@ -10,7 +10,6 @@ import { addRetrospect } from "@/firebase";
 import PrimaryButton from "@/components/common/PrimaryButton";
 import SecondaryButton from "@/components/common/SecondaryButton";
 import AlertPopup from "@/components/common/AlertPopup";
-import toast from "react-hot-toast";
 
 enum TimerStatus {
   READY = "READY",
