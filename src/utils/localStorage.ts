@@ -1,4 +1,4 @@
-import { defaultDuration } from "@/recoil";
+import { defaultCategories, defaultDuration, defaultTags } from "@/recoil";
 
 export const TAG_KEY = "focuslog_tags";
 export const CATEGORY_KEY = "focuslog_categories";
@@ -17,7 +17,7 @@ export function setLocalTags(tags: any[]) {
 
 export function getLocalCategories() {
   const raw = localStorage.getItem(CATEGORY_KEY);
-  return raw ? JSON.parse(raw) : [];
+  return raw ? JSON.parse(raw) : defaultCategories;
 }
 
 export function setLocalCategories(categories: any[]) {
@@ -26,7 +26,7 @@ export function setLocalCategories(categories: any[]) {
 
 export function getLocalSchedules() {
   const raw = localStorage.getItem(STORAGE_KEY);
-  return raw ? JSON.parse(raw) : [];
+  return raw ? JSON.parse(raw) : defaultTags;
 }
 
 export function setLocalSchedules(schedules: any[]) {
