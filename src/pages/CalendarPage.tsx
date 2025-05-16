@@ -20,11 +20,11 @@ export default function CalendarPage() {
       <Calendar selectedDate={selectedDate} onDateChange={setSelectedDate} />
       <UnderLine />
       <CalendarScheduleList selectedDate={selectedDate} />
-      <div className="fixed bottom-24 max-w-md w-full flex justify-end">
+      <div className="max-w-lg mx-auto w-full fixed bottom-20 left-1/2 -translate-x-1/2 flex justify-end">
         <Link
           to="/schedule-form"
           state={{ selectedDate }}
-          className="w-14 h-14 rounded-full bg-primary text-white shadow-lg flex items-center justify-center transition hover:bg-primary/80 hover:scale-110"
+          className="mr-6 w-14 h-14 rounded-full bg-primary text-white shadow-lg flex items-center justify-center transition hover:bg-primary/80 hover:scale-110"
           aria-label="일정 추가하기"
         >
           <FaPlusCircle className="text-3xl" />

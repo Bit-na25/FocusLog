@@ -13,7 +13,7 @@ export default function CalendarScheduleList({ selectedDate }: Props) {
 
   return (
     <section className="my-3 pb-4">
-      <h2 className="text-md font-bold mb-2 tracking-tight">
+      <h2 className="font-bold mb-2 tracking-tight">
         {formatToKoreanDateWithoutYear(selectedDate)}
       </h2>
       {schedules.length > 0 ? (
@@ -25,7 +25,7 @@ export default function CalendarScheduleList({ selectedDate }: Props) {
           ))}
         </ul>
       ) : (
-        <div className="flex text-md font-bold">
+        <div className="flex font-bold">
           <div className="border-l-4 border-gray-500 mr-2" />
           <p className="mr-7 text-gray-400">일정이 없습니다.</p>
         </div>

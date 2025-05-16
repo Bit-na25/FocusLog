@@ -22,7 +22,7 @@ export default function Schedule({ scheduleId }: ScheduleProps) {
       state={{ scheduleId }}
       className="flex items-center justify-between hover:bg-gray-50 cursor-pointer transition"
     >
-      <div className="flex text-md font-bold">
+      <div className="flex font-bold">
         <div className={`shrink-0 w-1 h-6 mr-2 ${categoryInfo.color}`} />
         <p className="mr-7 text-gray-500">{schedule?.time}</p>
         <p className="line-clamp-1 text-ellipsis overflow-hidden">{schedule?.title}</p>
