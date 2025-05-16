@@ -19,6 +19,8 @@ import PrimaryButton from "@/components/common/PrimaryButton";
 import FormActionButtons from "@/components/common/FormActionButtons";
 import CategoryForm from "@/components/features/scheduleForm/CategoryForm";
 import DateForm from "@/components/features/scheduleForm/DateForm";
+import toast from "react-hot-toast";
+import AlertPopup from "@/components/common/AlertPopup";
 
 export default function ScheduleFormPage() {
   const navigate = useNavigate();
@@ -35,6 +37,7 @@ export default function ScheduleFormPage() {
   );
   const [category, setCategory] = useState<CategoryType>(categories[0]);
   const setSchedules = useSetRecoilState(scheduleState);
+  const [showAlert, setShowAlert] = useState(false);
   const setRetrospects = useSetRecoilState(retrospectState);
 
   useEffect(() => {
@@ -49,7 +52,8 @@ export default function ScheduleFormPage() {
   const handleSave = async () => {
     if (!title.trim()) {
       titleRef.current?.focus();
-      alert("제목을 입력해주세요.");
+      toast.error("제목을 입력해주세요!");
+
       return;
     }
 
@@ -85,6 +89,7 @@ export default function ScheduleFormPage() {
   };
 
   const handleDelete = () => {
+    setShowAlert(false);
     if (userId !== null && schedule) {
       deleteSchedule(userId, schedule.id);
     }
@@ -142,8 +147,15 @@ export default function ScheduleFormPage() {
           저장
         </PrimaryButton>
       ) : (
-        <FormActionButtons onSave={handleSave} onDelete={handleDelete} />
+        <FormActionButtons onSave={handleSave} onDelete={() => setShowAlert(true)} />
       )}
+      <AlertPopup
+        open={showAlert}
+        message="일정을 삭제하시겠습니까?
+        ( 작성된 회고도 함께 삭제됩니다. )"
+        onConfirm={handleDelete}
+        onClose={() => setShowAlert(false)}
+      />
     </div>
   );
 }

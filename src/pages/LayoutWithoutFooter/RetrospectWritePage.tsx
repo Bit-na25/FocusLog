@@ -16,6 +16,7 @@ import { deleteRetrospect, updateRetrospect } from "@/firebase";
 import FormActionButtons from "@/components/common/FormActionButtons";
 import RetrospectTimer from "@/components/features/retrospect/RetrospectTimer";
 import RetrospectTagSelector from "@/components/features/retrospect/RetrospectTagSelector";
+import AlertPopup from "@/components/common/AlertPopup";
 
 export default function RetrospectWritePage() {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ export default function RetrospectWritePage() {
   const lastPage = useRecoilValue(lastPageState);
   const [note, setNote] = useState("");
   const [tags, setTags] = useState<string[]>([]);
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     if (retrospect) {
@@ -73,7 +75,7 @@ export default function RetrospectWritePage() {
     <div>
       <PageHeader
         title="회고 작성"
-        onClick={() => {
+        onBack={() => {
           navigate(lastPage);
         }}
       />
@@ -99,8 +101,14 @@ export default function RetrospectWritePage() {
 
       {/* 저장 버튼 */}
       <div className="fixed bottom-0 left-0 right-0 w-full h-20 bg-white">
-        <FormActionButtons onSave={handleSave} onDelete={handleDelete} />
+        <FormActionButtons onSave={handleSave} onDelete={() => setShowAlert(true)} />
       </div>
+      <AlertPopup
+        open={showAlert}
+        message="회고를 삭제하시겠습니까?"
+        onConfirm={handleDelete}
+        onClose={() => setShowAlert(false)}
+      />
     </div>
   );
 }

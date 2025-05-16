@@ -4,6 +4,7 @@ import { tagState } from "@/recoil";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { addTags as addTagsToFirestore } from "@/firebase";
 import ModalActionButtons from "./ModalActionButtons";
+import toast from "react-hot-toast";
 
 interface AddTagModal {
   onClose: () => void;
@@ -20,6 +21,8 @@ export default function AddTagModal({ onClose, onAddTag, setTag }: AddTagModal) 
   const handleSave = async () => {
     if (!label.trim()) {
       labelRef.current?.focus();
+      setLabel("");
+      toast.error("태그를 입력해주세요!");
       return;
     }
 
