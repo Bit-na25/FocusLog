@@ -142,7 +142,7 @@ export default function ScheduleFormPage() {
       {!schedule ? (
         <PrimaryButton
           onClick={handleSave}
-          className="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-[90%]"
+          className="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-[90%] max-w-md"
         >
           저장
         </PrimaryButton>
