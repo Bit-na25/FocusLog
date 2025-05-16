@@ -3,6 +3,7 @@ import { useRecoilValue } from "recoil";
 import ContentBox from "../../common/ContentBox";
 import LogBox from "../../LogBox";
 import { todayRetrospectSelector } from "@/recoil";
+import { LuRefreshCw } from "react-icons/lu";
 
 export default function RetrospectBox() {
   const [showIndex, setShowIndex] = useState(-1);
@@ -28,9 +29,10 @@ export default function RetrospectBox() {
         회고 현황
         {filteredRetrospects.length > 0 && (
           <button
-            className="px-3 py-1 border border-gray-300 rounded-lg text-sm font-normal"
+            className="px-3 py-1 border border-gray-300 rounded-lg text-sm font-normal flex items-center"
             onClick={handleChangeLog}
           >
+            <LuRefreshCw className="mr-2" />
             {showIndex + 1}/{filteredRetrospects.length}
           </button>
         )}

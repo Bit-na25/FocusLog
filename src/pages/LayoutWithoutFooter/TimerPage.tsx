@@ -7,6 +7,8 @@ import { retrospectState, RetrospectType, scheduleByIdSelector } from "@/recoil"
 import { formatDateOnly } from "../../utils/date/dateUtils";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { addRetrospect } from "@/firebase";
+import PrimaryButton from "@/components/common/PrimaryButton";
+import SecondaryButton from "@/components/common/SecondaryButton";
 
 enum TimerStatus {
   READY = "READY",
@@ -98,55 +100,42 @@ export default function TimerPage() {
       <PageHeader title="Timer" isTimer={true} />
 
       <section className="w-full pt-24">
-        {status === TimerStatus.RUNNING ? (
-          <div className="w-full aspect-square flex flex-col justify-center items-center">
-            <div className="w-full aspect-square rounded-full flex flex-col justify-center items-center bg-gray-800">
-              <div className="text-6xl font-bold">{formatTime(time)}</div>
-              <p className="text-gray-300 mt-2 text-sm">지금 집중 중...</p>
-            </div>
-          </div>
-        ) : (
-          <div className="w-full aspect-square flex justify-center items-center">
-            <span className="text-6xl font-bold"> {formatTime(time)}</span>
-          </div>
-        )}
+        <div className="w-full aspect-square flex flex-col  justify-center items-center">
+          <span
+            className={`${status === TimerStatus.RUNNING ? "text-7xl" : "text-6xl"} font-extrabold tracking-widest`}
+          >
+            {formatTime(time)}
+          </span>
+          {status === TimerStatus.RUNNING && (
+            <p className="text-gray-400 mt-2 tracking-wide animate-pulse">지금 집중 중...</p>
+          )}
+        </div>
 
-        <div className="bg-white text-black p-4 mt-6 rounded-lg">
+        <div className="bg-white/90 text-black p-4 mt-6 rounded-2xl border-l-4 shadow-lg">
           <Schedule scheduleId={scheduleId} isMini={false} />
         </div>
 
-        <div className="mt-3 flex gap-2">
+        <div className="mt-6 flex gap-2">
           {status === TimerStatus.READY ? (
-            <button
-              onClick={handleStart}
-              className="w-full py-3 bg-white text-black font-bold rounded"
-            >
+            <PrimaryButton onClick={handleStart} className="w-full">
               시작
-            </button>
+            </PrimaryButton>
           ) : (
             <>
               {status === TimerStatus.RUNNING && (
-                <button
-                  onClick={handlePause}
-                  className="w-1/2 py-3 border border-white text-white rounded"
-                >
+                <SecondaryButton onClick={handlePause} className="w-1/2">
                   일시정지
-                </button>
+                </SecondaryButton>
               )}
               {status === TimerStatus.PAUSED && (
-                <button
-                  onClick={handleResume}
-                  className="w-1/2 py-3 border border-white text-white rounded"
-                >
+                <SecondaryButton onClick={handleResume} className="w-1/2">
                   계속하기
-                </button>
+                </SecondaryButton>
               )}
-              <button
-                onClick={handleStop}
-                className="w-1/2 py-3 bg-white text-black font-bold rounded"
-              >
+
+              <PrimaryButton onClick={handleStop} className="w-1/2">
                 종료
-              </button>
+              </PrimaryButton>
             </>
           )}
         </div>

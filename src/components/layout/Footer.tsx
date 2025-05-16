@@ -1,4 +1,6 @@
 import { NavLink } from "react-router-dom";
+import { FaHome, FaCalendarAlt, FaUserAlt } from "react-icons/fa";
+import { IoStatsChart } from "react-icons/io5";
 
 export default function Footer() {
   return (
@@ -10,7 +12,7 @@ export default function Footer() {
         }
         aria-label="Home"
       >
-        🏠
+        <FaHome />
       </NavLink>
       <NavLink
         to="/calendar"
@@ -20,7 +22,7 @@ export default function Footer() {
         aria-label="Calendar"
         state={{ from: "category" }}
       >
-        📅
+        <FaCalendarAlt />
       </NavLink>
       <NavLink
         to="/statistics"
@@ -29,7 +31,7 @@ export default function Footer() {
         }
         aria-label="Statistics"
       >
-        📊
+        <IoStatsChart />
       </NavLink>
       <NavLink
         to="/mypage"
@@ -38,7 +40,7 @@ export default function Footer() {
         }
         aria-label="My Page"
       >
-        👤
+        <FaUserAlt />
       </NavLink>
     </div>
   );

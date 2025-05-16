@@ -12,7 +12,6 @@ export function useAuthUser() {
       setUserId(user ? user.uid : null);
       setName(user ? user.displayName : null);
       setPhoto(user ? user.photoURL : null);
-      console.log(user?.uid);
     });
     return () => unsubscribe();
   }, []);

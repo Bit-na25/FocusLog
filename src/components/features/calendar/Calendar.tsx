@@ -58,7 +58,7 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
   return (
     <div>
       {/* 년/월 표시 */}
-      <div className="text-xl font-bold mb-4">{`${year}년 ${month + 1}월`}</div>
+      <div className="text-xl font-bold mb-4 tracking-tight">{`${year}년 ${month + 1}월`}</div>
 
       <div className="mx-[-1rem]">
         {/* 요일 표시 */}
@@ -87,7 +87,7 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
                 <div className={`${opacity} mb-1`} onClick={() => onDateChange(date)}>
                   <div
                     className={`w-7 h-7 text-sm flex items-center justify-center ${
-                      isSelected ? "bg-gray-300 rounded-full" : ""
+                      isSelected ? "bg-primary text-white font-bold rounded-full" : ""
                     } ${textColor}`}
                   >
                     {date.getDate()}

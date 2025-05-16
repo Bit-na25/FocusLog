@@ -8,6 +8,7 @@ import ManageItemList from "../../components/features/myPage/ManageItemList";
 import { tagState } from "@/recoil";
 import { saveTagsToFirestore } from "@/firebase";
 import { useAuthUser } from "@/hooks/useAuthUser";
+import PrimaryButton from "@/components/common/PrimaryButton";
 
 export default function TagManagePage() {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ export default function TagManagePage() {
         title="태그 관리"
         rightSlot={
           <button onClick={() => setShowTagModal(true)} className="text-2xl">
-            <FiPlus />
+            <FiPlus className="hover:scale-110 hover:text-primary transition-all" />
           </button>
         }
       />
@@ -69,12 +70,9 @@ export default function TagManagePage() {
       </section>
 
       <div className="fixed bottom-0 left-0 right-0 w-full bg-white">
-        <button
-          className="m-6 w-[90%] py-3 bg-black font-bold text-white rounded-lg shadow-lg"
-          onClick={handleSave}
-        >
+        <PrimaryButton onClick={handleSave} className="m-6 w-[90%]">
           저장
-        </button>
+        </PrimaryButton>
       </div>
       {showTagModal && (
         <AddTagModal onClose={() => setShowTagModal(false)} setTag={(tags) => setFixedTag(tags)} />

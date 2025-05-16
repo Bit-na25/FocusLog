@@ -4,7 +4,7 @@ import { DateRange } from "../../../utils/date/dateRangeFilter";
 import { filterRetrospects } from "../../../utils/filter/filterRetrospects";
 
 type tagCount = Record<string, number>;
-const showCount = 5;
+const showCount = 4;
 
 interface TagStatisticsProps {
   period: DateRange;
@@ -28,20 +28,27 @@ export default function TagStatistics({ period, category }: TagStatisticsProps) 
     .slice(0, showCount);
 
   return (
-    <div className="mb-4">
-      <h2 className="font-bold mb-2">감정 태그 통계</h2>
+    <div className="mb-6">
+      <h2 className="font-bold mb-2 text-xl">감정 태그 통계</h2>
       <div className="flex flex-col gap-2">
-        {topTags.map(([tag, count]) => (
-          <div key={tag} className="flex items-center gap-2">
-            <span className="w-20">#{tag}</span>
-            <div className="flex-1 bg-gray-200 h-3 rounded-full">
-              <div
-                className={`h-full rounded-full ${count === maxCount ? "bg-yellow-400" : "bg-gray-400"}`}
-                style={{ width: `${(count / filtered.length) * 100}%` }}
-              ></div>
+        {topTags.map(([tag, count]) => {
+          const rate = Math.floor((count / filtered.length) * 100);
+
+          return (
+            <div key={tag} className="flex items-center gap-2">
+              <span className="w-20 line-clamp-1 text-ellipsis overflow-hidden">#{tag}</span>
+              <div className="flex flex-1 items-center gap-2">
+                <div className="flex-1 bg-gray-200 h-3 rounded-full">
+                  <div
+                    className={`h-full rounded-full ${count === maxCount ? "bg-primary/80" : "bg-gray-300"}`}
+                    style={{ width: `${rate}%` }}
+                  />
+                </div>
+                <div className="w-10 text-end text-sm">{rate}%</div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

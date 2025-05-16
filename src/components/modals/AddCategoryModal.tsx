@@ -4,6 +4,7 @@ import { CategoryType, categoryState, defaultCategoryColor } from "@/recoil";
 import { FaCheck } from "react-icons/fa";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { addCategory } from "@/firebase";
+import ModalActionButtons from "./ModalActionButtons";
 
 interface AddCategoryModalProps {
   onClose: () => void;
@@ -59,16 +60,16 @@ export default function AddCategoryModal({
           value={label}
           onChange={(e) => setLabel(e.target.value)}
           placeholder="카테고리 이름"
-          className="w-full border rounded px-3 py-2 mb-4 bg-white text-sm"
+          className="w-full border rounded px-3 py-2 mb-4 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
           ref={labelRef}
         />
 
         <label className="block text-sm font-semibold mb-1">색상</label>
-        <div className="w-full border rounded px-3 py-2 mb-4 bg-white h-28 grid grid-cols-6 gap-1 overflow-auto">
+        <div className="w-full border rounded px-2 py-2 mb-4 bg-white h-28 grid grid-cols-6 gap-3 overflow-auto">
           {defaultCategoryColor.map((c) => (
             <button
               key={c}
-              className={`w-10 h-10 rounded-full ${c} flex justify-center items-center`}
+              className={`w-10 h-10 rounded-full ${c} flex justify-center items-center ${c === color && "ring-2 ring-offset-1 ring-primary"}`}
               onClick={() => setColor(c)}
             >
               {c === color && <FaCheck className="text-2xl text-white" />}
@@ -76,17 +77,7 @@ export default function AddCategoryModal({
           ))}
         </div>
 
-        <div className="flex justify-end gap-2">
-          <button className="px-4 py-2 border rounded text-sm" onClick={onClose}>
-            취소
-          </button>
-          <button
-            className="px-4 py-2 bg-black text-white rounded text-sm font-bold"
-            onClick={handleSave}
-          >
-            저장
-          </button>
-        </div>
+        <ModalActionButtons onSave={handleSave} onCancel={onClose} />
       </div>
     </div>
   );

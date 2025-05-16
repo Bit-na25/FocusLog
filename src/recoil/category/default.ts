@@ -3,7 +3,7 @@ import { CategoryType } from "./types";
 export const defaultCategories: CategoryType[] = [
   { id: "1", label: "Study", color: "bg-blue-600" },
   { id: "2", label: "Exercise", color: "bg-green-600" },
-  { id: "3", label: "Meeting", color: "bg-purple-600" },
+  { id: "3", label: "Meeting", color: "bg-red-600" },
 ];
 
 export const defaultCategoryColor = [
@@ -22,13 +22,7 @@ export const defaultCategoryColor = [
   "bg-green-600",
   "bg-green-400",
   "bg-green-200",
-  "bg-teal-600",
-  "bg-teal-400",
-  "bg-teal-200",
   "bg-blue-600",
   "bg-blue-400",
   "bg-blue-200",
-  "bg-purple-600",
-  "bg-purple-400",
-  "bg-purple-200",
 ];

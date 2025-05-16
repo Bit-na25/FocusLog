@@ -9,6 +9,7 @@ import ColorPickerPopover from "../../components/modals/ColorPickerPopover";
 import { categoryState, CategoryType } from "@/recoil";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { saveCategoriesToFirestore } from "@/firebase";
+import PrimaryButton from "@/components/common/PrimaryButton";
 
 export default function CategoryManagePage() {
   const navigate = useNavigate();
@@ -76,7 +77,7 @@ export default function CategoryManagePage() {
         title="카테고리 관리"
         rightSlot={
           <button onClick={() => setShowAddCategoryModal(true)} className="text-2xl">
-            <FiPlus />
+            <FiPlus className="hover:scale-110 hover:text-primary transition-all" />
           </button>
         }
       />
@@ -110,12 +111,9 @@ export default function CategoryManagePage() {
       </section>
 
       <div className="fixed bottom-0 left-0 right-0 w-full bg-white">
-        <button
-          className="m-6 w-[90%] py-3 bg-black font-bold text-white rounded-lg shadow-lg"
-          onClick={handleSave}
-        >
+        <PrimaryButton onClick={handleSave} className="m-6 w-[90%]">
           저장
-        </button>
+        </PrimaryButton>
       </div>
 
       {showAddCategoryModal && (

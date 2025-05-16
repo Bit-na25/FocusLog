@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 import { Link } from "react-router-dom";
-import Schedule from "../../Schedule";
+import Schedule from "./Schedule";
 import { todayScheduleSelector } from "@/recoil";
 
 export default function ScheduleList() {
@@ -20,7 +20,10 @@ export default function ScheduleList() {
         </p>
       )}
       <Link to="/schedule-form">
-        <div className="w-full border border-gray-300 p-2 rounded-lg text-center">
+        <div
+          className="w-full border border-gray-300 p-2 rounded-lg text-sm text-center font-bold hover:bg-primary/5 
+        "
+        >
           + 일정 추가하기
         </div>
       </Link>

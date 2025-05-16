@@ -1,4 +1,3 @@
-// components/ManageItemList.tsx
 import { useRef } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import { JSX } from "react";
@@ -55,13 +54,16 @@ export default function ManageItemList<T>({
                     ref={inputRef}
                   />
                 ) : (
-                  <span className="flex-1" onClick={() => onEdit(item)}>
+                  <span
+                    className="flex-1 cursor-pointer line-clamp-1 text-ellipsis overflow-hidden"
+                    onClick={() => onEdit(item)}
+                  >
                     {label}
                   </span>
                 )}
               </div>
               <button onClick={() => onDelete(item)} className="text-gray-500">
-                <FiTrash2 />
+                <FiTrash2 className="hover:text-red-400" />
               </button>
             </div>
             <hr />
