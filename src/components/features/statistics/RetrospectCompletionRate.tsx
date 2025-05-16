@@ -6,6 +6,7 @@ import { retrospectState, scheduleState } from "@/recoil";
 import { DateRange } from "../../../utils/date/dateRangeFilter";
 import { filterSchedules } from "../../../utils/filter/filterSchedules";
 import { filterRetrospects } from "../../../utils/filter/filterRetrospects";
+import { motion } from "framer-motion";
 
 interface RetrospectCompletionRateProps {
   period: DateRange;
@@ -31,7 +32,7 @@ export default function RetrospectCompletionRate({
       : (filteredRetrospects.length / filteredSchedules.length) * 100,
   );
   const circumference = 2 * Math.PI * 16; // 반지름 r = 16
-  const offset = circumference - (circumference * completionRate) / 100;
+  const offset = circumference * (1 - completionRate / 100);
 
   useEffect(() => {
     setShowIndex(Math.floor(Math.random() * filteredRetrospects.length));
@@ -45,7 +46,7 @@ export default function RetrospectCompletionRate({
           <div className="relative w-16 h-16 shrink-0">
             <svg viewBox="0 0 36 36" className="w-full h-full">
               <circle cx="18" cy="18" r="16" fill="none" stroke="#eee" strokeWidth="4" />
-              <circle
+              {/* <circle
                 cx="18"
                 cy="18"
                 r="16"
@@ -54,6 +55,20 @@ export default function RetrospectCompletionRate({
                 strokeWidth="4"
                 strokeDasharray={circumference}
                 strokeDashoffset={offset}
+                strokeLinecap="round"
+                transform="rotate(-90 18 18)"
+              /> */}
+              <motion.circle
+                initial={{ strokeDashoffset: circumference }}
+                animate={{ strokeDashoffset: offset }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                cx="18"
+                cy="18"
+                r="16"
+                fill="none"
+                stroke="#793DF9"
+                strokeWidth="4"
+                strokeDasharray={circumference}
                 strokeLinecap="round"
                 transform="rotate(-90 18 18)"
               />

@@ -2,6 +2,7 @@ import { useRecoilValue } from "recoil";
 import { retrospectState } from "@/recoil";
 import { DateRange } from "../../../utils/date/dateRangeFilter";
 import { filterRetrospects } from "../../../utils/filter/filterRetrospects";
+import { motion } from "framer-motion";
 
 type tagCount = Record<string, number>;
 const showCount = 4;
@@ -42,9 +43,11 @@ export default function TagStatistics({ period, category }: TagStatisticsProps) 
                 </span>
                 <div className="flex flex-1 items-center gap-2">
                   <div className="flex-1 bg-gray-200 h-3 rounded-full">
-                    <div
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${rate}%` }}
+                      transition={{ duration: 0.5, ease: "easeOut" }}
                       className={`h-full rounded-full ${count === maxCount ? "bg-primary/80" : "bg-gray-300"}`}
-                      style={{ width: `${rate}%` }}
                     />
                   </div>
                   <div className="w-10 text-end text-sm">{rate}%</div>

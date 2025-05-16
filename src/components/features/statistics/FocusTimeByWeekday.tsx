@@ -3,6 +3,7 @@ import { retrospectState } from "@/recoil";
 import { DateRange } from "../../../utils/date/dateRangeFilter";
 import { filterRetrospects } from "../../../utils/filter/filterRetrospects";
 import { formatDurationKo } from "@/utils/date/formatDuration";
+import { motion } from "framer-motion";
 
 const dayLabels = ["일", "월", "화", "수", "목", "금", "토"];
 interface FocusTimeByDayProps {
@@ -31,11 +32,13 @@ export default function FocusTimeByDay({ period, category }: FocusTimeByDayProps
 
           return (
             <div key={i} className="h-full flex flex-col items-center justify-end">
-              <div
+              <motion.div
+                initial={{ height: 0 }}
+                animate={{ height: `${rate}%` }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
                 className={`w-3.5 rounded-t ${v === max ? "bg-primary/80" : "bg-gray-300"}`}
                 title={`${formatDurationKo(v)}`}
-                style={{ height: `${rate}%` }}
-              ></div>
+              />
               <span className="text-xs mt-1">{dayLabels[i]}</span>
             </div>
           );
