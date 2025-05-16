@@ -5,6 +5,7 @@ import { useAuthUser } from "@/hooks/useAuthUser";
 import { addTags as addTagsToFirestore } from "@/firebase";
 import ModalActionButtons from "./ModalActionButtons";
 import toast from "react-hot-toast";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface AddTagModal {
   onClose: () => void;
@@ -45,25 +46,38 @@ export default function AddTagModal({ onClose, onAddTag, setTag }: AddTagModal) 
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-      <div className="max-w-md bg-white rounded-lg shadow-lg p-6 w-[90%]">
-        <h2 className="text-lg font-bold mb-4">태그 추가</h2>
-        <input
-          type="text"
-          value={label}
-          onChange={(e) => setLabel(e.target.value)}
-          placeholder="뿌듯함, 피곤함"
-          className="w-full border rounded px-3 py-2 mb-1 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-          ref={labelRef}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleSave();
-          }}
-          autoFocus
-        />
-        <p className="text-xs text-gray-400 ml-1 mb-4">* 쉼표로 구분하여 입력하세요.</p>
+    <AnimatePresence>
+      <motion.div
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <motion.div
+          className="bg-white rounded-lg shadow-xl p-6 w-[70%] max-w-sm"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <h2 className="text-lg font-bold mb-4">태그 추가</h2>
+          <input
+            type="text"
+            value={label}
+            onChange={(e) => setLabel(e.target.value)}
+            placeholder="뿌듯함, 피곤함"
+            className="w-full border rounded px-3 py-2 mb-1 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            ref={labelRef}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleSave();
+            }}
+            autoFocus
+          />
+          <p className="text-xs text-gray-400 ml-1 mb-4">* 쉼표로 구분하여 입력하세요.</p>
 
-        <ModalActionButtons onSave={handleSave} onCancel={onClose} />
-      </div>
-    </div>
+          <ModalActionButtons onSave={handleSave} onCancel={onClose} />
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 }

@@ -69,8 +69,8 @@ export default function TagManagePage() {
         />
       </section>
 
-      <div className="fixed bottom-0 left-0 right-0 w-full bg-white">
-        <PrimaryButton onClick={handleSave} className="m-6 w-[90%] max-w-md">
+      <div className=" max-w-md mx-auto fixed bottom-0 left-0 right-0 w-full bg-white">
+        <PrimaryButton onClick={handleSave} className="m-6 w-[90%]">
           저장
         </PrimaryButton>
       </div>
