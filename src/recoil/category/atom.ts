@@ -6,6 +6,6 @@ import { CATEGORY_KEY } from "@/utils/localStorage";
 
 export const categoryState = atom<CategoryType[]>({
   key: "categoryState",
-  default: [],
+  default: defaultCategories,
   effects: [localStorageEffect<CategoryType[]>(CATEGORY_KEY, defaultCategories)],
 });

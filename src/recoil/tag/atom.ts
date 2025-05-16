@@ -5,6 +5,6 @@ import { TAG_KEY } from "@/utils/localStorage";
 
 export const tagState = atom<string[]>({
   key: "tagState",
-  default: [],
+  default: defaultTags,
   effects: [localStorageEffect<string[]>(TAG_KEY, defaultTags)],
 });
