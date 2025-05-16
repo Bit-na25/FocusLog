@@ -19,7 +19,7 @@ export default function PageHeader({
   const navigate = useNavigate();
 
   return (
-    <div className="fixed top-0 left-6 right-6">
+    <div className="max-w-md mx-auto fixed top-0 left-6 right-6">
       <header
         className={clsx(
           "py-4 flex relative items-center justify-between",

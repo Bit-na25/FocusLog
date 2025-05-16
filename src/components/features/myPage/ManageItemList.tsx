@@ -45,7 +45,7 @@ export default function ManageItemList<T>({
 
                 {editingKey === key ? (
                   <input
-                    className="flex-1 border rounded px-2 py-1 bg-white"
+                    className="flex-1 border rounded px-2 py-1 bg-white focus:outline-none focus:ring-2 focus:ring-primary"
                     value={editedLabel}
                     onChange={(e) => setEditedLabel(e.target.value)}
                     onBlur={onSaveEdit}

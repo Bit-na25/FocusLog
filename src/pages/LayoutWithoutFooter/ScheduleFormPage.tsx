@@ -15,7 +15,7 @@ import { useAuthUser } from "@/hooks/useAuthUser";
 import { addSchedule, deleteSchedule, updateSchedule } from "@/firebase";
 import PrimaryButton from "@/components/common/PrimaryButton";
 import FormActionButtons from "@/components/common/FormActionButtons";
-import CategoryForm from "@/components/features/scheduleForm/categoryForm";
+import CategoryForm from "@/components/features/scheduleForm/CategoryForm";
 import DateForm from "@/components/features/scheduleForm/DateForm";
 
 export default function ScheduleFormPage() {
