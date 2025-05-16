@@ -47,6 +47,7 @@ export const getSchedulesByMonthSelector = selectorFamily<ScheduleType[], Date>(
   get:
     (date: Date) =>
     ({ get }) => {
+      console.log("[getSchedulesByMonthSelector date]", date);
       const monthStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
 
       const all = get(scheduleState);
