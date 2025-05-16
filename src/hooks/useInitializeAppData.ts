@@ -18,6 +18,7 @@ export function useInitializeAppData() {
 
   return async function initialize(userId: string | null) {
     if (!userId) {
+      console.log("useInitializeAppData : ", getLocalCategories());
       setTags(getLocalTags());
       setCategories(getLocalCategories());
       setSchedules(getLocalSchedules());
