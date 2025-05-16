@@ -21,7 +21,6 @@ export function getLocalCategories() {
 }
 
 export function setLocalCategories(categories: any[]) {
-  console.log("localStorage : ", categories);
   localStorage.setItem(CATEGORY_KEY, JSON.stringify(categories));
 }
 
