@@ -24,8 +24,8 @@ export default function RetrospectBox() {
   };
 
   return (
-    <section className="my-8 pb-8">
-      <h2 className="flex justify-between text-xl font-bold mb-2">
+    <section className="my-6 pb-8">
+      <h2 className="flex justify-between text-lg font-bold mb-2">
         회고 현황
         {filteredRetrospects.length > 0 && (
           <button
@@ -41,8 +41,8 @@ export default function RetrospectBox() {
         <LogBox scheduleId={filteredRetrospects[showIndex]?.scheduleId} />
       ) : (
         <ContentBox>
-          <p className="text-m">오늘 회고가 아직 없습니다.</p>
-          <p className="text-sm">* 회고는 타이머 완료 후 작성할 수 있어요.</p>
+          <p className="text-sm">오늘 회고가 아직 없습니다.</p>
+          <p className="text-xs">* 회고는 타이머 완료 후 작성할 수 있어요.</p>
         </ContentBox>
       )}
     </section>

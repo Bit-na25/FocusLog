@@ -18,20 +18,20 @@ export default function FocusTimeByWeekday({ period, category }: FocusTimeByWeek
   const { h, m, s } = splitDuration(todayTotalFocusTime);
 
   return (
-    <div className="my-4">
+    <div className="my-3">
       <ContentBox>
-        <div className="py-1 flex justify-between items-center">
-          <h2 className="font-bold flex items-center text-xl ">
-            <IoMdTime className="text-primary text-4xl mr-1" />총 집중 시간
+        <div className="p-1.5 flex justify-between items-center">
+          <h2 className="font-bold flex items-center ">
+            <IoMdTime className="text-primary text-3xl mr-1" />총 집중 시간
           </h2>
-          <div className="text-2xl font-bold text-primary">
+          <div className="text-lg font-bold text-primary">
             {h > 0 ? (
               <>
-                <span className="text-4xl">{h}</span>시 <span className="text-4xl">{m}</span>분
+                <span className="text-2xl">{h}</span>시 <span className="text-2xl">{m}</span>분
               </>
             ) : (
               <>
-                <span className="text-4xl">{m}</span>분 <span className="text-4xl">{s}</span>초
+                <span className="text-2xl">{m}</span>분 <span className="text-2xl">{s}</span>초
               </>
             )}
           </div>

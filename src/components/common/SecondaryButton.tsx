@@ -15,7 +15,7 @@ export default function SecondaryButton({
   return (
     <button
       className={clsx(
-        "py-3.5 border border-2 font-bold text-white rounded-lg shadow-md hover:bg-white/10 transition-all duration-200",
+        "py-2.5 border border-2 font-bold text-sm text-white rounded-lg shadow-md hover:bg-white/10 transition-all duration-200",
         className,
       )}
       onClick={onClick}

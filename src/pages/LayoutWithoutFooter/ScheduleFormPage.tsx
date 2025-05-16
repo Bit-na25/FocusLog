@@ -42,7 +42,7 @@ export default function ScheduleFormPage() {
     }
   }, []);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!title.trim()) {
       titleRef.current?.focus();
       alert("제목을 입력해주세요.");
@@ -59,6 +59,15 @@ export default function ScheduleFormPage() {
       done: schedule?.done ?? false,
     };
 
+    if (userId !== null) {
+      if (schedule) {
+        updateSchedule(userId, newSchedule.id, newSchedule);
+      } else {
+        const newId = await addSchedule(userId, newSchedule);
+        newSchedule.id = newId;
+      }
+    }
+
     setSchedules((prev) => {
       if (schedule) {
         // 수정 모드 → 기존 id 덮어쓰기
@@ -67,14 +76,6 @@ export default function ScheduleFormPage() {
 
       return [...prev, newSchedule];
     });
-
-    if (userId !== null) {
-      if (schedule) {
-        updateSchedule(userId, newSchedule.id, newSchedule);
-      } else {
-        addSchedule(userId, newSchedule);
-      }
-    }
 
     navigate(-1);
   };
@@ -91,15 +92,15 @@ export default function ScheduleFormPage() {
     <div>
       <PageHeader title="일정" />
 
-      <section className="mt-24">
+      <section className="mt-16">
         <div>
-          <label className="block mb-1 text-lg font-bold">제목</label>
+          <label className="block mb-1 text-md font-bold">제목</label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="제목을 입력하세요."
-            className="w-full p-2 border rounded bg-white focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full text-sm p-2 border rounded bg-white focus:outline-none focus:ring-1 focus:ring-primary"
             ref={titleRef}
           ></input>
         </div>
@@ -113,12 +114,12 @@ export default function ScheduleFormPage() {
         />
 
         <div className="mt-4">
-          <label className="block mb-1 text-lg font-bold">메모</label>
+          <label className="block mb-1 font-bold">메모</label>
           <textarea
             value={memo}
             onChange={(e) => setMemo(e.target.value)}
             placeholder="메모를 입력하세요."
-            className="w-full p-2 border rounded h-32 resize-none bg-white focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full text-sm p-2 border rounded h-32 resize-none bg-white focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
       </section>

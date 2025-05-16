@@ -37,11 +37,12 @@ export default function AddCategoryModal({
     if (setCategory != null) {
       setCategory((prev) => [...prev, newCategory]);
     } else {
-      setCategories((prev) => [...prev, newCategory]);
-
       if (userId !== null) {
-        await addCategory(userId, newCategory);
+        const newId = await addCategory(userId, newCategory);
+        newCategory.id = newId;
       }
+
+      setCategories((prev) => [...prev, newCategory]);
     }
 
     if (onAddCategory != null) onAddCategory(newCategory);

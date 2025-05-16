@@ -44,7 +44,6 @@ export function setLocalRetrospects(retrospects: any[]) {
 
 export function getLocalFocusDuration() {
   const raw = localStorage.getItem(FOCUS_DURATION_KEY);
-  console.log(raw);
   return raw ? JSON.parse(raw) : defaultDuration;
 }
 

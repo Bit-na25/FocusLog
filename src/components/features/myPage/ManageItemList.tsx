@@ -39,13 +39,13 @@ export default function ManageItemList<T>({
 
         return (
           <li key={key}>
-            <div className="flex items-center justify-between py-3 h-14">
+            <div className="flex items-center justify-between px-2 h-12">
               <div className="flex items-center gap-3 flex-1 mr-3">
                 {renderLeft && renderLeft(item)}
 
                 {editingKey === key ? (
                   <input
-                    className="flex-1 border rounded px-2 py-1 bg-white focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="flex-1 border text-sm rounded px-2 py-1 bg-white focus:outline-none focus:ring-1 focus:ring-primary"
                     value={editedLabel}
                     onChange={(e) => setEditedLabel(e.target.value)}
                     onBlur={onSaveEdit}
@@ -55,7 +55,7 @@ export default function ManageItemList<T>({
                   />
                 ) : (
                   <span
-                    className="flex-1 cursor-pointer line-clamp-1 text-ellipsis overflow-hidden"
+                    className="flex-1 cursor-pointer text-sm line-clamp-1 text-ellipsis overflow-hidden"
                     onClick={() => onEdit(item)}
                   >
                     {label}
@@ -63,7 +63,7 @@ export default function ManageItemList<T>({
                 )}
               </div>
               <button onClick={() => onDelete(item)} className="text-gray-500">
-                <FiTrash2 className="hover:text-red-400" />
+                <FiTrash2 className="hover:text-red-400 text-sm" />
               </button>
             </div>
             <hr />

@@ -19,7 +19,7 @@ export default function HomePage() {
 
   return (
     <div>
-      <header className="py-4 text-xl font-bold tracking-tight">{formatToKoreanDate(today)}</header>
+      <header className="py-2 text-lg font-bold tracking-tight">{formatToKoreanDate(today)}</header>
       <UnderLine />
       <ScheduleList />
       <FocusSummary />

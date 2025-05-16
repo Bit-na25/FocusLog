@@ -14,6 +14,7 @@ interface TagStatisticsProps {
 export default function TagStatistics({ period, category }: TagStatisticsProps) {
   const retrospects = useRecoilValue(retrospectState);
   const filtered = filterRetrospects(retrospects, period, category);
+  console.log(filtered);
 
   const tagCounts: tagCount = {};
   filtered.forEach((r) => {
@@ -29,26 +30,34 @@ export default function TagStatistics({ period, category }: TagStatisticsProps) 
 
   return (
     <div className="mb-6">
-      <h2 className="font-bold mb-2 text-xl">감정 태그 통계</h2>
+      <h2 className="font-bold mb-2">감정 태그 통계</h2>
       <div className="flex flex-col gap-2">
-        {topTags.map(([tag, count]) => {
-          const rate = Math.floor((count / filtered.length) * 100);
+        {topTags.length > 0 ? (
+          topTags.map(([tag, count]) => {
+            const rate = Math.floor((count / filtered.length) * 100);
 
-          return (
-            <div key={tag} className="flex items-center gap-2">
-              <span className="w-20 line-clamp-1 text-ellipsis overflow-hidden">#{tag}</span>
-              <div className="flex flex-1 items-center gap-2">
-                <div className="flex-1 bg-gray-200 h-3 rounded-full">
-                  <div
-                    className={`h-full rounded-full ${count === maxCount ? "bg-primary/80" : "bg-gray-300"}`}
-                    style={{ width: `${rate}%` }}
-                  />
+            return (
+              <div key={tag} className="flex items-center gap-2">
+                <span className="w-16 text-sm font-bold line-clamp-1 text-ellipsis overflow-hidden">
+                  #{tag}
+                </span>
+                <div className="flex flex-1 items-center gap-2">
+                  <div className="flex-1 bg-gray-200 h-3 rounded-full">
+                    <div
+                      className={`h-full rounded-full ${count === maxCount ? "bg-primary/80" : "bg-gray-300"}`}
+                      style={{ width: `${rate}%` }}
+                    />
+                  </div>
+                  <div className="w-10 text-end text-sm">{rate}%</div>
                 </div>
-                <div className="w-10 text-end text-sm">{rate}%</div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        ) : (
+          <p className="text-gray-500 w-full text-xs text-center pt-2 font-bold">
+            선택된 태그가 없습니다.
+          </p>
+        )}
       </div>
     </div>
   );

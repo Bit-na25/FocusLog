@@ -7,9 +7,11 @@ interface LogProps {
 export default function Log({ content, tags }: LogProps) {
   return (
     <div>
-      <p className="overflow-hidden text-ellipsis line-clamp-2">"{content ? content : "..."}"</p>
+      <p className="overflow-hidden text-ellipsis line-clamp-2 text-sm">
+        "{content ? content : "..."}"
+      </p>
       {tags && tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-2">
+        <div className="flex flex-wrap gap-1 mt-1">
           {tags.map((tag) => (
             <Tag key={tag} tag={tag} />
           ))}

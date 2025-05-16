@@ -3,15 +3,14 @@ export const baseSelectStyles = {
     ...base,
     fontSize: "0.875rem", // text-sm
     backgroundColor: "#fff",
-    paddingLeft: "0.5rem",
-    paddingRight: "0.5rem",
+    padding: "0.3rem 0.5rem",
     boxShadow: state.isFocused ? "0 0 0 1px #8b5cf6" : "none",
     fontWeight: "bold",
   }),
   menu: (base: any) => ({
     ...base,
     boxShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
-    fontSize: "0.875rem",
+    fontSize: "0.8rem",
     zIndex: 20,
   }),
   option: (base: any, state: any) => ({

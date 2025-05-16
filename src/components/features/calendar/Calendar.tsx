@@ -58,9 +58,9 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
   return (
     <div>
       {/* 년/월 표시 */}
-      <div className="text-xl font-bold mb-4 tracking-tight">{`${year}년 ${month + 1}월`}</div>
+      <div className="text-lg font-bold mb-3 tracking-tight">{`${year}년 ${month + 1}월`}</div>
 
-      <div className="mx-[-1rem]">
+      <div className="mx-[-0.8rem]">
         {/* 요일 표시 */}
         <div className="grid grid-cols-7 text-center font-semibold text-xs mb-1">
           <div className="text-red-500">일</div>
@@ -86,14 +86,14 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
               <div key={idx} className="w-full flex flex-col items-center justify-center">
                 <div className={`${opacity} mb-1`} onClick={() => onDateChange(date)}>
                   <div
-                    className={`w-7 h-7 text-sm flex items-center justify-center ${
+                    className={`w-6 h-6 text-sm flex items-center justify-center ${
                       isSelected ? "bg-primary text-white font-bold rounded-full" : ""
                     } ${textColor}`}
                   >
                     {date.getDate()}
                   </div>
                 </div>
-                <div className="flex gap-1 mb-3">
+                <div className="flex gap-1 mb-2">
                   {schedules.map((s) => {
                     const color = categories.find((e) => e.id === s.category);
 

@@ -39,30 +39,30 @@ export default function LoginPage() {
     <div>
       <PageHeader title="" />
       <section className="min-h-screen flex flex-col items-center justify-center">
-        <img className="w-48" src={logo} />
-        <h1 className="text-4xl font-bold mb-6">
+        <img className="w-44" src={logo} />
+        <h1 className="text-3xl font-bold mb-6">
           Focus<span className="font-normal">Log</span>
         </h1>
 
-        <div className="flex gap-10 mt-24">
+        <div className="flex gap-10 mt-16">
           <button
             onClick={() => handleLogin("github")}
             disabled={loading}
-            className="bg-gray-800 text-white p-4 rounded-full hover:scale-110 transition-all"
+            className="bg-gray-800 text-white p-3 rounded-full hover:scale-110 transition-all"
           >
             <FaGithub className="text-lg" />
           </button>
           <button
             onClick={() => handleLogin("google")}
             disabled={loading}
-            className="bg-white border p-4 rounded-full hover:scale-110 transition-all"
+            className="bg-white border p-3 rounded-full hover:scale-110 transition-all"
           >
             <FcGoogle className="text-lg" />
           </button>
           <button
             onClick={() => handleLogin("facebook")}
             disabled={loading}
-            className="bg-blue-600 text-white p-4 rounded-full hover:scale-110 transition-all"
+            className="bg-blue-600 text-white p-3 rounded-full hover:scale-110 transition-all"
           >
             <FaFacebookF className="text-lg" />
           </button>

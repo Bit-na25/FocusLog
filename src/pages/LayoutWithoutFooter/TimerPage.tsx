@@ -63,7 +63,7 @@ export default function TimerPage() {
     startTimer();
   };
 
-  const handleStop = () => {
+  const handleStop = async () => {
     stopTimer();
     setStatus(TimerStatus.READY);
     const focusDuration = time;
@@ -76,12 +76,15 @@ export default function TimerPage() {
       focusDuration,
       category: schedule ? schedule.category : "",
       content: "",
+      tags: [],
     };
 
-    setRetrospect((prev) => [...prev, newRetrospect]);
     if (userId !== null) {
-      addRetrospect(userId, newRetrospect);
+      const newId = await addRetrospect(userId, newRetrospect);
+      newRetrospect.id = newId;
     }
+
+    setRetrospect((prev) => [...prev, newRetrospect]);
 
     navigate("/retrospect", {
       state: { scheduleId },
@@ -99,23 +102,21 @@ export default function TimerPage() {
     <div className="h-screen bg-neutral-900 text-white px-6">
       <PageHeader title="Timer" isTimer={true} />
 
-      <section className="pt-24 max-w-md mx-auto">
+      <section className="pt-16 max-w-md mx-auto">
         <div className="aspect-square flex flex-col justify-center items-center">
-          <span
-            className={`${status === TimerStatus.RUNNING ? "text-7xl" : "text-6xl"} font-extrabold tracking-widest`}
-          >
-            {formatTime(time)}
-          </span>
+          <span className="text-5xl font-extrabold tracking-widest">{formatTime(time)}</span>
           {status === TimerStatus.RUNNING && (
-            <p className="text-gray-400 mt-2 tracking-wide animate-pulse">지금 집중 중...</p>
+            <p className="text-gray-400 text-sm mt-2 tracking-wide animate-pulse">
+              지금 집중 중...
+            </p>
           )}
         </div>
 
-        <div className="bg-white/90 text-black p-4 mt-6 rounded-2xl border-l-4 shadow-lg">
+        <div className="bg-white/90 text-black p-3 rounded-2xl border-l-4 shadow-lg">
           <Schedule scheduleId={scheduleId} isMini={false} />
         </div>
 
-        <div className="mt-6 flex gap-2">
+        <div className="mt-3 flex gap-2">
           {status === TimerStatus.READY ? (
             <PrimaryButton onClick={handleStart} className="w-full">
               시작

@@ -14,7 +14,7 @@ export default function LogBox({ scheduleId }: { scheduleId: string }) {
         </Link>
       ) : (
         <Link to="/timer" state={{ scheduleId }}>
-          <div className="text-center text-sm text-gray-400">회고가 아직 없습니다.</div>
+          <div className="text-center text-xs text-gray-400">회고가 아직 없습니다.</div>
         </Link>
       )}
     </ContentBox>
