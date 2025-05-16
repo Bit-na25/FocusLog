@@ -23,16 +23,9 @@ export function useInitializeAppData() {
       setSchedules(getLocalSchedules());
       setRetrospects(getLocalRetrospects());
       setTargetHour(getLocalFocusDuration());
-
-      console.log(getLocalTags());
-      console.log(getLocalCategories());
-      console.log(getLocalSchedules());
-      console.log(getLocalRetrospects());
-
       return;
     }
 
-    console.log("initializeappdata user");
     const [tags, categories, schedules, retrospects, hour] = await Promise.all([
       getTags(userId),
       getCategories(userId),
