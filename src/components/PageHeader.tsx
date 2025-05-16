@@ -7,9 +7,15 @@ interface PageHeaderProps {
   title: string;
   isTimer?: boolean;
   rightSlot?: JSX.Element;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-export default function PageHeader({ title, isTimer = false, rightSlot }: PageHeaderProps) {
+export default function PageHeader({
+  title,
+  isTimer = false,
+  rightSlot,
+  onClick,
+}: PageHeaderProps) {
   const navigate = useNavigate();
 
   return (
@@ -20,10 +26,12 @@ export default function PageHeader({ title, isTimer = false, rightSlot }: PageHe
           isTimer ? "text-white bg-neutral-900" : "bg-white",
         )}
       >
-        <button onClick={() => navigate(-1)} className="text-2xl">
-          <IoChevronBack />
+        <button onClick={onClick ?? (() => navigate(-1))} className="text-2xl">
+          <IoChevronBack className="hover:scale-110  hover:text-primary transition-all" />
         </button>
-        <h1 className="absolute left-1/2 transform -translate-x-1/2 text-xl font-bold">{title}</h1>
+        <h1 className="absolute left-1/2 transform -translate-x-1/2 text-xl font-bold tracking-tight">
+          {title}
+        </h1>
         {rightSlot}
       </header>
     </div>

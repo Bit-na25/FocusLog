@@ -1,4 +1,4 @@
-export * from "./calendar";
+export * from "./etc";
 export * from "./category";
 export * from "./retrospect";
 export * from "./schedule";

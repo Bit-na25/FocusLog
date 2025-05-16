@@ -48,21 +48,21 @@ export default function LoginPage() {
           <button
             onClick={() => handleLogin("github")}
             disabled={loading}
-            className="bg-gray-800 text-white p-4 rounded-full"
+            className="bg-gray-800 text-white p-4 rounded-full hover:scale-110 transition-all"
           >
             <FaGithub className="text-lg" />
           </button>
           <button
             onClick={() => handleLogin("google")}
             disabled={loading}
-            className="bg-white border p-4 rounded-full"
+            className="bg-white border p-4 rounded-full hover:scale-110 transition-all"
           >
             <FcGoogle className="text-lg" />
           </button>
           <button
             onClick={() => handleLogin("facebook")}
             disabled={loading}
-            className="bg-blue-600 text-white p-4 rounded-full"
+            className="bg-blue-600 text-white p-4 rounded-full hover:scale-110 transition-all"
           >
             <FaFacebookF className="text-lg" />
           </button>

@@ -21,7 +21,6 @@ export function useInitializeAppData() {
 
   useEffect(() => {
     if (userId === null) return;
-    console.log(userId);
 
     async function init() {
       if (userId) {

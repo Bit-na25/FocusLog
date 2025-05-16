@@ -1,3 +1,5 @@
+import { defaultDuration } from "@/recoil";
+
 export const TAG_KEY = "focuslog_tags";
 export const CATEGORY_KEY = "focuslog_categories";
 export const STORAGE_KEY = "focuslog_schedules";
@@ -42,9 +44,10 @@ export function setLocalRetrospects(retrospects: any[]) {
 
 export function getLocalFocusDuration() {
   const raw = localStorage.getItem(FOCUS_DURATION_KEY);
-  return raw ? JSON.parse(raw) : 5;
+  console.log(raw);
+  return raw ? JSON.parse(raw) : defaultDuration;
 }
 
 export function setLocalFocusDuration(time: number) {
-  localStorage.setItem(RETROSPECT_KEY, JSON.stringify(time));
+  localStorage.setItem(FOCUS_DURATION_KEY, JSON.stringify(time));
 }

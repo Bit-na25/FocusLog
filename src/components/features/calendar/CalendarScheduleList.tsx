@@ -13,7 +13,9 @@ export default function CalendarScheduleList({ selectedDate }: Props) {
 
   return (
     <section className="my-4 pb-4">
-      <h2 className="text-lg font-bold mb-2">{formatToKoreanDateWithoutYear(selectedDate)}</h2>
+      <h2 className="text-lg font-bold mb-2 tracking-tight">
+        {formatToKoreanDateWithoutYear(selectedDate)}
+      </h2>
       {schedules.length > 0 ? (
         <ul className="flex flex-col gap-3">
           {schedules.map((schedule) => (

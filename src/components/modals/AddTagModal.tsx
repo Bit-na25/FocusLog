@@ -3,6 +3,7 @@ import { SetterOrUpdater, useRecoilState } from "recoil";
 import { tagState } from "@/recoil";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { addTags as addTagsToFirestore } from "@/firebase";
+import ModalActionButtons from "./ModalActionButtons";
 
 interface AddTagModal {
   onClose: () => void;
@@ -49,22 +50,16 @@ export default function AddTagModal({ onClose, onAddTag, setTag }: AddTagModal) 
           value={label}
           onChange={(e) => setLabel(e.target.value)}
           placeholder="뿌듯함, 피곤함"
-          className="w-full border rounded px-3 py-2 mb-1 bg-white text-sm"
+          className="w-full border rounded px-3 py-2 mb-1 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
           ref={labelRef}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSave();
+          }}
+          autoFocus
         />
         <p className="text-xs text-gray-400 ml-1 mb-4">* 쉼표로 구분하여 입력하세요.</p>
 
-        <div className="flex justify-end gap-2">
-          <button className="px-4 py-2 border rounded text-sm" onClick={onClose}>
-            취소
-          </button>
-          <button
-            className="px-4 py-2 bg-black text-white rounded text-sm font-bold"
-            onClick={handleSave}
-          >
-            저장
-          </button>
-        </div>
+        <ModalActionButtons onSave={handleSave} onCancel={onClose} />
       </div>
     </div>
   );

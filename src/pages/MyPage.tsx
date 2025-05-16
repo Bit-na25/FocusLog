@@ -11,11 +11,13 @@ import {
   initializeCategoryState,
   initializeTagState,
   targetHourAtom,
+  calendarSelectedDateState,
 } from "@/recoil";
 import { logout } from "../services/authService";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { resetAllUserData, setFocusDuration } from "@/firebase";
 import { useEffect } from "react";
+import { setLocalFocusDuration } from "@/utils/localStorage";
 
 export default function MyPage() {
   const resetSchedule = useResetRecoilState(scheduleState);
@@ -28,6 +30,7 @@ export default function MyPage() {
   const setTag = useSetRecoilState(tagState);
   const [targetHour, setTargetHour] = useRecoilState(targetHourAtom);
   const { userId, name, photo } = useAuthUser();
+  const setSelectedDate = useSetRecoilState(calendarSelectedDateState);
 
   const handleResetAll = () => {
     if (!confirm("모든 데이터를 초기화하시겠습니까?")) return;
@@ -62,10 +65,15 @@ export default function MyPage() {
   };
 
   useEffect(() => {
+    setLocalFocusDuration(targetHour);
     if (userId !== null) {
       setFocusDuration(userId, targetHour);
     }
   }, [targetHour, userId]);
+
+  useEffect(() => {
+    setSelectedDate(new Date());
+  }, []);
 
   return (
     <div>
@@ -84,16 +92,18 @@ export default function MyPage() {
         </div>
         {!userId && (
           <Link to="/login">
-            <div className="border px-4 py-1 rounded text-sm">로그인</div>
+            <div className="border px-4 py-1 rounded text-sm hover:bg-primary/5 transition-all">
+              로그인
+            </div>
           </Link>
         )}
       </div>
       <UnderLine />
 
-      <ul className="space-y-4 text-[1.05rem] mt-6">
+      <ul className="space-y-4 mt-6 flex flex-col gap-2">
         <li>
           <Link to="/category">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 hover:text-primary transition-all">
               <FaFolder className="text-lg" />
               카테고리 관리
             </div>
@@ -101,7 +111,7 @@ export default function MyPage() {
         </li>
         <li>
           <Link to="/tag">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 hover:text-primary transition-all">
               <FaTag className="text-lg" />
               태그 관리
             </div>
@@ -114,7 +124,7 @@ export default function MyPage() {
           </div>
           <span className="text-gray-700 flex items-center gap-2">
             <button
-              className="border p-1 rounded"
+              className="border px-2 py-1 rounded shadow-sm hover:bg-primary/5 transition-all"
               onClick={() => {
                 setTargetHour((prev) => (prev > 1 ? --prev : prev));
               }}
@@ -123,7 +133,7 @@ export default function MyPage() {
             </button>
             {targetHour}시간
             <button
-              className="border p-1 rounded"
+              className="border px-2 py-1 rounded shadow-sm hover:bg-primary/5 transition-all"
               onClick={() => {
                 setTargetHour((prev) => (prev < 24 ? ++prev : prev));
               }}
@@ -133,7 +143,10 @@ export default function MyPage() {
           </span>
         </li>
 
-        <li className="flex items-center gap-3" onClick={handleResetAll}>
+        <li
+          className="flex items-center gap-3 hover:text-primary transition-all"
+          onClick={handleResetAll}
+        >
           <FaTrash className="text-lg" />
           모든 데이터 초기화
         </li>
@@ -142,7 +155,10 @@ export default function MyPage() {
       {userId && (
         <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 w-full py-8">
           <hr className="mb-4 mx-6" />
-          <button className="w-full mx-auto" onClick={handleLogout}>
+          <button
+            className="w-full mx-auto hover:text-primary hover:scale-105 transition-all"
+            onClick={handleLogout}
+          >
             로그아웃
           </button>
         </div>

@@ -1,10 +1,12 @@
 export const baseSelectStyles = {
-  control: (base: any) => ({
+  control: (base: any, state: any) => ({
     ...base,
     fontSize: "0.875rem", // text-sm
     backgroundColor: "#fff",
     paddingLeft: "0.5rem",
     paddingRight: "0.5rem",
+    boxShadow: state.isFocused ? "0 0 0 1px #8b5cf6" : "none",
+    fontWeight: "bold",
   }),
   menu: (base: any) => ({
     ...base,
@@ -14,17 +16,19 @@ export const baseSelectStyles = {
   }),
   option: (base: any, state: any) => ({
     ...base,
-    backgroundColor: state.isSelected
-      ? "#eab308" // yellow-400
-      : "#fff",
-    color: "#000",
+    backgroundColor: state.isSelected ? "#793DF9" : state.isFocused ? "#EEE6FE" : "#fff",
+    color: state.isSelected ? "#fff" : "#000",
     cursor: "pointer",
     padding: "0.5rem 0.75rem",
+    fontWeight: "bold",
   }),
   indicatorSeparator: () => ({ display: "none" }), // | 제거
   dropdownIndicator: (base: any) => ({
     ...base,
     padding: "0 0.25rem",
     color: "#9ca3af", // gray-400
+    "&:hover": {
+      color: "#6b7280", // gray-500
+    },
   }),
 };

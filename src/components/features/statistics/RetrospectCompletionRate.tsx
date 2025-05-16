@@ -25,10 +25,11 @@ export default function RetrospectCompletionRate({
     period,
     category,
   );
-  const completionRate =
+  const completionRate = Math.floor(
     filteredSchedules.length === 0
       ? 0
-      : (filteredRetrospects.length / filteredSchedules.length) * 100;
+      : (filteredRetrospects.length / filteredSchedules.length) * 100,
+  );
   const circumference = 2 * Math.PI * 16; // 반지름 r = 16
   const offset = circumference - (circumference * completionRate) / 100;
 
@@ -37,8 +38,8 @@ export default function RetrospectCompletionRate({
   }, []);
 
   return (
-    <div className="mb-4">
-      <p className="font-bold mb-2">회고 작성률</p>
+    <div className="mb-6">
+      <p className="font-bold mb-2 text-xl">회고 작성률</p>
       <ContentBox>
         <div className="flex items-center gap-3">
           <div className="relative w-16 h-16 shrink-0">
@@ -49,7 +50,7 @@ export default function RetrospectCompletionRate({
                 cy="18"
                 r="16"
                 fill="none"
-                stroke="#facc15"
+                stroke="#793DF9"
                 strokeWidth="4"
                 strokeDasharray={circumference}
                 strokeDashoffset={offset}

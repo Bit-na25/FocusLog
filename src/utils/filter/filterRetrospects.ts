@@ -11,7 +11,7 @@ export function filterRetrospects(
   return retrospects.filter((r) => {
     const date = new Date(`${r.date}T00:00:00`);
     const inRange = date >= startDate && date <= today;
-    const categoryMatch = category === "all" || r.id === category;
+    const categoryMatch = category === "all" || r.category === category;
 
     return inRange && categoryMatch;
   });
