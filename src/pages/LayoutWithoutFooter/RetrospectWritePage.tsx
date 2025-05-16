@@ -50,8 +50,6 @@ export default function RetrospectWritePage() {
       tags,
     };
 
-    console.log(newRetrospect);
-
     setRetrospect((prev) => {
       return prev.map((item) => (item.id === retrospect.id ? newRetrospect : item));
     });
@@ -63,7 +61,6 @@ export default function RetrospectWritePage() {
   };
 
   const handleDelete = () => {
-    console.log(retrospect?.id);
     setRetrospect((prev) => prev.filter((s) => s.id !== retrospect?.id));
     if (userId !== null && retrospect) {
       deleteRetrospect(userId, retrospect.id);

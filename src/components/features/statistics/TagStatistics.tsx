@@ -14,7 +14,6 @@ interface TagStatisticsProps {
 export default function TagStatistics({ period, category }: TagStatisticsProps) {
   const retrospects = useRecoilValue(retrospectState);
   const filtered = filterRetrospects(retrospects, period, category);
-  console.log(filtered);
 
   const tagCounts: tagCount = {};
   filtered.forEach((r) => {

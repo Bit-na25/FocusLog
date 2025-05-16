@@ -24,7 +24,6 @@ export default function ColorPickerPopover({
   const viewportHeight = window.innerHeight - 40;
   const adjustedTop =
     position.top + popoverHeight > viewportHeight ? position.top - popoverHeight : position.top;
-  console.log(selectedColor);
   return createPortal(
     <div
       ref={ref}
