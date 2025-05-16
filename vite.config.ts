@@ -7,8 +7,8 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"), // ✅ @ = src/
+      "@": path.resolve(__dirname, "src"),
     },
-    dedupe: ["firebase"], // 👈 중복 방지!
+    dedupe: ["firebase"],
   },
 });
