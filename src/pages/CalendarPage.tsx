@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-// import UnderLine from "../components/common/UnderLine";
+import UnderLine from "../components/common/UnderLine";
 // import Calendar from "../components/features/calendar/Calendar";
-// import CalendarScheduleList from "../components/features/calendar/CalendarScheduleList";
+import CalendarScheduleList from "../components/features/calendar/CalendarScheduleList";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { calendarSelectedDateState, lastPageState } from "@/recoil";
 import { useEffect } from "react";
@@ -20,9 +20,9 @@ export default function CalendarPage() {
 
   return (
     <div className="w-full mt-4">
-      {/* <Calendar selectedDate={selectedDate} onDateChange={setSelectedDate} />
+      {/* <Calendar selectedDate={selectedDate} onDateChange={setSelectedDate} />*/}
       <UnderLine />
-      <CalendarScheduleList selectedDate={selectedDate} />*/}
+      <CalendarScheduleList selectedDate={selectedDate} />
       <div className="fixed bottom-24 max-w-md w-full flex justify-end">
         <Link
           to="/schedule-form"
