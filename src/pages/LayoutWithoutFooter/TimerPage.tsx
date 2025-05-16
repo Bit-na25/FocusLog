@@ -157,8 +157,7 @@ export default function TimerPage() {
       <AlertPopup
         open={showAlert}
         message="집중 모드를 종료하시겠습니까?
-        * 타이머가 중지되고 기록이 저장되지 
-        않습니다."
+        * 타이머가 중지되고 기록이 저장되지 않습니다."
         onConfirm={() => navigate(-1)}
         onClose={() => {
           setShowAlert(false);
