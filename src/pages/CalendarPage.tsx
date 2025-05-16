@@ -20,9 +20,9 @@ export default function CalendarPage() {
 
   return (
     <div className="w-full mt-4">
-      <Calendar selectedDate={selectedDate} onDateChange={setSelectedDate} />
+      {/* <Calendar selectedDate={selectedDate} onDateChange={setSelectedDate} />
       <UnderLine />
-      <CalendarScheduleList selectedDate={selectedDate} />
+      <CalendarScheduleList selectedDate={selectedDate} />*/}
       <div className="fixed bottom-24 max-w-md w-full flex justify-end">
         <Link
           to="/schedule-form"
