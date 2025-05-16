@@ -11,6 +11,8 @@ export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useRecoilState(calendarSelectedDateState);
   const setLastPage = useSetRecoilState(lastPageState);
 
+  console.log(selectedDate);
+
   useEffect(() => {
     setLastPage("/calendar");
   }, []);

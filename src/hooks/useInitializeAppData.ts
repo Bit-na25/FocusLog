@@ -17,7 +17,9 @@ export function useInitializeAppData() {
   const setTargetHour = useSetRecoilState(targetHourAtom);
 
   return async function initialize(userId: string | null) {
+    console.log("initializeappdata");
     if (!userId) {
+      console.log("initializeappdata not user");
       console.log("useInitializeAppData : ", getLocalCategories());
       setTags(getLocalTags());
       setCategories(getLocalCategories());
@@ -27,6 +29,7 @@ export function useInitializeAppData() {
       return;
     }
 
+    console.log("initializeappdata user");
     const [tags, categories, schedules, retrospects, hour] = await Promise.all([
       getTags(userId),
       getCategories(userId),
