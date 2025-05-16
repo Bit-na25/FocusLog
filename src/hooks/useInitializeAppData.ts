@@ -17,15 +17,18 @@ export function useInitializeAppData() {
   const setTargetHour = useSetRecoilState(targetHourAtom);
 
   return async function initialize(userId: string | null) {
-    console.log("initializeappdata");
     if (!userId) {
-      console.log("initializeappdata not user");
-      console.log("useInitializeAppData : ", getLocalCategories());
       setTags(getLocalTags());
       setCategories(getLocalCategories());
       setSchedules(getLocalSchedules());
       setRetrospects(getLocalRetrospects());
       setTargetHour(getLocalFocusDuration());
+
+      console.log(getLocalTags());
+      console.log(getLocalCategories());
+      console.log(getLocalSchedules());
+      console.log(getLocalRetrospects());
+
       return;
     }
 

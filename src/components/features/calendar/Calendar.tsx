@@ -8,6 +8,7 @@ interface CalendarProps {
 }
 
 export default function Calendar({ selectedDate, onDateChange }: CalendarProps) {
+  console.log("[selectedDate]", selectedDate, typeof selectedDate);
   const monthSchedules = useRecoilValue(getSchedulesByMonthSelector(selectedDate));
   const categories = useRecoilValue(categorySelector);
 

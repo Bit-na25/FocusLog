@@ -50,6 +50,7 @@ export const getSchedulesByMonthSelector = selectorFamily<ScheduleType[], Date>(
       const monthStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
 
       const all = get(scheduleState);
+      console.log("[all schedules]", all);
       return all.filter((s) => s.date.startsWith(monthStr));
     },
 });
