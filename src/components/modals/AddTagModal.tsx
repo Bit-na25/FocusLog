@@ -46,7 +46,7 @@ export default function AddTagModal({ onClose, onAddTag, setTag }: AddTagModal) 
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-      <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6 w-[90%]">
+      <div className="max-w-md bg-white rounded-lg shadow-lg p-6 w-[90%]">
         <h2 className="text-lg font-bold mb-4">태그 추가</h2>
         <input
           type="text"
