@@ -20,8 +20,7 @@ export default function ColorPickerPopover({
   const ref = useRef<HTMLDivElement>(null);
   useClickOutside(ref, onClose);
 
-  // Smart positioning: adjust if near bottom of screen
-  const popoverHeight = 200; // Approximate height in px
+  const popoverHeight = 200;
   const viewportHeight = window.innerHeight - 50;
   const adjustedTop =
     position.top + popoverHeight > viewportHeight ? position.top - popoverHeight : position.top;
@@ -29,7 +28,7 @@ export default function ColorPickerPopover({
   return createPortal(
     <div
       ref={ref}
-      className="absolute z-50 bg-white border rounded-lg shadow-md p-3 grid grid-cols-6 gap-2"
+      className="absolute z-50 bg-white border border-primary rounded-lg shadow-md p-3 grid grid-cols-6 gap-2"
       style={{ top: adjustedTop, left: position.left }}
     >
       {defaultCategoryColor.map((color) => (

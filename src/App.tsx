@@ -7,9 +7,11 @@ function App() {
   useInitializeAppData();
 
   return (
-    <BrowserRouter>
-      <Router />
-    </BrowserRouter>
+    <div className="mx-auto w-full max-w-lg">
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+    </div>
   );
 }
 

@@ -29,7 +29,7 @@ export default function RetrospectBox() {
         회고 현황
         {filteredRetrospects.length > 0 && (
           <button
-            className="px-3 py-1 border border-gray-300 rounded-lg text-sm font-normal flex items-center"
+            className="px-3 py-1 border border-gray-300 rounded-lg text-sm font-normal flex items-center  hover:bg-primary/5 transition-all"
             onClick={handleChangeLog}
           >
             <LuRefreshCw className="mr-2" />

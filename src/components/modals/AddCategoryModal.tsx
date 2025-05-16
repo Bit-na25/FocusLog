@@ -51,7 +51,7 @@ export default function AddCategoryModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-[90%]">
+      <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6 w-[90%]">
         <h2 className="text-lg font-bold mb-4">카테고리 추가</h2>
 
         <label className="block text-sm font-semibold mb-1">이름</label>

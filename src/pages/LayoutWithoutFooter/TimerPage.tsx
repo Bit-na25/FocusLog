@@ -99,8 +99,8 @@ export default function TimerPage() {
     <div className="h-screen bg-neutral-900 text-white px-6">
       <PageHeader title="Timer" isTimer={true} />
 
-      <section className="w-full pt-24">
-        <div className="w-full aspect-square flex flex-col  justify-center items-center">
+      <section className="pt-24 max-w-md mx-auto">
+        <div className="aspect-square flex flex-col justify-center items-center">
           <span
             className={`${status === TimerStatus.RUNNING ? "text-7xl" : "text-6xl"} font-extrabold tracking-widest`}
           >

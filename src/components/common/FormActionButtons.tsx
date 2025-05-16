@@ -4,7 +4,7 @@ interface FormActionButtonsProps {
 }
 export default function FormActionButtons({ onSave, onDelete }: FormActionButtonsProps) {
   return (
-    <div className="fixed w-[90%] bottom-6 left-1/2 -translate-x-1/2 flex gap-4 ">
+    <div className="max-w-md mx-auto fixed w-[90%] bottom-6 left-1/2 -translate-x-1/2 flex gap-4 ">
       <button
         className="w-1/2 border py-3.5 rounded-lg border-primary bg-primary font-bold text-white shadow-md hover:bg-primary/80 transition-all duration-200"
         onClick={onSave}
