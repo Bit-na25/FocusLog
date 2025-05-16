@@ -10,7 +10,6 @@ import { addRetrospect } from "@/firebase";
 import PrimaryButton from "@/components/common/PrimaryButton";
 import SecondaryButton from "@/components/common/SecondaryButton";
 import AlertPopup from "@/components/common/AlertPopup";
-import toast from "react-hot-toast";
 
 enum TimerStatus {
   READY = "READY",
@@ -158,8 +157,7 @@ export default function TimerPage() {
       <AlertPopup
         open={showAlert}
         message="집중 모드를 종료하시겠습니까?
-        * 타이머가 중지되고 기록이 저장되지 
-        않습니다."
+        * 타이머가 중지되고 기록이 저장되지 않습니다."
         onConfirm={() => navigate(-1)}
         onClose={() => {
           setShowAlert(false);

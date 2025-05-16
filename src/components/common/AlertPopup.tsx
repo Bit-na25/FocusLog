@@ -1,6 +1,4 @@
 import { motion, AnimatePresence } from "framer-motion";
-import SecondaryButton from "./SecondaryButton";
-import PrimaryButton from "./PrimaryButton";
 
 interface AlertPopupProps {
   open: boolean;
