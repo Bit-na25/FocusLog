@@ -1,8 +1,7 @@
-// import { useRecoilValue } from "recoil";
-// import { getSchedulesByMonthSelector, categorySelector } from "@/recoil";
-// import { formatDateOnly } from "../../../utils/date/dateUtils";
-
+import { useRecoilValue } from "recoil";
+import { getSchedulesByMonthSelector /*, categorySelector*/ } from "@/recoil";
 import { useEffect } from "react";
+// import { formatDateOnly } from "../../../utils/date/dateUtils";
 
 interface CalendarProps {
   selectedDate: Date;
@@ -10,12 +9,12 @@ interface CalendarProps {
 }
 
 export default function Calendar({ selectedDate, onDateChange }: CalendarProps) {
-  //const monthSchedules = useRecoilValue(getSchedulesByMonthSelector(selectedDate));
-  //const categories = useRecoilValue(categorySelector);
+  const monthSchedules = useRecoilValue(getSchedulesByMonthSelector(selectedDate));
+  // const categories = useRecoilValue(categorySelector);
+
   useEffect(() => {
-    console.log("[selectedDate]", selectedDate, typeof selectedDate);
-    onDateChange(new Date());
-    console.log("[selectedDate]", selectedDate, typeof selectedDate);
+    console.log(onDateChange);
+    console.log(monthSchedules);
   }, []);
 
   const year = selectedDate.getFullYear();
