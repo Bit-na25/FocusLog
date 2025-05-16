@@ -1,11 +1,11 @@
-// import { Link } from "react-router-dom";
-// import UnderLine from "../components/common/UnderLine";
-// import Calendar from "../components/features/calendar/Calendar";
-// import CalendarScheduleList from "../components/features/calendar/CalendarScheduleList";
+import { Link } from "react-router-dom";
+import UnderLine from "../components/common/UnderLine";
+import Calendar from "../components/features/calendar/Calendar";
+import CalendarScheduleList from "../components/features/calendar/CalendarScheduleList";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { calendarSelectedDateState, lastPageState } from "@/recoil";
 import { useEffect } from "react";
-// import { FaPlusCircle } from "react-icons/fa";
+import { FaPlusCircle } from "react-icons/fa";
 
 export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useRecoilState(calendarSelectedDateState);
@@ -13,14 +13,11 @@ export default function CalendarPage() {
 
   useEffect(() => {
     setLastPage("/calendar");
-    console.log(selectedDate);
-    setSelectedDate(new Date());
-    console.log(selectedDate);
   }, []);
 
   return (
     <div className="w-full mt-4">
-      {/* <Calendar selectedDate={selectedDate} onDateChange={setSelectedDate} />
+      <Calendar selectedDate={selectedDate} onDateChange={setSelectedDate} />
       <UnderLine />
       <CalendarScheduleList selectedDate={selectedDate} />
       <div className="fixed bottom-24 max-w-md w-full flex justify-end">
@@ -32,7 +29,7 @@ export default function CalendarPage() {
         >
           <FaPlusCircle className="text-3xl" />
         </Link>
-      </div> */}
+      </div>
     </div>
   );
 }

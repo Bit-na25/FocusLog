@@ -1,6 +1,8 @@
-import { useRecoilValue } from "recoil";
-import { getSchedulesByMonthSelector, categorySelector } from "@/recoil";
-import { formatDateOnly } from "../../../utils/date/dateUtils";
+// import { useRecoilValue } from "recoil";
+// import { getSchedulesByMonthSelector, categorySelector } from "@/recoil";
+// import { formatDateOnly } from "../../../utils/date/dateUtils";
+
+import { useEffect } from "react";
 
 interface CalendarProps {
   selectedDate: Date;
@@ -8,9 +10,13 @@ interface CalendarProps {
 }
 
 export default function Calendar({ selectedDate, onDateChange }: CalendarProps) {
-  console.log("[selectedDate]", selectedDate, typeof selectedDate);
-  const monthSchedules = useRecoilValue(getSchedulesByMonthSelector(selectedDate));
-  const categories = useRecoilValue(categorySelector);
+  //const monthSchedules = useRecoilValue(getSchedulesByMonthSelector(selectedDate));
+  //const categories = useRecoilValue(categorySelector);
+  useEffect(() => {
+    console.log("[selectedDate]", selectedDate, typeof selectedDate);
+    onDateChange(new Date());
+    console.log("[selectedDate]", selectedDate, typeof selectedDate);
+  }, []);
 
   const year = selectedDate.getFullYear();
   const month = selectedDate.getMonth();
@@ -51,10 +57,10 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
     });
   }
 
-  const isSameDay = (d1: Date, d2: Date) =>
-    d1.getFullYear() === d2.getFullYear() &&
-    d1.getMonth() === d2.getMonth() &&
-    d1.getDate() === d2.getDate();
+  // const isSameDay = (d1: Date, d2: Date) =>
+  //   d1.getFullYear() === d2.getFullYear() &&
+  //   d1.getMonth() === d2.getMonth() &&
+  //   d1.getDate() === d2.getDate();
 
   return (
     <div>
@@ -74,7 +80,7 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
         </div>
 
         {/* 날짜 그리드 */}
-        <div className="grid grid-cols-7 text-center">
+        {/* <div className="grid grid-cols-7 text-center">
           {dates.map(({ date, isCurrentMonth }, idx) => {
             const isSelected = isSameDay(date, selectedDate);
             const day = date.getDay(); // 요일 0=일, 6=토
@@ -106,7 +112,7 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
               </div>
             );
           })}
-        </div>
+        </div> */}
       </div>
     </div>
   );
