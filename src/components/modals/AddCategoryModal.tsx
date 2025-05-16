@@ -5,6 +5,7 @@ import { FaCheck } from "react-icons/fa";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { addCategory } from "@/firebase";
 import ModalActionButtons from "./ModalActionButtons";
+import toast from "react-hot-toast";
 
 interface AddCategoryModalProps {
   onClose: () => void;
@@ -26,6 +27,9 @@ export default function AddCategoryModal({
   const handleSave = async () => {
     if (!label.trim()) {
       labelRef.current?.focus();
+      setLabel("");
+      toast.error("카테고리 이름을 입력해주세요!");
+
       return;
     }
 

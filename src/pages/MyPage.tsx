@@ -16,11 +16,14 @@ import {
 import { logout } from "../services/authService";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { resetAllUserData, setFocusDuration } from "@/firebase";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setLocalFocusDuration } from "@/utils/localStorage";
 import { useInitializeAppData } from "@/hooks/useInitializeAppData";
+import AlertPopup from "@/components/common/AlertPopup";
+import toast from "react-hot-toast";
 
 export default function MyPage() {
+  const [showAlert, setShowAlert] = useState(false);
   const resetSchedule = useResetRecoilState(scheduleState);
   const resetRetrospect = useResetRecoilState(retrospectState);
   const resetCategory = useResetRecoilState(categoryState);
@@ -35,7 +38,7 @@ export default function MyPage() {
   const setSelectedDate = useSetRecoilState(calendarSelectedDateState);
 
   const handleResetAll = async () => {
-    if (!confirm("모든 데이터를 초기화하시겠습니까?")) return;
+    setShowAlert(false);
 
     resetSchedule();
     resetCategory();
@@ -51,6 +54,8 @@ export default function MyPage() {
       await resetAllUserData(userId);
       await initializeAppData(userId);
     }
+
+    toast.success("모든 데이터가 초기화되었습니다.");
   };
 
   const handleLogout = async () => {
@@ -66,7 +71,6 @@ export default function MyPage() {
     initializeCategoryState(setCategory);
     initializeTagState(setTag);
 
-    console.log("✅ 로그아웃 완료");
     window.location.reload();
   };
 
@@ -151,7 +155,7 @@ export default function MyPage() {
 
         <li
           className="flex items-center gap-3 hover:text-primary transition-all"
-          onClick={handleResetAll}
+          onClick={() => setShowAlert(true)}
         >
           <FaTrash className="text-lg" />
           모든 데이터 초기화
@@ -169,6 +173,12 @@ export default function MyPage() {
           </button>
         </div>
       )}
+      <AlertPopup
+        open={showAlert}
+        message="모든 데이터를 초기화하시겠습니까?"
+        onConfirm={handleResetAll}
+        onClose={() => setShowAlert(false)}
+      />
     </div>
   );
 }

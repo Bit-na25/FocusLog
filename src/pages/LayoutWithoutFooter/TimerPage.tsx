@@ -9,6 +9,8 @@ import { useAuthUser } from "@/hooks/useAuthUser";
 import { addRetrospect } from "@/firebase";
 import PrimaryButton from "@/components/common/PrimaryButton";
 import SecondaryButton from "@/components/common/SecondaryButton";
+import AlertPopup from "@/components/common/AlertPopup";
+import toast from "react-hot-toast";
 
 enum TimerStatus {
   READY = "READY",
@@ -25,8 +27,10 @@ export default function TimerPage() {
   const schedule = useRecoilValue(scheduleByIdSelector(scheduleId));
   const setRetrospect = useSetRecoilState(retrospectState);
   const [status, setStatus] = useState<TimerStatus>(TimerStatus.READY);
+  const [prevStatus, setPrevStatus] = useState<TimerStatus>(TimerStatus.READY);
   const [time, setTime] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -98,9 +102,19 @@ export default function TimerPage() {
     return `${hrs}:${mins}:${secs}`;
   };
 
+  const handleBack = () => {
+    setPrevStatus(status);
+    if (status === TimerStatus.READY) {
+      navigate(-1);
+    } else {
+      handlePause();
+      setShowAlert(true);
+    }
+  };
+
   return (
     <div className="h-screen bg-neutral-900 text-white px-6">
-      <PageHeader title="Timer" isTimer={true} />
+      <PageHeader title="Timer" isTimer={true} onBack={handleBack} />
 
       <section className="pt-16 max-w-md mx-auto">
         <div className="aspect-square flex flex-col justify-center items-center">
@@ -141,6 +155,17 @@ export default function TimerPage() {
           )}
         </div>
       </section>
+      <AlertPopup
+        open={showAlert}
+        message="집중 모드를 종료하시겠습니까?
+        * 타이머가 중지되고 기록이 저장되지 
+        않습니다."
+        onConfirm={() => navigate(-1)}
+        onClose={() => {
+          setShowAlert(false);
+          if (prevStatus === TimerStatus.RUNNING) handleResume();
+        }}
+      />
     </div>
   );
 }

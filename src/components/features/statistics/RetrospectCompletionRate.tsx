@@ -46,18 +46,6 @@ export default function RetrospectCompletionRate({
           <div className="relative w-16 h-16 shrink-0">
             <svg viewBox="0 0 36 36" className="w-full h-full">
               <circle cx="18" cy="18" r="16" fill="none" stroke="#eee" strokeWidth="4" />
-              {/* <circle
-                cx="18"
-                cy="18"
-                r="16"
-                fill="none"
-                stroke="#793DF9"
-                strokeWidth="4"
-                strokeDasharray={circumference}
-                strokeDashoffset={offset}
-                strokeLinecap="round"
-                transform="rotate(-90 18 18)"
-              /> */}
               <motion.circle
                 initial={{ strokeDashoffset: circumference }}
                 animate={{ strokeDashoffset: offset }}
