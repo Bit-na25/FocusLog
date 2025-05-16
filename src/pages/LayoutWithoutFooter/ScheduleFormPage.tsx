@@ -10,9 +10,11 @@ import {
   ScheduleType,
   scheduleState,
   scheduleByIdSelector,
+  retrospectByScheduleIdSelector,
+  retrospectState,
 } from "@/recoil";
 import { useAuthUser } from "@/hooks/useAuthUser";
-import { addSchedule, deleteSchedule, updateSchedule } from "@/firebase";
+import { addSchedule, deleteRetrospect, deleteSchedule, updateSchedule } from "@/firebase";
 import PrimaryButton from "@/components/common/PrimaryButton";
 import FormActionButtons from "@/components/common/FormActionButtons";
 import CategoryForm from "@/components/features/scheduleForm/CategoryForm";
@@ -23,6 +25,7 @@ export default function ScheduleFormPage() {
   const { userId } = useAuthUser();
   const { state } = useLocation();
   const schedule = useRecoilValue(scheduleByIdSelector(state?.scheduleId));
+  const retrospect = useRecoilValue(retrospectByScheduleIdSelector(state?.scheduleId));
   const categories = useRecoilValue(categorySelector);
   const [title, setTitle] = useState("");
   const titleRef = useRef<HTMLInputElement>(null);
@@ -32,6 +35,7 @@ export default function ScheduleFormPage() {
   );
   const [category, setCategory] = useState<CategoryType>(categories[0]);
   const setSchedules = useSetRecoilState(scheduleState);
+  const setRetrospects = useSetRecoilState(retrospectState);
 
   useEffect(() => {
     if (schedule) {
@@ -85,6 +89,13 @@ export default function ScheduleFormPage() {
       deleteSchedule(userId, schedule.id);
     }
     setSchedules((prev) => prev.filter((s) => s.id !== schedule?.id));
+
+    if (retrospect) {
+      if (userId !== null) {
+        deleteRetrospect(userId, retrospect.id);
+      }
+      setRetrospects((prev) => prev.filter((s) => s.id !== retrospect.id));
+    }
     navigate(-1);
   };
 
