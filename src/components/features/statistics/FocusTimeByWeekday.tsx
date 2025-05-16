@@ -23,20 +23,20 @@ export default function FocusTimeByDay({ period, category }: FocusTimeByDayProps
   const max = Math.max(...focusTimeByDay, 1);
 
   return (
-    <div className="my-6">
-      <h2 className="font-bold mb-2 text-xl">요일별 집중 시간</h2>
-      <div className="flex justify-between items-end h-32 px-6">
+    <div className="my-3">
+      <h2 className="font-bold mb-2">요일별 집중 시간</h2>
+      <div className="flex justify-between items-end h-24 px-6">
         {focusTimeByDay.map((v, i) => {
           const rate = Math.floor((v / max) * 100);
 
           return (
             <div key={i} className="h-full flex flex-col items-center justify-end">
               <div
-                className={`w-4 rounded-t ${v === max ? "bg-primary/80" : "bg-gray-300"}`}
+                className={`w-3.5 rounded-t ${v === max ? "bg-primary/80" : "bg-gray-300"}`}
                 title={`${formatDurationKo(v)}`}
                 style={{ height: `${rate}%` }}
               ></div>
-              <span className="text-sm mt-1">{dayLabels[i]}</span>
+              <span className="text-xs mt-1">{dayLabels[i]}</span>
             </div>
           );
         })}

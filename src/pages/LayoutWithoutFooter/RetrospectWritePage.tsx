@@ -50,6 +50,8 @@ export default function RetrospectWritePage() {
       tags,
     };
 
+    console.log(newRetrospect);
+
     setRetrospect((prev) => {
       return prev.map((item) => (item.id === retrospect.id ? newRetrospect : item));
     });
@@ -61,6 +63,7 @@ export default function RetrospectWritePage() {
   };
 
   const handleDelete = () => {
+    console.log(retrospect?.id);
     setRetrospect((prev) => prev.filter((s) => s.id !== retrospect?.id));
     if (userId !== null && retrospect) {
       deleteRetrospect(userId, retrospect.id);
@@ -78,18 +81,18 @@ export default function RetrospectWritePage() {
         }}
       />
 
-      <section className="mt-24 mb-32">
+      <section className="mt-16 mb-20">
         <RetrospectTimer retrospect={retrospect} />
         <Schedule scheduleId={scheduleId} isMini={false} />
 
         {/* 노트 작성 */}
         <div className="mt-6 mb-5">
-          <label className="block mb-1 text-lg font-bold">노트</label>
+          <label className="block mb-1 font-bold">노트</label>
           <textarea
             value={note}
             onChange={(e) => setNote(e.target.value)}
             placeholder="내용을 입력하세요."
-            className="w-full border p-2 rounded resize-none h-32 bg-white focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full text-sm border p-2 rounded resize-none h-32 bg-white focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
 
@@ -98,7 +101,7 @@ export default function RetrospectWritePage() {
       </section>
 
       {/* 저장 버튼 */}
-      <div className="fixed bottom-0 left-0 right-0 w-full bg-white">
+      <div className="fixed bottom-0 left-0 right-0 w-full h-20 bg-white">
         <FormActionButtons onSave={handleSave} onDelete={handleDelete} />
       </div>
     </div>

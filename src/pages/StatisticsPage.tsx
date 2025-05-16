@@ -22,9 +22,9 @@ export default function StatisticsPage() {
 
   return (
     <div>
-      <header className="py-4 text-xl font-bold text-center">통계</header>
+      <header className="py-2 text-lg font-bold text-center">통계</header>
 
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-3">
         <div className="flex-1">
           <PeriodSelect period={period} setPeriod={(e) => setPeriod(e)} />
         </div>
@@ -41,10 +41,10 @@ export default function StatisticsPage() {
       <TotalFocusTime period={period} category={category} />
 
       <FocusTimeByWeekday period={period} category={category} />
-      <hr className="my-4" />
+      <hr className="my-3" />
 
       <TagStatistics period={period} category={category} />
-      <hr className="my-4" />
+      <hr className="my-3" />
 
       <RetrospectCompletionRate period={period} category={category} />
     </div>

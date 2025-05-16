@@ -21,7 +21,9 @@ export async function getSchedules(userId: string): Promise<ScheduleType[]> {
 
 export async function addSchedule(userId: string, schedule: ScheduleType) {
   const { id, ...rest } = schedule;
-  await addDoc(getScheduleCollectionRef(userId), rest);
+  const docRef = await addDoc(getScheduleCollectionRef(userId), rest);
+
+  return docRef.id;
 }
 
 export async function updateSchedule(

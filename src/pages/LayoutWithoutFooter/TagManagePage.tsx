@@ -51,7 +51,7 @@ export default function TagManagePage() {
           </button>
         }
       />
-      <section className="mt-20">
+      <section className="mt-16">
         <ManageItemList
           items={fixedTag}
           getKey={(tag) => tag}

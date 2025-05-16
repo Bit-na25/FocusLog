@@ -4,7 +4,7 @@ import { IoStatsChart } from "react-icons/io5";
 
 export default function Footer() {
   return (
-    <div className="btm-nav bg-white border-t-2 border-gray-200 h-24 max-w-lg mx-auto">
+    <div className="btm-nav bg-white border-t-2 border-gray-200 h-18 max-w-lg mx-auto">
       <NavLink
         to="/"
         className={({ isActive }) =>

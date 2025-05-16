@@ -18,7 +18,9 @@ export async function getRetrospects(userId: string): Promise<RetrospectType[]> 
 
 export async function addRetrospect(userId: string, retrospect: RetrospectType) {
   const { id, ...rest } = retrospect;
-  await addDoc(getRetrospectCollectionRef(userId), rest);
+  const docRef = await addDoc(getRetrospectCollectionRef(userId), rest);
+
+  return docRef.id;
 }
 
 export async function updateRetrospect(

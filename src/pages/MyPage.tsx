@@ -18,6 +18,7 @@ import { useAuthUser } from "@/hooks/useAuthUser";
 import { resetAllUserData, setFocusDuration } from "@/firebase";
 import { useEffect } from "react";
 import { setLocalFocusDuration } from "@/utils/localStorage";
+import { useInitializeAppData } from "@/hooks/useInitializeAppData";
 
 export default function MyPage() {
   const resetSchedule = useResetRecoilState(scheduleState);
@@ -25,6 +26,7 @@ export default function MyPage() {
   const resetCategory = useResetRecoilState(categoryState);
   const resetTag = useResetRecoilState(tagState);
   const resetTargetHour = useResetRecoilState(targetHourAtom);
+  const initializeAppData = useInitializeAppData();
 
   const setCategory = useSetRecoilState(categoryState);
   const setTag = useSetRecoilState(tagState);
@@ -32,7 +34,7 @@ export default function MyPage() {
   const { userId, name, photo } = useAuthUser();
   const setSelectedDate = useSetRecoilState(calendarSelectedDateState);
 
-  const handleResetAll = () => {
+  const handleResetAll = async () => {
     if (!confirm("모든 데이터를 초기화하시겠습니까?")) return;
 
     resetSchedule();
@@ -46,7 +48,8 @@ export default function MyPage() {
     initializeTagState(setTag);
 
     if (userId !== null) {
-      resetAllUserData(userId);
+      await resetAllUserData(userId);
+      await initializeAppData(userId);
     }
   };
 
@@ -77,18 +80,18 @@ export default function MyPage() {
 
   return (
     <div>
-      <header className="py-4 text-xl font-bold text-center">마이페이지</header>
+      <header className="py-3 text-lg font-bold text-center">마이페이지</header>
 
-      <div className="flex items-center justify-between my-4">
+      <div className="flex items-center justify-between my-3">
         <div className="flex items-center gap-4">
           {photo ? (
-            <img className="w-12 h-12 rounded-full" src={photo} />
+            <img className="w-10 h-10 rounded-full" src={photo} />
           ) : (
-            <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-xl">
+            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-xl">
               <FaUser />
             </div>
           )}
-          <div>{name}</div>
+          <div className="font-bold">{name}</div>
         </div>
         {!userId && (
           <Link to="/login">
@@ -100,7 +103,7 @@ export default function MyPage() {
       </div>
       <UnderLine />
 
-      <ul className="space-y-4 mt-6 flex flex-col gap-2">
+      <ul className="space-y-4 mt-6 flex flex-col gap-2 text-sm font-bold">
         <li>
           <Link to="/category">
             <div className="flex items-center gap-3 hover:text-primary transition-all">
@@ -153,10 +156,10 @@ export default function MyPage() {
       </ul>
 
       {userId && (
-        <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 w-full py-8">
+        <div className="fixed bottom-12 left-1/2 transform -translate-x-1/2 w-full py-8">
           <hr className="mb-4 mx-6" />
           <button
-            className="w-full mx-auto hover:text-primary hover:scale-105 transition-all"
+            className="w-full text-sm font-bold mx-auto hover:text-primary hover:scale-105 transition-all"
             onClick={handleLogout}
           >
             로그아웃

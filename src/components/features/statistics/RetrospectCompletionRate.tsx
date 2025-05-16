@@ -38,8 +38,8 @@ export default function RetrospectCompletionRate({
   }, []);
 
   return (
-    <div className="mb-6">
-      <p className="font-bold mb-2 text-xl">회고 작성률</p>
+    <div className="pb-6">
+      <p className="font-bold mb-2">회고 작성률</p>
       <ContentBox>
         <div className="flex items-center gap-3">
           <div className="relative w-16 h-16 shrink-0">

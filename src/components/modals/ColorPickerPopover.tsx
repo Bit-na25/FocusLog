@@ -20,21 +20,21 @@ export default function ColorPickerPopover({
   const ref = useRef<HTMLDivElement>(null);
   useClickOutside(ref, onClose);
 
-  const popoverHeight = 200;
-  const viewportHeight = window.innerHeight - 50;
+  const popoverHeight = 135;
+  const viewportHeight = window.innerHeight - 40;
   const adjustedTop =
     position.top + popoverHeight > viewportHeight ? position.top - popoverHeight : position.top;
-
+  console.log(selectedColor);
   return createPortal(
     <div
       ref={ref}
-      className="absolute z-50 bg-white border border-primary rounded-lg shadow-md p-3 grid grid-cols-6 gap-2"
+      className="absolute z-50 bg-white border border-primary rounded-lg shadow-md p-2 grid grid-cols-6 gap-2"
       style={{ top: adjustedTop, left: position.left }}
     >
       {defaultCategoryColor.map((color) => (
         <div
           key={color}
-          className={`w-8 h-8 rounded-full cursor-pointer relative ${color}`}
+          className={`w-6 h-6 rounded-full cursor-pointer relative ${color}`}
           onClick={() => onSelect(color)}
         >
           {selectedColor === color && (

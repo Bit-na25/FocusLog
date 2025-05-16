@@ -22,14 +22,14 @@ export default function PageHeader({
     <div className="max-w-md mx-auto fixed top-0 left-6 right-6">
       <header
         className={clsx(
-          "py-4 flex relative items-center justify-between",
+          "py-3 flex relative items-center justify-between",
           isTimer ? "text-white bg-neutral-900" : "bg-white",
         )}
       >
-        <button onClick={onClick ?? (() => navigate(-1))} className="text-2xl">
+        <button onClick={onClick ?? (() => navigate(-1))} className="text-xl">
           <IoChevronBack className="hover:scale-110  hover:text-primary transition-all" />
         </button>
-        <h1 className="absolute left-1/2 transform -translate-x-1/2 text-xl font-bold tracking-tight">
+        <h1 className="absolute left-1/2 transform -translate-x-1/2 text-lg font-bold tracking-tight">
           {title}
         </h1>
         {rightSlot}

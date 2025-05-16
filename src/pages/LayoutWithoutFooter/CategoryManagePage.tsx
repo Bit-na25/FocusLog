@@ -8,8 +8,8 @@ import ManageItemList from "../../components/features/myPage/ManageItemList";
 import ColorPickerPopover from "../../components/modals/ColorPickerPopover";
 import { categoryState, CategoryType } from "@/recoil";
 import { useAuthUser } from "@/hooks/useAuthUser";
-import { saveCategoriesToFirestore } from "@/firebase";
 import PrimaryButton from "@/components/common/PrimaryButton";
+import { syncCategoriesToFirestore } from "@/firebase";
 
 export default function CategoryManagePage() {
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ export default function CategoryManagePage() {
   const [colorPickerTarget, setColorPickerTarget] = useState<{
     id: string;
     position: { top: number; left: number };
+    color: string;
   } | null>(null);
 
   const handleEdit = (cat: CategoryType) => {
@@ -50,18 +51,24 @@ export default function CategoryManagePage() {
 
   const handleOpenColorPicker = (e: React.MouseEvent<HTMLDivElement>, cat: CategoryType) => {
     const rect = e.currentTarget.getBoundingClientRect();
+
     setColorPickerTarget({
       id: cat.id,
+      color: cat.color,
       position: {
-        top: rect.top + 200 > window.innerHeight ? rect.top - 180 : rect.bottom,
+        top: rect.top + 25,
         left: rect.left,
       },
     });
   };
 
   const handleSave = async () => {
-    setCategories(fixedCategory);
-    if (userId !== null) await saveCategoriesToFirestore(userId, fixedCategory);
+    if (userId !== null) {
+      const { added, updated } = await syncCategoriesToFirestore(userId, fixedCategory);
+      setCategories([...added, ...updated]);
+    } else {
+      setCategories(fixedCategory);
+    }
     navigate(-1);
   };
 
@@ -76,12 +83,12 @@ export default function CategoryManagePage() {
       <PageHeader
         title="카테고리 관리"
         rightSlot={
-          <button onClick={() => setShowAddCategoryModal(true)} className="text-2xl">
+          <button onClick={() => setShowAddCategoryModal(true)} className="text-xl">
             <FiPlus className="hover:scale-110 hover:text-primary transition-all" />
           </button>
         }
       />
-      <section className="mt-20">
+      <section className="mt-16">
         <ManageItemList<CategoryType>
           items={fixedCategory}
           getKey={(cat) => cat.id}
@@ -95,7 +102,7 @@ export default function CategoryManagePage() {
           handleEnter={handleEnter}
           renderLeft={(cat) => (
             <div
-              className={`w-6 h-6 rounded-full ${cat.color} cursor-pointer`}
+              className={`w-5 h-5 rounded-full ${cat.color} cursor-pointer`}
               onClick={(e) => handleOpenColorPicker(e, cat)}
             />
           )}
@@ -103,7 +110,7 @@ export default function CategoryManagePage() {
         {colorPickerTarget && (
           <ColorPickerPopover
             position={colorPickerTarget.position}
-            selectedColor={categories.find((c) => c.id === colorPickerTarget.id)?.color ?? ""}
+            selectedColor={colorPickerTarget.color}
             onSelect={(color) => handleChangeColor(colorPickerTarget.id, color)}
             onClose={() => setColorPickerTarget(null)}
           />

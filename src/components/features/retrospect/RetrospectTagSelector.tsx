@@ -28,22 +28,22 @@ export default function RetrospectTagSelector({ tags, setTags }: RetrospectTagSe
   return (
     <>
       <div className="my-5">
-        <label className="block mb-1 text-lg font-bold flex justify-between">
+        <label className="block mb-1 font-bold flex justify-between">
           태그
           <button
-            className="text-sm px-3 py-1 border rounded"
+            className="text-xs px-3 py-1.5 border rounded"
             onClick={() => setShowTagModal(true)}
           >
-            +추가
+            + 추가
           </button>
         </label>
 
-        <div className="flex flex-wrap gap-2 mb-2">
+        <div className="flex flex-wrap gap-2 mb-3">
           {visibleTags.map((tag) => (
             <button
               key={tag}
               onClick={() => handleChangeTag(tag)}
-              className={`px-3 py-1 rounded-full border ${
+              className={`px-2 py-1 text-sm rounded-full border ${
                 tags.includes(tag)
                   ? "bg-primary/20 text-primary border-primary font-semibold shadow-sm"
                   : "bg-white border"
@@ -55,7 +55,7 @@ export default function RetrospectTagSelector({ tags, setTags }: RetrospectTagSe
         </div>
 
         <button
-          className="text-sm text-gray-600 block mx-auto cursor-pointer"
+          className="text-xs text-gray-600 block mx-auto cursor-pointer"
           onClick={() => setShowMore(!showMore)}
         >
           더보기 {showMore ? "▲" : "▼"}
