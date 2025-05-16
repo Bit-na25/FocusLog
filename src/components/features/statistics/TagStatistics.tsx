@@ -53,7 +53,7 @@ export default function TagStatistics({ period, category }: TagStatisticsProps) 
             );
           })
         ) : (
-          <p className="text-gray-500 w-full text-xs text-center pt-2 font-bold">
+          <p className="text-gray-500 w-full text-sm text-center pt-2 font-bold">
             선택된 태그가 없습니다.
           </p>
         )}

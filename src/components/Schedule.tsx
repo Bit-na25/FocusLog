@@ -15,7 +15,7 @@ export default function Schedule({ scheduleId, isMini = true }: ScheduleProps) {
     <>
       {isMini ? (
         <Link to="/schedule-form" state={{ scheduleId }}>
-          <div className="flex text-md font-bold">
+          <div className="flex font-bold">
             <div className={`shrink-0 w-1 h-6 mr-2 ${categoryInfo.color}`} />
             <p className="mr-7 text-gray-500">{schedule?.time}</p>
             <p className="line-clamp-1 text-ellipsis overflow-hidden">{schedule?.title}</p>

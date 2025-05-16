@@ -8,7 +8,7 @@ interface DateFormProps {
 export default function DateForm({ selectedDate, setSelectedDate }: DateFormProps) {
   return (
     <div className="my-4">
-      <label className="block mb-1 text-md font-bold">날짜 및 시간</label>
+      <label className="block mb-1 font-bold">날짜 및 시간</label>
       <DatePicker
         selected={selectedDate}
         onChange={(date) => date && setSelectedDate(date)}

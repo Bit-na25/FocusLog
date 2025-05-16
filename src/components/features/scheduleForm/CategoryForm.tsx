@@ -33,7 +33,7 @@ export default function CategoryForm({
   return (
     <div>
       <div className="relative w-full" ref={dropdownRef}>
-        <label className="block mb-1 text-md font-bold">카테고리</label>
+        <label className="block mb-1 font-bold">카테고리</label>
         <button
           onClick={() => setDropdownOpen(!dropdownOpen)}
           className={`w-full flex items-center justify-between border py-2 px-4 rounded mb-1 ${dropdownOpen && "focus:ring-1 focus:ring-primary"}`}

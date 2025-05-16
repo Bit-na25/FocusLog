@@ -69,7 +69,7 @@ export default function RetrospectCompletionRate({
             />
           ) : (
             <div>
-              <p className="text-m">작성된 회고가 없습니다.</p>
+              <p>작성된 회고가 없습니다.</p>
               <p className="text-sm">* 회고는 타이머 완료 후 작성할 수 있어요.</p>
             </div>
           )}

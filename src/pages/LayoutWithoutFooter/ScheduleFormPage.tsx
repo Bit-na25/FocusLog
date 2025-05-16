@@ -94,7 +94,7 @@ export default function ScheduleFormPage() {
 
       <section className="mt-16">
         <div>
-          <label className="block mb-1 text-md font-bold">제목</label>
+          <label className="block mb-1 font-bold">제목</label>
           <input
             type="text"
             value={title}
