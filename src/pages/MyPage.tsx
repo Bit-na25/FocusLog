@@ -63,6 +63,9 @@ export default function MyPage() {
     localStorage.clear();
     indexedDB.deleteDatabase("firebaseLocalStorageDb");
 
+    initializeCategoryState(setCategory);
+    initializeTagState(setTag);
+
     console.log("✅ 로그아웃 완료");
     window.location.reload();
   };
@@ -156,7 +159,7 @@ export default function MyPage() {
       </ul>
 
       {userId && (
-        <div className="fixed bottom-12 left-1/2 transform -translate-x-1/2 w-full py-8">
+        <div className="fixed bottom-12 left-1/2 transform -translate-x-1/2 py-8">
           <hr className="mb-4 mx-6" />
           <button
             className="w-full text-sm font-bold mx-auto hover:text-primary hover:scale-105 transition-all"

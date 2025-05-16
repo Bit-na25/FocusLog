@@ -17,7 +17,6 @@ export function useInitializeAppData() {
   const setTargetHour = useSetRecoilState(targetHourAtom);
 
   return async function initialize(userId: string | null) {
-    console.log(userId);
     if (!userId) {
       setTags(getLocalTags());
       setCategories(getLocalCategories());
