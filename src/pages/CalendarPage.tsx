@@ -16,18 +16,20 @@ export default function CalendarPage() {
   }, []);
 
   return (
-    <div className="w-full mt-2">
+    <div className="w-full mt-4">
       <Calendar selectedDate={selectedDate} onDateChange={setSelectedDate} />
       <UnderLine />
       <CalendarScheduleList selectedDate={selectedDate} />
-      <Link
-        to="/schedule-form"
-        state={{ selectedDate }}
-        className="fixed bottom-20 right-4 w-12 h-12 rounded-full bg-primary text-white shadow-lg flex items-center justify-center transition hover:bg-primary/80 hover:scale-110"
-        aria-label="일정 추가하기"
-      >
-        <FaPlusCircle className="text-3xl" />
-      </Link>
+      <div className="fixed bottom-24 max-w-md w-full flex justify-end">
+        <Link
+          to="/schedule-form"
+          state={{ selectedDate }}
+          className="w-14 h-14 rounded-full bg-primary text-white shadow-lg flex items-center justify-center transition hover:bg-primary/80 hover:scale-110"
+          aria-label="일정 추가하기"
+        >
+          <FaPlusCircle className="text-3xl" />
+        </Link>
+      </div>
     </div>
   );
 }
