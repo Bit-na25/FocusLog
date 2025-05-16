@@ -1,7 +1,6 @@
 import { useRecoilValue } from "recoil";
-import { getSchedulesByMonthSelector /*, categorySelector*/ } from "@/recoil";
-import { useEffect } from "react";
-// import { formatDateOnly } from "../../../utils/date/dateUtils";
+import { getSchedulesByMonthSelector, categorySelector } from "@/recoil";
+import { formatDateOnly } from "../../../utils/date/dateUtils";
 
 interface CalendarProps {
   selectedDate: Date;
@@ -10,12 +9,7 @@ interface CalendarProps {
 
 export default function Calendar({ selectedDate, onDateChange }: CalendarProps) {
   const monthSchedules = useRecoilValue(getSchedulesByMonthSelector(selectedDate));
-  // const categories = useRecoilValue(categorySelector);
-
-  useEffect(() => {
-    console.log(onDateChange);
-    console.log(monthSchedules);
-  }, []);
+  const categories = useRecoilValue(categorySelector);
 
   const year = selectedDate.getFullYear();
   const month = selectedDate.getMonth();
@@ -56,10 +50,10 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
     });
   }
 
-  // const isSameDay = (d1: Date, d2: Date) =>
-  //   d1.getFullYear() === d2.getFullYear() &&
-  //   d1.getMonth() === d2.getMonth() &&
-  //   d1.getDate() === d2.getDate();
+  const isSameDay = (d1: Date, d2: Date) =>
+    d1.getFullYear() === d2.getFullYear() &&
+    d1.getMonth() === d2.getMonth() &&
+    d1.getDate() === d2.getDate();
 
   return (
     <div>
@@ -79,7 +73,7 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
         </div>
 
         {/* 날짜 그리드 */}
-        {/* <div className="grid grid-cols-7 text-center">
+        <div className="grid grid-cols-7 text-center">
           {dates.map(({ date, isCurrentMonth }, idx) => {
             const isSelected = isSameDay(date, selectedDate);
             const day = date.getDay(); // 요일 0=일, 6=토
@@ -111,7 +105,7 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
               </div>
             );
           })}
-        </div> */}
+        </div>
       </div>
     </div>
   );
