@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import UnderLine from "../components/common/UnderLine";
-import Calendar from "../components/features/calendar/Calendar";
-import CalendarScheduleList from "../components/features/calendar/CalendarScheduleList";
+// import UnderLine from "../components/common/UnderLine";
+// import Calendar from "../components/features/calendar/Calendar";
+// import CalendarScheduleList from "../components/features/calendar/CalendarScheduleList";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { calendarSelectedDateState, lastPageState } from "@/recoil";
 import { useEffect } from "react";
