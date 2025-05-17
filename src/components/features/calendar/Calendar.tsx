@@ -115,8 +115,9 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
               <div
                 key={idx}
                 className="w-full flex flex-col items-center justify-center cursor-pointer"
+                onClick={() => onDateChange(date)}
               >
-                <div className={`${opacity} mb-1`} onClick={() => onDateChange(date)}>
+                <div className={`${opacity} mb-1`}>
                   <div
                     className={`w-6 h-6 text-sm flex items-center justify-center ${
                       isSelected ? "bg-primary text-white font-bold rounded-full" : ""
