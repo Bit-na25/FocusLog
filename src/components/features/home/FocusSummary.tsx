@@ -27,7 +27,7 @@ export default function FocusSummary() {
         <div className="border-t border-gray-300 my-3" />
         <div className="relative w-full h-6 bg-gray-300/50 rounded-lg">
           <div
-            className={`absolute h-4/5 ${color} rounded-lg left-1 top-1 transform -transform-y-1/2`}
+            className={`absolute h-full ${color} rounded-lg`}
             style={{ width: `${percent}%` }}
           ></div>
         </div>
