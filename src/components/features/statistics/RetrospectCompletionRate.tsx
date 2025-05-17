@@ -22,7 +22,7 @@ export default function RetrospectCompletionRate({
   const filteredSchedules = filterSchedules(schedules, period, category);
   const retrospects = useRecoilValue(retrospectState);
   const filteredRetrospects = filterRetrospects(
-    retrospects.filter((r) => r.content || r.tags),
+    retrospects.filter((r) => r.content || r.tags?.length),
     period,
     category,
   );
