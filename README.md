@@ -32,17 +32,16 @@
 - 로그인 후 사용자 UID를 기준으로 Firestore에 데이터 분리 저장
 
 ### 📂 Firestore 데이터 구조 예시
-users/{uid}/categories
-users/{uid}/schedules
-users/{uid}/retrospects
+- users/{uid}/categories
+- users/{uid}/schedules
+- users/{uid}/retrospects
 
 
 ### 🔄 Recoil 상태 전략
 
 - 각 기능별 atom/selector 파일을 분리 관리
-  - 예: `categoryAtom.ts`, `scheduleAtom.ts`, `authAtom.ts`
+  - 예: `categoryAtom.ts`, `scheduleAtom.ts`
 - 초기 mock 상태는 로컬 캐시에 저장하다가 Firestore 연동 후 전환
-- atom → service(fetch/transform) → 컴포넌트 구조 유지
 
 ---
 
@@ -83,11 +82,11 @@ users/{uid}/retrospects
 - `refactor/{대상}`: 리팩터링용 브랜치
 
 ### 커밋 메시지 규칙
-feat: 새로운 기능 추가
-fix: 버그 수정
-refactor: 리팩토링
-chore: 설정 변경 및 기타 잡일
-docs: 문서 작성/수정
+- feat: 새로운 기능 추가
+- fix: 버그 수정
+- refactor: 리팩토링
+- chore: 설정 변경 및 기타 잡일
+- docs: 문서 작성/수정
 
 ---
 
