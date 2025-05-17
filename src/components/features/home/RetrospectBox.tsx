@@ -15,6 +15,8 @@ export default function RetrospectBox() {
   }, []);
 
   const handleChangeLog = () => {
+    if (filteredRetrospects.length <= 1) return;
+
     let index = -1;
     do {
       index = Math.floor(Math.random() * filteredRetrospects.length);
