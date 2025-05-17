@@ -49,7 +49,7 @@ export default function RetrospectCompletionRate({
               <motion.circle
                 initial={{ strokeDashoffset: circumference }}
                 animate={{ strokeDashoffset: offset }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
                 cx="18"
                 cy="18"
                 r="16"

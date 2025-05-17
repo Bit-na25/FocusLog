@@ -2,6 +2,7 @@ import { useRecoilValue } from "recoil";
 import { formatDurationKo } from "../../../utils/date/formatDuration";
 import ContentBox from "../../common/ContentBox";
 import { targetHourAtom, todayTotalFocusTimeSelector } from "@/recoil";
+import { motion } from "framer-motion";
 
 export default function FocusSummary() {
   const todayTotalFocusTime = useRecoilValue(todayTotalFocusTimeSelector);
@@ -26,10 +27,12 @@ export default function FocusSummary() {
         </p>
         <div className="border-t border-gray-300 my-3" />
         <div className="relative w-full h-6 bg-gray-300/50 rounded-lg">
-          <div
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${percent}%` }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
             className={`absolute h-full ${color} rounded-lg`}
-            style={{ width: `${percent}%` }}
-          ></div>
+          />
         </div>
       </ContentBox>
     </section>
