@@ -87,7 +87,7 @@ export default function MyPage() {
 
   return (
     <div>
-      <header className="py-3 text-lg font-bold text-center">마이페이지</header>
+      <header className="py-2 text-lg font-bold text-center">마이페이지</header>
 
       <div className="flex items-center justify-between my-3">
         <div className="flex items-center gap-4">

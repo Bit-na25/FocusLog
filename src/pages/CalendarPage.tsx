@@ -16,7 +16,7 @@ export default function CalendarPage() {
   }, []);
 
   return (
-    <div className="w-full mt-4">
+    <div className="w-full mt-2">
       <Calendar selectedDate={selectedDate} onDateChange={setSelectedDate} />
       <UnderLine />
       <CalendarScheduleList selectedDate={selectedDate} />
