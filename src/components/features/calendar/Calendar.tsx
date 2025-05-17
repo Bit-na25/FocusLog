@@ -1,6 +1,9 @@
 import { useRecoilValue } from "recoil";
 import { getSchedulesByMonthSelector, categorySelector } from "@/recoil";
 import { formatDateOnly } from "../../../utils/date/dateUtils";
+import { FaAngleDown } from "react-icons/fa";
+import CalendarModal from "@/components/modals/CalendarModal";
+import { useState } from "react";
 
 interface CalendarProps {
   selectedDate: Date;
@@ -8,27 +11,28 @@ interface CalendarProps {
 }
 
 export default function Calendar({ selectedDate, onDateChange }: CalendarProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(selectedDate.getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState(selectedDate.getMonth());
+
   const monthSchedules = useRecoilValue(getSchedulesByMonthSelector(selectedDate));
   const categories = useRecoilValue(categorySelector);
 
-  const year = selectedDate.getFullYear();
-  const month = selectedDate.getMonth();
-
   // 달의 첫째 날 (ex: 2025-04-01)
-  const firstDay = new Date(year, month, 1);
+  const firstDay = new Date(selectedYear, selectedMonth, 1);
   const firstDayOfWeek = firstDay.getDay(); // 요일 (0=일, 1=월, ..., 6=토)
 
   // 이달이 며칠까지 있는지
-  const lastDate = new Date(year, month + 1, 0).getDate();
+  const lastDate = new Date(selectedYear, selectedMonth + 1, 0).getDate();
 
   // 날짜 배열 만들기 (빈칸 포함)
   const dates: { date: Date; isCurrentMonth: boolean }[] = [];
 
-  const prevMonthLastDate = new Date(year, month, 0).getDate();
+  const prevMonthLastDate = new Date(selectedYear, selectedMonth, 0).getDate();
   // 앞에 빈칸 (ex: 1일이 수요일이면 앞에 0,0)
   for (let i = 0; i < firstDayOfWeek; i++) {
     dates.unshift({
-      date: new Date(year, month - 1, prevMonthLastDate - i),
+      date: new Date(selectedYear, selectedMonth - 1, prevMonthLastDate - i),
       isCurrentMonth: false,
     });
   }
@@ -36,7 +40,7 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
   // 날짜 채우기
   for (let i = 1; i <= lastDate; i++) {
     dates.push({
-      date: new Date(year, month, i),
+      date: new Date(selectedYear, selectedMonth, i),
       isCurrentMonth: true,
     });
   }
@@ -45,7 +49,7 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
   while (dates.length < 42) {
     const nextDay = dates.length - (firstDayOfWeek + lastDate) + 1;
     dates.push({
-      date: new Date(year, month + 1, nextDay),
+      date: new Date(selectedYear, selectedMonth + 1, nextDay),
       isCurrentMonth: false,
     });
   }
@@ -55,10 +59,35 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
     d1.getMonth() === d2.getMonth() &&
     d1.getDate() === d2.getDate();
 
+  const handleChangeYearMonth = (y: number, m: number) => {
+    setSelectedMonth(m);
+    setSelectedYear(y);
+  };
+
   return (
     <div>
       {/* 년/월 표시 */}
-      <div className="text-lg font-bold mb-3 tracking-tight">{`${year}년 ${month + 1}월`}</div>
+      <div className="relative inline-block">
+        <button
+          className="text-lg font-bold mb-3 tracking-tight flex items-center"
+          onClick={() => {
+            console.log("open");
+            setIsOpen(true);
+          }}
+        >
+          {`${selectedYear}년 ${selectedMonth + 1}월`}
+          <FaAngleDown className="ml-1" />
+        </button>
+        {isOpen && (
+          <CalendarModal
+            year={selectedYear}
+            month={selectedMonth + 1}
+            isOpen={isOpen}
+            onOpen={setIsOpen}
+            onSelect={handleChangeYearMonth}
+          />
+        )}
+      </div>
 
       <div className="mx-[-0.8rem]">
         {/* 요일 표시 */}
@@ -83,8 +112,12 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
             const schedules = monthSchedules.filter((s) => s.date === formatDateOnly(date));
 
             return (
-              <div key={idx} className="w-full flex flex-col items-center justify-center">
-                <div className={`${opacity} mb-1`} onClick={() => onDateChange(date)}>
+              <div
+                key={idx}
+                className="w-full flex flex-col items-center justify-center cursor-pointer"
+                onClick={() => onDateChange(date)}
+              >
+                <div className={`${opacity} mb-1`}>
                   <div
                     className={`w-6 h-6 text-sm flex items-center justify-center ${
                       isSelected ? "bg-primary text-white font-bold rounded-full" : ""
@@ -93,7 +126,7 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
                     {date.getDate()}
                   </div>
                 </div>
-                <div className="flex gap-1 mb-2">
+                <div className="flex gap-1 mb-2 min-h-[0.25rem]">
                   {schedules.map((s) => {
                     const color = categories.find((e) => e.id === s.category);
 
