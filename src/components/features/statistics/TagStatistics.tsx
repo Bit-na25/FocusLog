@@ -46,7 +46,7 @@ export default function TagStatistics({ period, category }: TagStatisticsProps) 
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${rate}%` }}
-                      transition={{ duration: 0.5, ease: "easeOut" }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
                       className={`h-full rounded-full ${count === maxCount ? "bg-primary/80" : "bg-gray-300"}`}
                     />
                   </div>

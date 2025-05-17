@@ -35,7 +35,7 @@ export default function FocusTimeByDay({ period, category }: FocusTimeByDayProps
               <motion.div
                 initial={{ height: 0 }}
                 animate={{ height: `${rate}%` }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
                 className={`w-3.5 rounded-t ${v === max ? "bg-primary/80" : "bg-gray-300"}`}
                 title={`${formatDurationKo(v)}`}
               />
