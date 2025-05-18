@@ -64,7 +64,7 @@ export default function AddCategoryModal({
         exit={{ opacity: 0 }}
       >
         <motion.div
-          className="bg-white rounded-lg shadow-xl p-6 w-[80%] max-w-md"
+          className="bg-white rounded-lg shadow-xl p-6 w-[90%] max-w-md"
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
@@ -83,7 +83,7 @@ export default function AddCategoryModal({
           />
 
           <label className="block text-sm font-semibold mb-1">색상</label>
-          <div className="w-full border rounded px-2 py-2 mb-4 bg-white h-28 grid grid-cols-6 gap-3 overflow-auto">
+          <div className="w-full border rounded px-3 py-3 mb-4 bg-white grid grid-cols-6 gap-3">
             {defaultCategoryColor.map((c) => (
               <button
                 key={c}
