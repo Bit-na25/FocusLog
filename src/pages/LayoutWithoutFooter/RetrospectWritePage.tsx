@@ -17,6 +17,7 @@ import FormActionButtons from "@/components/common/FormActionButtons";
 import RetrospectTimer from "@/components/features/retrospect/RetrospectTimer";
 import RetrospectTagSelector from "@/components/features/retrospect/RetrospectTagSelector";
 import AlertPopup from "@/components/common/AlertPopup";
+import toast from "react-hot-toast";
 
 export default function RetrospectWritePage() {
   const navigate = useNavigate();
@@ -31,6 +32,8 @@ export default function RetrospectWritePage() {
   const [note, setNote] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [showAlert, setShowAlert] = useState(false);
+
+  const maxNote = 100;
 
   useEffect(() => {
     if (retrospect) {
@@ -71,6 +74,15 @@ export default function RetrospectWritePage() {
     navigate(lastPage);
   };
 
+  const handleChangeNote = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.target.value.length > maxNote) {
+      toast.error(`회고는 최대 ${maxNote}자까지 입력할 수 있어요.`);
+      return;
+    }
+
+    setNote(e.target.value);
+  };
+
   return (
     <div>
       <PageHeader
@@ -85,14 +97,17 @@ export default function RetrospectWritePage() {
         <Schedule scheduleId={scheduleId} isMini={false} />
 
         {/* 노트 작성 */}
-        <div className="mt-6 mb-5">
+        <div className="mt-6 mb-5 relative ">
           <label className="block mb-1 font-bold">노트</label>
           <textarea
             value={note}
-            onChange={(e) => setNote(e.target.value)}
+            onChange={handleChangeNote}
             placeholder="내용을 입력하세요."
             className="w-full text-sm border p-2 rounded resize-none h-32 bg-white focus:outline-none focus:ring-1 focus:ring-primary"
-          />
+          ></textarea>
+          <div className="absolute bottom-3 right-3 text-xs">
+            {note.length} / {maxNote}
+          </div>
         </div>
 
         {/* 태그 선택 */}

@@ -18,6 +18,7 @@ export default function AddTagModal({ onClose, onAddTag, setTag }: AddTagModal) 
   const [label, setLabel] = useState("");
   const labelRef = useRef<HTMLInputElement>(null);
   const [tags, setTags] = useRecoilState(tagState);
+  const maxLabel = 10;
 
   const handleSave = async () => {
     if (!label.trim()) {
@@ -45,6 +46,17 @@ export default function AddTagModal({ onClose, onAddTag, setTag }: AddTagModal) 
     onClose();
   };
 
+  const handleChangeLabel = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const labels = e.target.value.split(",").map((t) => t.trim());
+    if (labels.length > 0 && labels.some((l) => l.length > maxLabel)) {
+      toast.error(`${maxLabel}자를 넘는 태그는 추가할 수 없어요.`);
+
+      return;
+    }
+
+    setLabel(e.target.value);
+  };
+
   return (
     <AnimatePresence>
       <motion.div
@@ -54,7 +66,7 @@ export default function AddTagModal({ onClose, onAddTag, setTag }: AddTagModal) 
         exit={{ opacity: 0 }}
       >
         <motion.div
-          className="bg-white rounded-lg shadow-xl p-6 w-[70%] max-w-sm"
+          className="bg-white rounded-lg shadow-xl p-6 w-[80%] max-w-sm"
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
@@ -64,7 +76,7 @@ export default function AddTagModal({ onClose, onAddTag, setTag }: AddTagModal) 
           <input
             type="text"
             value={label}
-            onChange={(e) => setLabel(e.target.value)}
+            onChange={handleChangeLabel}
             placeholder="뿌듯함, 피곤함"
             className="w-full border rounded px-3 py-2 mb-1 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             ref={labelRef}
@@ -73,7 +85,10 @@ export default function AddTagModal({ onClose, onAddTag, setTag }: AddTagModal) 
             }}
             autoFocus
           />
-          <p className="text-xs text-gray-400 ml-1 mb-4">* 쉼표로 구분하여 입력하세요.</p>
+          <p className="text-xs text-gray-400 ml-1">* 쉼표로 구분하여 입력하세요.</p>
+          <p className="text-xs text-gray-400 ml-1 mb-4">
+            각 태그는 최대 {maxLabel}자까지 입력할 수 있습니다.
+          </p>
 
           <ModalActionButtons onSave={handleSave} onCancel={onClose} />
         </motion.div>
