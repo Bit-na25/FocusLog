@@ -65,7 +65,7 @@ export default function ScheduleFormPage() {
       time: formatTimeOnly(selectedDate),
       title,
       memo,
-      category: category.id,
+      category: category?.id,
       done: schedule?.done ?? false,
     };
 
