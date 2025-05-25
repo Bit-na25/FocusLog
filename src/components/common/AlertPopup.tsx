@@ -25,7 +25,7 @@ export default function AlertPopup({
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="bg-white rounded-lg shadow-xl p-6 w-[60%] max-w-sm text-center"
+            className="bg-white rounded-lg shadow-xl p-6 w-[80%] max-w-sm text-center"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}

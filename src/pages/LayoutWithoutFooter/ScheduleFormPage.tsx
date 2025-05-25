@@ -35,7 +35,9 @@ export default function ScheduleFormPage() {
   const [selectedDate, setSelectedDate] = useState<Date>(
     state?.selectedDate ? new Date(state.selectedDate) : new Date(),
   );
-  const [category, setCategory] = useState<CategoryType>(categories[0]);
+  const [category, setCategory] = useState<CategoryType | null>(
+    categories !== null ? categories[0] : null,
+  );
   const setSchedules = useSetRecoilState(scheduleState);
   const [showAlert, setShowAlert] = useState(false);
   const setRetrospects = useSetRecoilState(retrospectState);
@@ -63,7 +65,7 @@ export default function ScheduleFormPage() {
       time: formatTimeOnly(selectedDate),
       title,
       memo,
-      category: category.id,
+      category: category?.id,
       done: schedule?.done ?? false,
     };
 

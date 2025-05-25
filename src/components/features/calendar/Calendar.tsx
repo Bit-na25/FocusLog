@@ -131,7 +131,10 @@ export default function Calendar({ selectedDate, onDateChange }: CalendarProps) 
                     const color = categories.find((e) => e.id === s.category);
 
                     return (
-                      <span key={s.id} className={`w-1 h-1 rounded-full ${color?.color}`}></span>
+                      <span
+                        key={s.id}
+                        className={`w-1 h-1 rounded-full ${color ? color.color : "bg-gray-400"}`}
+                      ></span>
                     );
                   })}
                 </div>

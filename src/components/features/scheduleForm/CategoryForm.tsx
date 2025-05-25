@@ -5,8 +5,8 @@ import { useRef, useState } from "react";
 
 interface CategoryFormProps {
   categories: CategoryType[];
-  selectedCategory: CategoryType;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<CategoryType>>;
+  selectedCategory: CategoryType | null;
+  setSelectedCategory: React.Dispatch<React.SetStateAction<CategoryType | null>>;
 }
 
 export default function CategoryForm({
@@ -39,8 +39,8 @@ export default function CategoryForm({
           className={`w-full flex items-center justify-between border py-2 px-4 rounded mb-1 ${dropdownOpen && "focus:ring-1 focus:ring-primary"}`}
         >
           <div className="flex items-center gap-2 text-sm">
-            <span className={`w-3 h-3 rounded-full ${selectedCategory.color}`}></span>
-            {selectedCategory.label}
+            <span className={`w-3 h-3 rounded-full ${selectedCategory?.color}`}></span>
+            {selectedCategory?.label}
           </div>
           <span className="text-sm">{dropdownOpen ? "▲" : "▼"}</span>
         </button>
@@ -51,7 +51,7 @@ export default function CategoryForm({
               <div
                 key={c.id}
                 onClick={() => handleChangeCategory(c)}
-                className={`flex items-center text-sm gap-2 px-4 py-2 ${selectedCategory.id === c.id ? "bg-primary/80 text-white" : "hover:bg-primary/10"} cursor-pointer`}
+                className={`flex items-center text-sm gap-2 px-4 py-2 ${selectedCategory?.id === c.id ? "bg-primary/80 text-white" : "hover:bg-primary/10"} cursor-pointer`}
               >
                 <span className={`w-3 h-3 rounded-full ${c.color}`} />
                 {c.label}
